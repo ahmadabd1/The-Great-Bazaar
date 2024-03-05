@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const authRoutes = require('./routes/authRoutes'); // Import authRoutes.js
+const authRoutes = require('./routes/authRoutes')
+const categoriesRoutes = require('./routes/categoriesRoutes')
 const path = require('path');
 
 app.use(express.json());
@@ -16,7 +17,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/', authRoutes); // Mount authRoutes
-
+app.use('/user', authRoutes); // Mount authRoutes
+app.use('/category',categoriesRoutes)
 const PORT = 8080;
 app.listen(process.env.PORT || PORT);
