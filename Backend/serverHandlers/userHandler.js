@@ -53,17 +53,17 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email });
+        const { email, password } = req.body
+        const user = await User.findOne({ email })
         if (!user) {
-            return res.status(401).json({ message: errorMessages.emailNotFound });
+            return res.status(401).json({ message: errorMessages.emailNotFound })
         }
         if (user.password !== password) {
-            return res.status(401).json({ message: errorMessages.wrongPassword });
+            return res.status(401).json({ message: errorMessages.wrongPassword })
         }
-        res.status(200).json({ message: "Login successful" });
+        res.status(200).json({ message: "Login successful", userId: user._id })
     } catch (error) {
-        console.error("Error logging in:", error);
-        res.status(500).json({ message: errorMessages.internalServerError });
+        console.error("Error logging in:", error)
+        res.status(500).json({ message: errorMessages.internalServerError })
     }
-};
+}
