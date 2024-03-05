@@ -4,6 +4,6 @@ const router = Router();
 
 
 router.post('/signup',authController.signup_post)
-router.get('/login',()=>{})
+router.get('/login',authController.signin_get)
 
 module.exports = router
