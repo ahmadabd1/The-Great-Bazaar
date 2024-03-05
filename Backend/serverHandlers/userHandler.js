@@ -1,81 +1,44 @@
-const ERROR_MESSAGES = {
-    userExists: 'User is already registered.',
-    emailFormat: 'Check your email format.',
-    passwordShort: 'Password is too short.',
-    phoneNumber: 'Wrong Phone Number .',
-    needSignUp: 'You need to sign up first.',
-    wrongPassword: 'Email exists, but the password seems wrong.',
-    successAddUser: 'User added successfully.',
-}
+const User = require('../models/user');
 
-const MIN_PASSWORD_LENGTH = 5
-const PHONE_NUMBER_LENGTH = 10
-
-function checkEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const existingUser = users.find(user => user.email.toLowerCase() === email.toLowerCase())
-    
-    if (existingUser) {
-        return { valid: false, message: ERROR_MESSAGES.userExists }
-    }
-
-    if (!emailRegex.test(email)) {
-        return { valid: false, message: ERROR_MESSAGES.emailFormat }
-    }
-    
-    return { valid: true };
-}
-
-function checkPassword(password) {
-    if (password.length < MIN_PASSWORD_LENGTH) {
-        return { valid: false, message: ERROR_MESSAGES.passwordShort }
-    }
-    return { valid: true }
-}
-
-function checkPhoneNumber(phoneNumber) {
-    if (phoneNumber.length == PHONE_NUMBER_LENGTH) {
-        return { valid: false, message: ERROR_MESSAGES.phoneNumber }
-    }
-    return { valid: true }
-}
-
-function checkUser(user) {
-    const response = { message: '', result: false }
-    const existingUser = users.find(existUser => existUser.email.toLowerCase() === user.email.toLowerCase())
-
-    if (!existingUser) {
-        response.message = ERROR_MESSAGES.needSignUp
-        return response
-    }
-
-    if (existingUser.password === user.password) {
-        response.message = 'Everything is fine. Go inside.'
-        response.result = true
-        return response
-    } else {
-        response.message = ERROR_MESSAGES.wrongPassword
-        return response
+exports.signup = async (req, res) => {
+    try {
+        const { email, password, phoneNumber } = req.body;
+        const existingEmail = await User.findOne({ email })
+        if (existingEmail) {
+            return res.status(400).json({ message: "Email already exists" })
+        }
+        const existingPhoneNumber = await User.findOne({ phoneNumber });
+        if (existingPhoneNumber) {
+            return res.status(400).json({ message: "Phone number already exists" })
+        }
+        const newUser = new User({
+            email,
+            password,
+            phoneNumber
+        });
+        await newUser.save()
+        res.status(201).json({ message: "User created successfully" })
+    } catch (error) {
+        console.error("Error creating user:", error)
+        res.status(500).json({ message: "Internal server error" })
     }
 }
 
-function addUser(user) {
-    const response = { message: '', result: false }
-    const emailCheck = checkEmail(user.email)
-    const passwordCheck = checkPassword(user.password)
-    const phoneNumberCheck = checkPhoneNumber(user.phoneNumber)
 
-    if (emailCheck.valid && passwordCheck.valid && phoneNumberCheck.valid) {
-        users.push({ username: user.username, email: user.email, password: user.password })
-        response.result = true
-        response.message = ERROR_MESSAGES.successAddUser
-    } else {
-        response.message = emailCheck.message || passwordCheck.message || phoneNumberCheck.message
+exports.login = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const user = await User.findOne({ email })
+        if (!user) {
+            return res.status(401).json({ message: "Email not found" })
+        }
+        if (user.password !== password) {
+            return res.status(401).json({ message: "Wrong password" })
+        }
+        res.status(200).json({ message: "Login successful" })
+    } catch (error) {
+        console.error("Error logging in:", error)
+        res.status(500).json({ message: "Internal server error" })
     }
-    return response
 }
 
-module.exports = {
-    checkUser,
-    addUser
-};
