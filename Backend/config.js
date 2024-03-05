@@ -9,6 +9,8 @@ module.exports = {
         passwordNoSpecialChar: "Password must contain at least one special character (!@#$%^&*(),.?\":{}|<>)",
         emailNotFound: "Email not found",
         wrongPassword: "Wrong password",
-        internalServerError: "Internal server error"
+        internalServerError: "Internal server error",
+        nameIsRequired: "Name is a required field",
+        descriptionIsRequired: "Description is a required field"
     }
 };
