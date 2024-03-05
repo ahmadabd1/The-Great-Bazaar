@@ -1,23 +1,21 @@
-// Import required modules
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-const api = require("./routes/api");
-const app = express();
-// Serving Static Files by Server
-app.use(express.static(path.join(__dirname, "dist")));
-// Serving Static Files
-// If we have frontend libraries or dependencies installed in 'node_modules' that we wanna make available
-// to the client-side we can use this middleware to serve them.
-app.use(express.static(path.join(__dirname, "node_modules")));
-// Parse JSON && URL
-// We use these middleware when processing POST requests (to extract data from the request body)
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-// Using the custom API route
-app.use("/", api);
-const port = 8181;
-// Server is listening - the Server ready to accept requests
-app.listen(port, function () {
-  console.log(`Server running on port ${port}`);
-});
+const express = require('express')
+const app = express()
+const api = require('./routes/api')
+const path = require('path')
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+const mongoose = require('mongoose');
+mongoose.connect("mongodb://127.0.0.1:27017/TheGreateBazar" , { useNewUrlParser: true })
+
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+
+    next()
+})
+app.use('/', api)
+const PORT = 8080
+app.listen(process.env.PORT || PORT)
