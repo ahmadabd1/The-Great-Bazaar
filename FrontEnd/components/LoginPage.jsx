@@ -7,16 +7,30 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
     phoneNumber: "",
   });
-   const [errorMessage, setErrorMessage] = useState("");
+   const [formDataA, setFormDataA] = useState({
+    email: "",
+    password: "",
+   
+  });
+   const [message, setMessage] = useState("");
+     const [successMessage, setSuccessMessage] = useState(""); 
 
-  const handleChange = (event) => {
+ const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (showLogin) {
+      setFormDataA((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
   const toggleSignup = () => {
     setShowSignup(!showSignup);
@@ -27,9 +41,12 @@ const LoginPage = () => {
     setShowLogin(!showLogin);
     setShowSignup(false);
   };
-  const handleSubmit = async (event) => {
+  const handleSubmitSignup = async (event) => {
     event.preventDefault();
-
+ if (formData.password !== formData.confirmPassword) {
+      setMessage("Passwords do not match");
+      return;
+    }
     try {
       const response = await fetch("http://localhost:8080/user/signup", {
         method: "POST",
@@ -40,22 +57,46 @@ const LoginPage = () => {
       });
 
       if (response.ok) {
-        console.log("User signed up successfully");
+        setSuccessMessage("signed up successfully");
+        setMessage("");
       } else {
-     const errorMessage1 = await response.text();
-      console.log(errorMessage1)
-        setErrorMessage(errorMessage1);
+     const errorMessage = await response.text();
+      console.log(errorMessage)
+        setMessage(errorMessage);
       }
     } catch (error) {
       console.error("Error occurred while signing up:", error);
     }
   };
+  const handleSubmitLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8080/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataA),
+      });
+
+      if (response.ok) {
+        setSuccessMessage("Login successful");
+        setMessage("");
+      } else {
+        const errorMessage = await response.text();
+        setMessage(errorMessage);
+      }
+    } catch (error) {
+      console.error("Error occurred while logging in:", error);
+    }
+  };
+
   return (
     <div className="main">
       <input type="checkbox" id="chk" aria-hidden="true" />
 
       <div className="signup">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitSignup}>
           <label htmlFor="chk" aria-hidden="true" onClick={toggleSignup}>
             Sign up
           </label>
@@ -84,31 +125,36 @@ const LoginPage = () => {
             onChange={handleChange}
             required=""
           />
-          <input
+           <input
             type="password"
-            name="password"
+            name="confirmPassword"
             placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
             required=""
           />
           <button type="submit"> sign up</button>
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {message && <div className="error-message">{message}</div>}
+          {successMessage && <div className="success-message">{successMessage}</div>} 
 
         </form>
       </div>
 
       <div className="login">
-        <form>
+        <form onSubmit={handleSubmitLogin}>
           <label htmlFor="chk" aria-hidden="true" onClick={toggleLogin}>
             Login
           </label>
-          <input type="email" name="email" placeholder="Email" required="" />
+          <input type="email" name="email" value={formDataA.email} onChange={handleChange} placeholder="Email" required="" />
           <input
             type="password"
-            name="pswd"
+            name="password"
             placeholder="Password"
-            required=""
+            value={formDataA.password}
+            onChange={handleChange}
+            required
           />
-          <button>Login</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>
