@@ -1,11 +1,12 @@
 const Item = require('../models/item');
 const { errorMessages } = require('../config');
 
-exports.get_item_byid = async (req, res) => {
-    const { Id } = req.params;
 
+exports.get_item_byid = async (req, res) => {
+    const  Id  = req.params.Id;
+    console.log(Id)
     try {
-        const item = await Item.findOne({ id: Id });
+        const item = await Item.findOne({ _id : Id});
         if (!item) {
             return res.status(404).json({ message: errorMessages.NOT_FOUND });
         }
@@ -16,9 +17,9 @@ exports.get_item_byid = async (req, res) => {
     }
 }
 
+
 exports.get_items_byCategoryId = async (req, res) => {
     const { categoryId } = req.params;
-
     try {
         const items = await Item.find({ category_id: categoryId });
         res.status(200).json(items);
@@ -30,7 +31,6 @@ exports.get_items_byCategoryId = async (req, res) => {
 
 exports.delete_item = async (req, res) => {
     const { Id } = req.params;
-
     try {
         const deletedItem = await Item.findOneAndDelete({ id: Id });
         if (!deletedItem) {
@@ -45,16 +45,33 @@ exports.delete_item = async (req, res) => {
 
 exports.create_item = async (req, res) => {
     const newItemData = req.body;
+    const { errorMessages } = require("../config");
+    const requiredFields = ['name', 'description', 'sellPrice', 'quantity', 'category_id'];
+    const missingFields = [];
 
+    requiredFields.forEach(field => {
+        if (!newItemData[field]) {
+            missingFields.push(errorMessages[`${field}IsRequired`]);
+        }
+    });
+    if (missingFields.length > 0) {
+        return res.status(400).json({ message: missingFields.join(", ") });
+    }
     try {
         const newItem = new Item(newItemData);
         await newItem.save();
         res.status(201).json(newItem);
     } catch (error) {
         console.error("Error creating item:", error);
-        res.status(500).json({ message: errorMessages.SERVER_ERROR });
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.id === 1) {
+            return res.status(400).json({ message: "Item with this ID already exists" });
+        }
+        res.status(500).json({ message: errorMessages.internalServerError });
     }
 }
+
+
+
 
 exports.update_item = async (req, res) => {
     const updatedItemData = req.body;
