@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
-    id: {
-        type: String,
-        required: true,
-        unique: true
-    },
+
     name: {
         type: String,
         required: true
@@ -16,7 +12,7 @@ const categorySchema = new mongoose.Schema({
     },
     parent_id: {
         type: String,
-        required: false // It's optional, as it might not have a parent
+        required: false 
     },
     created_at: {
         type: Date,
