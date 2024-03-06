@@ -31,7 +31,7 @@ const LoginPage = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/signup", {
+      const response = await fetch("http://localhost:8080/user/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const LoginPage = () => {
         console.log("User signed up successfully");
       } else {
      const errorMessage1 = await response.text();
-      console.log(errorMessage1 + " 111")
+      console.log(errorMessage1)
         setErrorMessage(errorMessage1);
       }
     } catch (error) {
