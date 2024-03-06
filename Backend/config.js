@@ -11,6 +11,11 @@ module.exports = {
         wrongPassword: "Wrong password",
         internalServerError: "Internal server error",
         nameIsRequired: "Name is a required field",
-        descriptionIsRequired: "Description is a required field"
+        descriptionIsRequired: "Description is a required field",
+        itemNotFound: "Item not found",
+        categoryIdIsRequired: "Category ID is a required field",
+        itemCreationFailed: "Failed to create item",
+        itemUpdateFailed: "Failed to update item",
+        itemDeletionFailed: "Failed to delete item"
     }
 };
