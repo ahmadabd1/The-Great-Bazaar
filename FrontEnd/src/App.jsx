@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SideBar from "../components/admin/SideBar.jsx";
 
 
-const admin =true
+const admin =false
 
 function App() {
   return (
@@ -21,14 +21,14 @@ function App() {
         </Router>
       ) : (
         <Router>
-          <Navbar balance={balance} />
+          {/* <Navbar balance={balance} /> */}
           <main className="main-content">
             <Routes>
               <Route path="/login" element={<LoginPage />} />
             
             </Routes>
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </Router>
       )}
     </>

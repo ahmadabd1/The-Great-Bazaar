@@ -2,8 +2,6 @@ const Item = require('../models/item');
 const { errorMessages } = require('../config');
 
 
-
-
 exports.get_item_byid = async (req, res) => {
     const  Id  = req.params.Id;
     console.log(Id)
@@ -47,9 +45,17 @@ exports.delete_item = async (req, res) => {
 
 exports.create_item = async (req, res) => {
     const newItemData = req.body;
-    const { name, description, price, quantity, category_id } = newItemData;
-    if (!name || !description || !price || !quantity || !category_id) {
-        return res.status(400).json({ message: "All fields are required" });
+    const { errorMessages } = require("../config");
+    const requiredFields = ['name', 'description', 'sellPrice', 'quantity', 'category_id'];
+    const missingFields = [];
+
+    requiredFields.forEach(field => {
+        if (!newItemData[field]) {
+            missingFields.push(errorMessages[`${field}IsRequired`]);
+        }
+    });
+    if (missingFields.length > 0) {
+        return res.status(400).json({ message: missingFields.join(", ") });
     }
     try {
         const newItem = new Item(newItemData);
@@ -60,9 +66,10 @@ exports.create_item = async (req, res) => {
         if (error.code === 11000 && error.keyPattern && error.keyPattern.id === 1) {
             return res.status(400).json({ message: "Item with this ID already exists" });
         }
-        res.status(500).json({ message: errorMessages.SERVER_ERROR });
+        res.status(500).json({ message: errorMessages.internalServerError });
     }
 }
+
 
 
 
