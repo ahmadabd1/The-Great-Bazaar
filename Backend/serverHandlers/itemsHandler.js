@@ -1,11 +1,14 @@
 const Item = require('../models/item');
 const { errorMessages } = require('../config');
 
-exports.get_item_byid = async (req, res) => {
-    const { Id } = req.params;
 
+
+
+exports.get_item_byid = async (req, res) => {
+    const  Id  = req.params.Id;
+    console.log(Id)
     try {
-        const item = await Item.findOne({ id: Id });
+        const item = await Item.findOne({ _id : Id});
         if (!item) {
             return res.status(404).json({ message: errorMessages.NOT_FOUND });
         }
@@ -16,9 +19,9 @@ exports.get_item_byid = async (req, res) => {
     }
 }
 
+
 exports.get_items_byCategoryId = async (req, res) => {
     const { categoryId } = req.params;
-
     try {
         const items = await Item.find({ category_id: categoryId });
         res.status(200).json(items);
@@ -30,7 +33,6 @@ exports.get_items_byCategoryId = async (req, res) => {
 
 exports.delete_item = async (req, res) => {
     const { Id } = req.params;
-
     try {
         const deletedItem = await Item.findOneAndDelete({ id: Id });
         if (!deletedItem) {
@@ -45,16 +47,24 @@ exports.delete_item = async (req, res) => {
 
 exports.create_item = async (req, res) => {
     const newItemData = req.body;
-
+    const { name, description, price, quantity, category_id } = newItemData;
+    if (!name || !description || !price || !quantity || !category_id) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
     try {
         const newItem = new Item(newItemData);
         await newItem.save();
         res.status(201).json(newItem);
     } catch (error) {
         console.error("Error creating item:", error);
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.id === 1) {
+            return res.status(400).json({ message: "Item with this ID already exists" });
+        }
         res.status(500).json({ message: errorMessages.SERVER_ERROR });
     }
 }
+
+
 
 exports.update_item = async (req, res) => {
     const updatedItemData = req.body;

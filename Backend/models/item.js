@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
-    id: {
-        type: String,
-        required: true,
-        unique: true
-    },
+
     name: {
         type: String,
         required: true
@@ -14,7 +10,11 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    price: {
+    sellPrice: {
+        type: Number,
+        required: true
+    },
+    buyPrice: {
         type: Number,
         required: true
     },
@@ -28,7 +28,6 @@ const itemSchema = new mongoose.Schema({
     },
     image_url: {
         type: String,
-        required: true
     },
     created_at: {
         type: Date,
@@ -40,7 +39,6 @@ const itemSchema = new mongoose.Schema({
     },
     vendor: {
         type: String,
-        required: true
     },
     soldQuantity: {
         type: Number,

@@ -16,6 +16,11 @@ module.exports = {
         categoryIdIsRequired: "Category ID is a required field",
         itemCreationFailed: "Failed to create item",
         itemUpdateFailed: "Failed to update item",
-        itemDeletionFailed: "Failed to delete item"
+        itemDeletionFailed: "Failed to delete item",
+        nameIsRequired: "Name is a required field",
+        descriptionIsRequired: "Description is a required field",
+        priceIsRequired: "Price is a required field",
+        quantityIsRequired: "Quantity is a required field",
+        categoryIdIsRequired: "Category ID is a required field",
     }
 };
