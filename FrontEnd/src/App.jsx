@@ -1,11 +1,11 @@
 import "./App.css";
 import LoginPage from "../components/LoginPage";
-import { useState } from "react";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SideBar from "../components/admin/SideBar.jsx";
+import HomaPage from "../components/client/HomePage.jsx"
 
-
-const admin =true
+const admin =false
 
 function App() {
   return (
@@ -21,14 +21,15 @@ function App() {
         </Router>
       ) : (
         <Router>
-          <Navbar balance={balance} />
+        {/*   <Navbar balance={balance} /> */}
           <main className="main-content">
             <Routes>
               <Route path="/login" element={<LoginPage />} />
-            
+                    <Route path="/home" element={<HomaPage/>} />
+
             </Routes>
           </main>
-          <Footer />
+        {/*   <Footer /> */}
         </Router>
       )}
     </>
