@@ -3,6 +3,11 @@ const User = require("../models/user");
 exports.signup = async (req, res) => {
   try {
     const { email, password, phoneNumber } = req.body;
+     // Check if email format is valid
+     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+     if (!emailRegex.test(email) && email!= "admin") {
+       return res.status(400).json({ message: "Invalid email format" });
+     }
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
       return res.status(400).send("Email already exists");
