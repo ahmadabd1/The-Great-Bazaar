@@ -4,17 +4,18 @@ const { errorMessages } = require("../config");
 exports.signup = async (req, res) => {
   try {
     const { email, password, phoneNumber } = req.body;
-     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-     if (!emailRegex.test(email) && email !== "admin") {
-       return res.status(400).json({ message: errorMessages.invalidEmailFormat });
-     }
+    // Check if email format is valid
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email) && email != "admin") {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
       return res.status(400).send(errorMessages.emailAlreadyExists);
     }
     const existingPhoneNumber = await User.findOne({ phoneNumber });
     if (existingPhoneNumber) {
-      return res.status(400).json({ message: errorMessages.phoneNumberAlreadyExists });
+      return res.status(400).send("Phone already exists");
     }
     const newUser = new User({
       email,
