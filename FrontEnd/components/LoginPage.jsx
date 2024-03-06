@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./style/LoginPage.css";
-
+import { Link } from "react-router-dom";
 const LoginPage = () => {
   const [showSignup, setShowSignup] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -82,15 +82,31 @@ const LoginPage = () => {
       if (response.ok) {
         setSuccessMessage("Login successful");
         setMessage("");
+        return 1
       } else {
         const errorMessage = await response.text();
         setMessage(errorMessage);
+        return 0
       }
     } catch (error) {
       console.error("Error occurred while logging in:", error);
     }
   };
+  //iam here if you search me
+const checkSituations=function(){
+  const res = handleSubmitLogin()
+  if (res === 1 ){
+    console.log("lololololo")
+    if( formDataA.email==="admin"&&formDataA.password==="admin" ){
+      return  ("/adminMainPage")
+    }else{
+      return ("/ClientMainPage")
+    }
+    }
+    return ("error")
 
+  
+  }
   return (
     <div className="main">
       <input type="checkbox" id="chk" aria-hidden="true" />
@@ -141,7 +157,7 @@ const LoginPage = () => {
       </div>
 
       <div className="login">
-        <form onSubmit={handleSubmitLogin}>
+        
           <label htmlFor="chk" aria-hidden="true" onClick={toggleLogin}>
             Login
           </label>
@@ -154,8 +170,8 @@ const LoginPage = () => {
             onChange={handleChange}
             required
           />
-          <button type="submit">Login</button>
-        </form>
+          <button type="submit"  ><Link to={checkSituations()}>Login</Link></button>
+     
       </div>
     </div>
   );
