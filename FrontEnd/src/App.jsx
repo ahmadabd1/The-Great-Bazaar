@@ -1,51 +1,33 @@
-import "./App.css";
-import LoginPage from "../components/LoginPage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SideBar from "../components/admin/SideBar.jsx";
-import HomaPage from "../components/client/HomePage.jsx"
+import React, { useState } from 'react';
+import './App.css';
+import Home from '../components/outside/Home';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import OutsideNavbar from '../components/outside/OutsideNavbar';
+import ClientNavBar from '../components/client/ClientNavBar';
+import LoginPage from '../components/outside/LoginPage';
 import AdminMainPage from '../components/admin/AdminMainPage';
 import ClientMainPage from '../components/client/ClientMainPage';
-
-
-const admin =false
-
+import SideBar from '../components/admin/SideBar'
 function App() {
-  return (
-    <div className="App">
-    <Router>
-      <Routes>
-        <Route path='/' element={<LoginPage />} />
-        <Route path='/adminMainPage' element={<AdminMainPage />} />
-        <Route path='/ClientMainPage' element={<ClientMainPage />} />
-      </Routes>
-    </Router>
-  </div>
+  const [userType, setUserType] = useState(null);
 
+  const handleUserType = (type) => {
+    setUserType(type);
+  };
+
+  return (
+    <div>
+      <Router>
+        {userType === 'client' ? <ClientNavBar /> : userType=='admin'? <SideBar/>:  <OutsideNavbar  />}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Login" element={<LoginPage handleUserType={handleUserType} />} />
+          <Route path="/admin" element={<AdminMainPage />} />
+          <Route path="/client" element={<ClientMainPage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
 export default App;
-
-
-// {admin ? (
-//   <Router>
-//     {/* // <Route path="/" element={<SideBar />} /> */}
-//     <SideBar />
-//     {/* <Routes>
-
-//     </Routes> */}
-
-//   </Router>
-// ) : (
-//   <Router>
-//   {/*   <Navbar balance={balance} /> */}
-//     <main className="main-content">
-//       <Routes>
-//         <Route path="/login" element={<LoginPage />} />
-//               <Route path="/home" element={<HomaPage/>} />
-
-//       </Routes>
-//     </main>
-//   {/*   <Footer /> */}
-//   </Router>
-// )}
