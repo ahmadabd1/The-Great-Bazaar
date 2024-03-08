@@ -1,14 +1,7 @@
-
 export default function ClientMainPage() {
-  const logout = () => {
-   
-    localStorage.removeItem('token');
-
- window.location.href = '/login';  };
   return (
     <div>
-      <div>AdminMainPage-Ahmad</div>
-      <button onClick={logout}>LogOut</button>
+      <div>Client Main Page</div>
     </div>
-  );
+  )
 }
