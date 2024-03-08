@@ -46,10 +46,12 @@ exports.login = async (req, res) => {
 
     if (user.password !== password) {
       return res.send({ message: errorMessages.wrongPassword });
+      return res.send({ message: errorMessages.wrongPassword });
     }
 
     return res.send({ message: 'Login successful as client' });
   } catch (error) {
+    res.send({ message: errorMessages.internalServerError });
     res.send({ message: errorMessages.internalServerError });
   }
 };
