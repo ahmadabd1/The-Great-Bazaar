@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import './App.css';
 import Home from '../components/outside/Home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
