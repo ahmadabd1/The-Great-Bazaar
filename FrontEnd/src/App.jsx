@@ -10,7 +10,7 @@ import CategoryPage from './components/client/CategoryPage';
 import ClientNavbar from './components/client/ClientNavbar';
 import OutsideNavbar from './components/outside/OutsideNavbar';
 import SideBar from "./components/admin/SideBar";
-
+import NavBar from "./components/NavBar"
 export default function App() {
   const location = useLocation();
   const [userType, setUserType] = useState(null);
@@ -22,7 +22,7 @@ export default function App() {
       case 'client':
         return <ClientNavbar />;
       default:
-        return <OutsideNavbar />;
+        return <NavBar />;
     }
   };
 
