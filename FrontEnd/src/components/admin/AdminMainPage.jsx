@@ -1,11 +1,11 @@
 
 
 export default function AdminMainPage() {
- const logout = () => {
+ /* const logout = () => {
    
     localStorage.removeItem('token');
 
- window.location.href = '/login';  };
+ window.location.href = '/login';  }; */
   return (
     <div>
         Admin Main Page     

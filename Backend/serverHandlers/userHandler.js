@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const { errorMessages } = require("../config");
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 
 exports.signup = async (req, res) => {
   try {
@@ -31,7 +31,6 @@ exports.signup = async (req, res) => {
   }
 };
 
-
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -40,8 +39,8 @@ exports.login = async (req, res) => {
       return res.send({ message: errorMessages.emailNotFound });
     }
 
-    if (email === 'admin' && user.password === password) {
-      return res.send({ message: 'Login successful as admin' });
+    if (email === "admin" && user.password === password) {
+      return res.send({ message: "Login successful as admin" });
     }
 
     if (user.password !== password) {
@@ -49,10 +48,9 @@ exports.login = async (req, res) => {
       return res.send({ message: errorMessages.wrongPassword });
     }
 
-    return res.send({ message: 'Login successful as client' });
+    return res.send({ message: "Login successful as client" });
   } catch (error) {
     res.send({ message: errorMessages.internalServerError });
     res.send({ message: errorMessages.internalServerError });
   }
 };
-
