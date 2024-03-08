@@ -35,14 +35,16 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: errorMessages.emailNotFound });
+      return res.send({ message: errorMessages.emailNotFound });
+    }
+    if (email === "admin" && user.password === password) {
+      return res.send({ message: "Login successful as admin" });
     }
     if (user.password !== password) {
-      return res.status(401).json({ message: errorMessages.wrongPassword });
+      return res.send({ message: errorMessages.wrongPassword });
     }
-    res.status(200).json({ message: "Login successful" });
+    return res.send({ message: "Login successful as client" });
   } catch (error) {
-    console.error("Error logging in:", error);
-    res.status(500).json({ message: errorMessages.internalServerError });
+    res.send({ message: errorMessages.internalServerError });
   }
 };

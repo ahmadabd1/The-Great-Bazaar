@@ -1,22 +1,22 @@
 import "./App.css";
 import LoginPage from "../components/LoginPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SideBar from "../components/admin/SideBar.jsx";
-import HomaPage from "../components/client/HomePage.jsx"
+
 import AdminMainPage from '../components/admin/AdminMainPage';
 import ClientMainPage from '../components/client/ClientMainPage';
+import CategoryPage from "../components/client/CategoryPage";
 
-
-const admin =false
 
 function App() {
   return (
     <div className="App">
     <Router>
       <Routes>
-        <Route path='/' element={<LoginPage />} />
-        <Route path='/adminMainPage' element={<AdminMainPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/AdminMainPage' element={<AdminMainPage />} />
         <Route path='/ClientMainPage' element={<ClientMainPage />} />
+        <Route path='/CategoryPage' element={<CategoryPage />} />
+
       </Routes>
     </Router>
   </div>

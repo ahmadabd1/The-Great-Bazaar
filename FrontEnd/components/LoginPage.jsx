@@ -1,32 +1,33 @@
 import { useState } from "react";
 import "./style/LoginPage.css";
-import { Link } from "react-router-dom";
+
+import { useNavigate } from 'react-router-dom';
+
 const LoginPage = () => {
   const [showSignup, setShowSignup] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const [formData, setFormData] = useState({
+  const [message, setMessage] = useState("");
+        const navigate = useNavigate();
+
+  const [signUpData, setSignUpData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
     phoneNumber: "",
-  });
-   const [formDataA, setFormDataA] = useState({
+  })
+  const [signInData, setSignInData] = useState({
     email: "",
     password: "",
-   
-  });
-   const [message, setMessage] = useState("");
-     const [successMessage, setSuccessMessage] = useState(""); 
-
- const handleChange = (event) => {
+  })
+  const handleChange = (event) => {
     const { name, value } = event.target;
     if (showLogin) {
-      setFormDataA((prevData) => ({
+      setSignInData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
     } else {
-      setFormData((prevData) => ({
+      setSignUpData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
@@ -36,14 +37,13 @@ const LoginPage = () => {
     setShowSignup(!showSignup);
     setShowLogin(false);
   };
-
   const toggleLogin = () => {
     setShowLogin(!showLogin);
     setShowSignup(false);
   };
   const handleSubmitSignup = async (event) => {
     event.preventDefault();
- if (formData.password !== formData.confirmPassword) {
+    if (signUpData.password !== signUpData.confirmPassword) {
       setMessage("Passwords do not match");
       return;
     }
@@ -53,82 +53,69 @@ const LoginPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(signUpData),
       });
-
       if (response.ok) {
-        setSuccessMessage("signed up successfully");
-        setMessage("");
+        setMessage("success");
       } else {
-     const errorMessage = await response.text();
-      console.log(errorMessage)
+        const errorMessage = await response.text();
+        console.log(errorMessage)
         setMessage(errorMessage);
       }
     } catch (error) {
       console.error("Error occurred while signing up:", error);
     }
-  };
-  const handleSubmitLogin = async (event) => {
-    event.preventDefault();
+  }
+  const handleSubmitLogin = async () => {
+
     try {
       const response = await fetch("http://localhost:8080/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formDataA),
+        body: JSON.stringify(signInData),
       });
-
+      const responseData = await response.json();
+      console.log('Response data:', responseData.message);
       if (response.ok) {
-        setSuccessMessage("Login successful");
-        setMessage("");
-        return 1
+        if (responseData.message === "Login successful as client") {
+          setMessage("client");
+           navigate('/ClientMainPage'); 
+        } else if (responseData.message === "Login successful as admin") {
+          setMessage("admin");
+           navigate('/AdminMainPage'); 
+        } else {
+          setMessage(responseData.message);
+        }
       } else {
-        const errorMessage = await response.text();
-        setMessage(errorMessage);
-        return 0
+        setMessage(responseData.message); // Assuming the response contains error message
       }
     } catch (error) {
       console.error("Error occurred while logging in:", error);
+      setMessage("Error occurred while logging in. Please try again."); // Set appropriate error message
     }
   };
-  //iam here if you search me
-const checkSituations=function(){
-  const res = handleSubmitLogin()
-  if (res === 1 ){
-    console.log("lololololo")
-    if( formDataA.email==="admin"&&formDataA.password==="admin" ){
-      return  ("/adminMainPage")
-    }else{
-      return ("/ClientMainPage")
-    }
-    }
-    return ("error")
-
-  
-  }
   return (
     <div className="main">
       <input type="checkbox" id="chk" aria-hidden="true" />
-
       <div className="signup">
         <form onSubmit={handleSubmitSignup}>
           <label htmlFor="chk" aria-hidden="true" onClick={toggleSignup}>
             Sign up
           </label>
-
           <input
             type="email"
             name="email"
             placeholder="Email"
-            value={formData.email}
+            value={signUpData.email}
             onChange={handleChange}
             required=""
           />
           <input
             type="text"
             name="phoneNumber"
-            value={formData.phoneNumber}
+            value={signUpData.phoneNumber}
             onChange={handleChange}
             placeholder="Phone Number"
             required=""
@@ -137,44 +124,39 @@ const checkSituations=function(){
             type="password"
             name="password"
             placeholder="Password"
-            value={formData.password}
+            value={signUpData.password}
             onChange={handleChange}
             required=""
           />
-           <input
+          <input
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
-            value={formData.confirmPassword}
+            value={signUpData.confirmPassword}
             onChange={handleChange}
             required=""
           />
           <button type="submit"> sign up</button>
           {message && <div className="error-message">{message}</div>}
-          {successMessage && <div className="success-message">{successMessage}</div>} 
-
         </form>
       </div>
-
       <div className="login">
-        
           <label htmlFor="chk" aria-hidden="true" onClick={toggleLogin}>
             Login
           </label>
-          <input type="email" name="email" value={formDataA.email} onChange={handleChange} placeholder="Email" required="" />
+          <input type="text" name="email" value={signInData.email} onChange={handleChange} placeholder="Email" required="" />
           <input
             type="password"
             name="password"
             placeholder="Password"
-            value={formDataA.password}
+            value={signInData.password}
             onChange={handleChange}
             required
           />
-          <button type="submit"  ><Link to={checkSituations()}>Login</Link></button>
-     
+          <button type="submit" onClick={handleSubmitLogin}>Login</button>
+          {message && <div className="error-message">{message}</div>}
       </div>
     </div>
   );
 };
-
 export default LoginPage;

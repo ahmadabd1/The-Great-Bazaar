@@ -1,0 +1,19 @@
+.category-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.category-item h2 {
+  margin-top: 0;
+}
+.category-item p {
+  margin-bottom: 0;
+}
+.category-page {
+  margin: 20px;
+}
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
