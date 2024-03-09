@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import useGet from '../customHooks/useGet';
 import useDelete from '../customHooks/useDelete';
 import '../style/adminitems.css';
-
+import AddItemModal from './AddItemModal';
+import { Link } from 'react-router-dom';
 export default function Items() {
   const { data: items, loading: loadingItems, error: itemsError, refetch } = useGet('http://localhost:8080/item/items');
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,9 +29,11 @@ export default function Items() {
     item.description.toLowerCase().includes(searchTerm)
   );
 
+
   return (
     <div>
-      <button onClick={() => {/* logic to add item */}} className="add-item-button">Add New Item</button>
+      
+      <button onClick={()=>{}} className="add-item-button">Add New Item</button>
       <input
         type="text"
         placeholder="Search by ID, name, or description..."

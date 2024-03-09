@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../style/adminSideBar.css'
+
 const SideBar = () => {
   return (
     <div className="sidebar">
