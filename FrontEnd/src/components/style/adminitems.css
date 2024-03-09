@@ -1,0 +1,118 @@
+/* adminitems.css */
+.search-bar {
+  width: 30%;
+  padding: 10px;
+  margin: 20px;
+  margin-left: 30%;
+  font-size: 16px;
+  border: 1px solid #aaa; /* Lighter border color */
+  background-color: #fff; /* White background for visibility */
+  color: #333; /* Dark text for contrast */
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.Items-Container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px;
+  margin-left: 250px; /* Space for sidebar */
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.item-container {
+  border: 1px solid #aaa; /* Lighter border color */
+  background-color: #fff; /* White background for visibility */
+  color: #333; /* Dark text for contrast */
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 300px; /* Maximum width for each item */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: box-shadow 0.3s ease-in-out;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.item-container:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.item-Name {
+  color: #007bff; /* Bright blue for the item name */
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+}
+
+.item-id {
+  color: #28a745; /* Green for the ID */
+  font-size: 0.9em;
+  margin: 0 0 5px 0;
+}
+
+.item-desc {
+  color: #17a2b8; /* Light blue for the description */
+  font-size: 1em;
+}
+
+.add-item-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 20%;
+  margin-left: 30%;
+}
+.delete-item-button{
+  background-color: #b51d20;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 5px;
+
+}
+
+.add-item-button:hover, .delete-item-button:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid #007bff;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Items-Container {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .search-bar {
+    width: calc(100% - 20px);
+    margin: 10px auto; /* Center the search bar */
+    display: block;
+  }
+
+  .item-container {
+    width: 90%;
+    max-width: none;
+  }
+}
