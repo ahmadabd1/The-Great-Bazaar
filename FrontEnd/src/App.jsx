@@ -8,9 +8,11 @@ import AdminMainPage from "./components/admin/AdminMainPage";
 import LoginPage from "./components/outside/LoginPage";
 import CategoryPage from './components/client/CategoryPage';
 import ClientNavbar from './components/client/ClientNavbar';
-import OutsideNavbar from './components/outside/OutsideNavbar';
+import NavBar from './components/NavBar';
 import SideBar from "./components/admin/SideBar";
-import NavBar from "./components/NavBar"
+import Items from "./components/admin/Items";
+import Statics from "./components/admin/Statics";
+
 export default function App() {
   const location = useLocation();
   const [userType, setUserType] = useState(null);
@@ -35,6 +37,9 @@ export default function App() {
         <Route path="/admin" element={<AdminMainPage />} />
         <Route path="/client" element={<ClientMainPage />} />
         <Route path="/category" element={<CategoryPage />} />
+        <Route path="/admin/items" element={<Items />} />
+        <Route path="/admin/statics" element={<Statics />} />
+
       </Routes>
       <Footer />
     </>
