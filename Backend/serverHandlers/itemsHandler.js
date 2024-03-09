@@ -16,6 +16,16 @@ exports.get_item_byid = async (req, res) => {
         res.status(500).json({ message: errorMessages.SERVER_ERROR });
     }
 }
+exports.get_all_items = async (req, res) => {
+    try {
+        const items = await Item.find();
+        res.status(200).json(items);
+    } catch (error) {
+        console.error("Error fetching items:", error);
+        res.status(500).json({ message: errorMessages.SERVER_ERROR });
+    }
+};
+
 
 
 exports.get_items_byCategoryId = async (req, res) => {
@@ -32,9 +42,9 @@ exports.get_items_byCategoryId = async (req, res) => {
 exports.delete_item = async (req, res) => {
     const { Id } = req.params;
     try {
-        const deletedItem = await Item.findOneAndDelete({ id: Id });
+        const deletedItem = await Item.findOneAndDelete({ _id: Id });
         if (!deletedItem) {
-            return res.status(404).json({ message: errorMessages.NOT_FOUND });
+            return res.send({ message: errorMessages.NOT_FOUND });
         }
         res.status(200).json(deletedItem);
     } catch (error) {
@@ -50,25 +60,30 @@ exports.create_item = async (req, res) => {
     const missingFields = [];
 
     requiredFields.forEach(field => {
-        if (!newItemData[field]) {
-            missingFields.push(errorMessages[`${field}IsRequired`]);
+        if (newItemData[field] === undefined || newItemData[field] === '') {
+            missingFields.push(field + ' is required'); // Direct message, adjust as necessary
         }
     });
+
     if (missingFields.length > 0) {
-        return res.status(400).json({ message: missingFields.join(", ") });
+        return res.status(400).json({ message: "Missing fields: " + missingFields.join(", ") });
     }
+
     try {
         const newItem = new Item(newItemData);
         await newItem.save();
         res.status(201).json(newItem);
     } catch (error) {
         console.error("Error creating item:", error);
-        if (error.code === 11000 && error.keyPattern && error.keyPattern.id === 1) {
+        if (error.code === 11000) {
+            // Adjust this condition based on your DB's error structure
             return res.status(400).json({ message: "Item with this ID already exists" });
         }
-        res.status(500).json({ message: errorMessages.internalServerError });
+        // Send back a more generic error message (or specific if in development)
+        res.status(500).json({ message: "An error occurred while creating the item" });
     }
-}
+};
+
 
 
 

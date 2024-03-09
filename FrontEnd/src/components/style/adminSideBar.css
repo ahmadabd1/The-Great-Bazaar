@@ -1,0 +1,51 @@
+/* adminSideBar.css */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+  }
+  
+  .sidebar .logo {
+    margin-bottom: 50px;
+    text-align: center;
+    /* Add a logo image if you have one */
+    /* background: url('path/to/your/logo.png') no-repeat center; */
+    /* Adjust the height accordingly */
+    /* height: 60px; */
+  }
+  
+  .sidebar .menu {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar .menu li {
+    padding: 10px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar .menu li:hover {
+    background-color: #34495e;
+  }
+  
+  .sidebar .menu li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+  }
+  
+  /* Adjust this based on your preference */
+  .sidebar .menu li a:active,
+  .sidebar .menu li a:focus {
+    color: #bdc3c7;
+  }
+  
