@@ -46,8 +46,8 @@ const itemSchema = new mongoose.Schema({
     income: {
         type: Number,
         default: 0
-    }
-});
+   }
+}); 
 
 const Item = mongoose.model('Item', itemSchema);
 
