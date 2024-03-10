@@ -1,7 +1,14 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import '../style/adminSideBar.css'
+import { Button } from 'react-bootstrap';
+import '../style/adminSideBar.css';
 
 const SideBar = () => {
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+  };
+
   return (
     <div className="sidebar">
       Admin Side Bar
@@ -9,21 +16,24 @@ const SideBar = () => {
       </div>
       <ul className="menu">
         <li>
-          <Link to="/admin/Items">Items  </Link>
+          <Link to="/admin/Items">Items</Link>
         </li>
         <li>
-          <Link to="/admin/statics">Statics </Link>
+          <Link to="/admin/statics">Statics</Link>
         </li>
         <li>
-          <Link to="/admin/categories">Categories </Link>
+          <Link to="/admin/categories">Categories</Link>
         </li>
         <li>
-          <Link to="/admin/orders">Orders </Link>
+          <Link to="/admin/orders">Orders</Link>
         </li>
         <li>
-          <Link to="/admin/clents">Clients </Link>
+          <Link to="/admin/clents">Clients</Link>
         </li>
       </ul>
+      <Button variant="danger" className="logout-button" onClick={logout}>
+        Logout
+      </Button>
     </div>
   );
 };
