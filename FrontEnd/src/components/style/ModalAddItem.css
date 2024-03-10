@@ -1,0 +1,72 @@
+.Modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  max-width: 90%;
+  margin: auto;
+}
+
+/* Header Styling */
+.Modal h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Form Styling */
+.Modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.Modal label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.Modal input[type="text"],
+.Modal input[type="number"] {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.Modal input[type="text"]:focus,
+.Modal input[type="number"]:focus {
+  border-color: #90cdf4;
+  outline: none;
+}
+
+/* Button Styling */
+.Modal .submit-button,
+.Modal .cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.Modal .submit-button {
+  background-color: #48bb78;
+  color: white;
+}
+
+.Modal .cancel-button {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.Modal .submit-button:hover {
+  background-color: #38a169;
+}
+
+.Modal .cancel-button:hover {
+  background-color: #c53030;
+}

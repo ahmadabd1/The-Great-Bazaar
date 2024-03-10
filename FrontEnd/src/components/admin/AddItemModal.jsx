@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-
-Modal.setAppElement('#root'); // Set the root element for accessibility
+import "../style/ModalAddItem.css"
+Modal.setAppElement('#root');
 
 function AddItemModal({ isOpen, closeModal, addItem }) {
   const [formData, setFormData] = useState({
@@ -74,8 +74,8 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
         <label>Vendor:</label>
         <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />
 
-        <button type="submit">Add Item</button>
-        <button onClick={closeModal}>Cancel</button>
+        <button type="submit" className="submit-button">Add Item</button>
+        <button onClick={closeModal} className="cancel-button">Cancel</button>
       </form>
     </Modal>
   );
