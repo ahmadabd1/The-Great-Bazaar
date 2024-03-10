@@ -43,7 +43,7 @@ const CategoryComponent = ({ category, deleteCategory, deleteSubcategory }) => {
   return (
     
     <Container>
-
+<div className='category'>
       <div className="category-row">
         <div onClick={() => setShowSubCategories(!showSubCategories)}>
           {hasSubCategories ? (showSubCategories ? <BsDash /> : <BsPlusCircle />) : null}
@@ -69,6 +69,7 @@ const CategoryComponent = ({ category, deleteCategory, deleteSubcategory }) => {
           </div>
         </div>
       ))}
+      </div>
     </Container>
   );
 };

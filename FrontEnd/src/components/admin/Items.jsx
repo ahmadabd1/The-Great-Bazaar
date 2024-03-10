@@ -3,7 +3,6 @@ import useGet from '../customHooks/useGet';
 import useDelete from '../customHooks/useDelete';
 import '../style/adminitems.css';
 import AddItemModal from './AddItemModal';
-import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 
 export default function Items() {
   const { data: items, loading: loadingItems, error: itemsError, refetch } = useGet('http://localhost:8080/item/items');

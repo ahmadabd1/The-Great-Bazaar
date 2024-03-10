@@ -12,7 +12,7 @@ import NavBar from './components/NavBar';
 import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
-
+import CategiryPage from './components/admin/CategiryPage'
 export default function App() {
   const location = useLocation();
   const [userType, setUserType] = useState(null);
@@ -39,6 +39,7 @@ export default function App() {
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/admin/items" element={<Items />} />
         <Route path="/admin/statics" element={<Statics />} />
+        <Route path="/admin/categories" element={<CategiryPage />} />
 
       </Routes>
       <Footer />
