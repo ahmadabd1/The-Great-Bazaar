@@ -1,12 +1,15 @@
 import usePost from '../customHooks/usePost';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import '../style/LoginPage.css'
+import '../style/LoginPage.css';
+
 const LoginPage = ({ handleUserType }) => {
   const navigate = useNavigate();
   const [formType, setFormType] = useState('login'); // 'login' or 'signup'
   const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -22,6 +25,8 @@ const LoginPage = ({ handleUserType }) => {
       [name]: value,
     }));
   };
+const [user, setUser] = useState({ firstName: '', lastName: '' });
+
 
   const toggleForm = () => {
     setFormType(formType === 'login' ? 'signup' : 'login');
@@ -44,12 +49,15 @@ const LoginPage = ({ handleUserType }) => {
           const userType = message.includes('client') ? 'client' : 'admin';
           setMessage(userType);
           handleUserType(userType);
+        
           navigate(`/${userType}`);
         } else {
           setMessage(message);
         }
       } else {
         setMessage('Signup successful');
+        // After successful signup, redirect to login
+        setFormType('login');
       }
     } catch (error) {
       setMessage(error.message || `An error occurred while ${formType === 'login' ? 'logging in' : 'signing up'}`);
@@ -63,6 +71,26 @@ const LoginPage = ({ handleUserType }) => {
         <label htmlFor="chk" aria-hidden="true" onClick={toggleForm}>
           {formType === 'login' ? 'Login' : 'Sign up'}
         </label>
+         
+        {formType === 'signup' && (
+          <>
+            <input
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+            <input
+              name="lastName"
+              placeholder="Last Name"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+          </>
+        )}
+
         <input
           name="email"
           placeholder="Email"
@@ -70,6 +98,7 @@ const LoginPage = ({ handleUserType }) => {
           onChange={handleChange}
           required
         />
+
         {formType === 'signup' && (
           <>
             <input
@@ -90,6 +119,7 @@ const LoginPage = ({ handleUserType }) => {
             />
           </>
         )}
+
         <input
           type="password"
           name="password"
@@ -98,6 +128,7 @@ const LoginPage = ({ handleUserType }) => {
           onChange={handleChange}
           required
         />
+
         <button type="submit">{formType === 'login' ? 'Login' : 'Sign up'}</button>
         {message && <div className="error-message">{message}</div>}
       </form>

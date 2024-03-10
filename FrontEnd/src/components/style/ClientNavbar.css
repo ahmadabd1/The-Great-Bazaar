@@ -1,0 +1,84 @@
+.NavBar {
+  color: #fff;
+  display: flex;
+  justify-content: space-between; /* Distribute space between elements */
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.NavBarClient {
+  list-style-type: none;
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin: 0;
+  padding: 0;
+}
+
+.NavBarClient li {
+  padding: 10px 20px;
+}
+
+.NavBarClient li:last-child {
+  margin-right: 0;
+}
+
+.NavBarClient li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.NavBarClient li a:hover {
+  color: #ddd;
+}
+
+.client,
+.categorys,
+.orders,
+.cart,
+.logout {
+  transition: background-color 0.3s ease-in-out;
+}
+
+.client:hover,
+.categorys:hover,
+.orders:hover,
+.cart:hover,
+.logout:hover {
+  background-color: #555;
+}
+
+.rightNav {
+  display: flex;
+  align-items: center;
+}
+
+.rightNav li {
+  margin-right: 20px; /* Add space between the items */
+}
+.logout {
+  margin-left: 700px;
+}
+@media (max-width: 768px) {
+  .NavBarClient {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .NavBarClient li {
+    padding: 10px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .NavBarClient li:last-child {
+    margin-bottom: 0;
+  }
+}

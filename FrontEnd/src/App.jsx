@@ -7,7 +7,7 @@ import ClientMainPage from "./components/client/ClientMainPage";
 import AdminMainPage from "./components/admin/AdminMainPage";
 import LoginPage from "./components/outside/LoginPage";
 import CategoryPage from './components/client/CategoryPage';
-import ClientNavbar from './components/client/ClientNavbar';
+import ClientNavbar from './components/client/ClientNavBar';
 import NavBar from './components/NavBar';
 import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
