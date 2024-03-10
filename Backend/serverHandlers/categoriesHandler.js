@@ -22,16 +22,6 @@ exports.get_category = async (req, res) => {
     }
 }
 
-exports.delete_category = async (req, res) => {
-    try {
-        const categoryId = req.body.categoryId;
-        await category.findByIdAndDelete(categoryId);
-        res.status(200).json({ message: "Category deleted successfully" });
-    } catch (error) {
-        console.error("Error deleting category:", error)
-        res.status(500).json({ message: errorMessages.internalServerError })
-    }
-}
 
 exports.create_category = async (req, res) => {
     try {
@@ -63,3 +53,33 @@ exports.update_category = async (req, res) => {
     }
 };
 
+exports.get_subcategories = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        const subcategories = await category.find({ parentCategoryId: categoryId });
+        res.status(200).json(subcategories);
+    } catch (error) {
+        console.error("Error getting subcategories:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.delete_category = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        await category.findByIdAndDelete(categoryId);
+        res.status(200).json({ message: "Category deleted successfully." });
+    } catch (error) {
+        console.error("Error deleting category:", error);
+        res.status(500).json({ message: errorMessages.internalServerError });
+    }
+};
+exports.delete_subcategory = async (req, res) => {
+    try {
+        const { subcategoryId } = req.params; // Use req.params to get subcategoryId
+        await category.findByIdAndDelete(subcategoryId);
+        res.status(200).json({ message: "Subcategory deleted successfully." });
+    } catch (error) {
+        console.error("Error deleting subcategory:", error);
+        res.status(500).json({ message: errorMessages.internalServerError });
+    }
+};
