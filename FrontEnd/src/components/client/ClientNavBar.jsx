@@ -5,6 +5,7 @@ export default function ClientNavbar() {
   const logout = () => {
     localStorage.clear();
     window.location.href = '/';
+    
   };
 
   return (
@@ -15,6 +16,8 @@ export default function ClientNavbar() {
         <li className='categorys'><Link to="/category">Category</Link></li>
         <li className='orders'><Link to="/orders">Orders</Link></li>
         <li className='cart'><Link to="/cart">Cart</Link></li>
+        <li className='profile'><Link to="/ClientProfile">Profile</Link></li>
+
         </div>
         <li className='logout'><Link to="/logout" onClick={logout}>Logout</Link></li>
       </ul>

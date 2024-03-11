@@ -1,4 +1,6 @@
 import { Icon } from "@iconify/react";
+import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 export default function Home() {
   const features = [
@@ -48,7 +50,18 @@ export default function Home() {
       desc: "ITEM",
     },
   ];
-
+const navigate = useNavigate();
+    useEffect(() => {
+    switch (localStorage.getItem('userType')) {
+      case 'admin':
+        navigate('/admin')
+        break
+      case 'client':
+        navigate('/client')
+        break
+      
+    }
+  }, [])
   return (
     <>
       <div

@@ -56,3 +56,27 @@ exports.login = async (req, res) => {
     res.send({ message: errorMessages.internalServerError });
   }
 };
+exports.editProfile = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { firstName, lastName, email, password, phoneNumber } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.email = email;
+    user.password = password;
+    user.phoneNumber = phoneNumber;
+
+    await user.save();
+
+    res.status(200).json({ message: "Profile updated successfully" });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: errorMessages.internalServerError });
+  }
+};
