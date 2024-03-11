@@ -13,16 +13,19 @@ import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
 import CategiryPage from './components/admin/CategiryPage'
+import ClientProfile from "./components/client/ClientProfile"
+import { useNavigate } from 'react-router-dom';
+
 export default function App() {
   const location = useLocation();
-  const [userType, setUserType] = useState(null);
-
+ // const [userType, setUserType] = useState(localStorage.getItem('userType') | null);
+  
   const renderNavbar = () => {
-    switch (userType) {
+    switch (localStorage.getItem('userType')) {
       case 'admin':
         return <SideBar />;
       case 'client':
-        return <ClientNavbar />;
+        return <ClientNavbar/>;
       default:
         return <NavBar />;
     }
@@ -33,13 +36,14 @@ export default function App() {
       {renderNavbar()}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage handleUserType={setUserType} />} />
+        <Route path="/login" element={<LoginPage/>} />
         <Route path="/admin" element={<AdminMainPage />} />
         <Route path="/client" element={<ClientMainPage />} />
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/admin/items" element={<Items />} />
         <Route path="/admin/statics" element={<Statics />} />
         <Route path="/admin/categories" element={<CategiryPage />} />
+        <Route path="/ClientProfile" element={<ClientProfile/>}/>
 
       </Routes>
       <Footer />
