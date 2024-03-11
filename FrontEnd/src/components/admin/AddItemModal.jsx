@@ -4,6 +4,8 @@ import "../style/ModalAddItem.css"
 Modal.setAppElement('#root');
 
 function AddItemModal({ isOpen, closeModal, addItem }) {
+  const [showAdditionalFields, setShowAdditionalFields] = useState(false); // State to track if additional fields should be shown
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -42,11 +44,16 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     });
   };
 
+  const handleShowAdditionalFields = () => {
+    setShowAdditionalFields(true);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
       contentLabel="Add Item Modal"
+      className="Modal"
     >
       <h2>Add New Item</h2>
       <form onSubmit={handleSubmit}>
@@ -65,14 +72,22 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
         <label>Quantity:</label>
         <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} required />
         
-        <label>Category ID:</label>
-        <input type="text" name="category_id" value={formData.category_id} onChange={handleChange} required />
-        
-        <label>Image URL:</label>
-        <input type="text" name="image_url" value={formData.image_url} onChange={handleChange} />
-        
-        <label>Vendor:</label>
-        <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />
+        {showAdditionalFields && (
+          <>
+            <label>Category ID:</label>
+            <input type="text" name="category_id" value={formData.category_id} onChange={handleChange} required />
+            
+            <label>Image URL:</label>
+            <input type="text" name="image_url" value={formData.image_url} onChange={handleChange} />
+            
+            <label>Vendor:</label>
+            <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />
+          </>
+        )}
+
+        {!showAdditionalFields && (
+          <button type="button" onClick={handleShowAdditionalFields}>Show Additional Fields</button>
+        )}
 
         <button type="submit" className="submit-button">Add Item</button>
         <button onClick={closeModal} className="cancel-button">Cancel</button>
