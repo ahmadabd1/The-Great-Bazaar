@@ -43,6 +43,7 @@
 .categorys,
 .orders,
 .cart,
+.profile,
 .logout {
   transition: background-color 0.3s ease-in-out;
 }
@@ -61,10 +62,10 @@
 }
 
 .rightNav li {
-  margin-right: 20px; /* Add space between the items */
+  margin-right: 20px;
 }
 .logout {
-  margin-left: 700px;
+  margin-left: 600px;
 }
 @media (max-width: 768px) {
   .NavBarClient {
