@@ -14,9 +14,11 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     image: null,
     vendor: '',
   });
+
   useEffect(() => {
     fetchCategories();
   }, []);
+
   const fetchCategories = async () => {
     try {
       const response = await fetch('http://localhost:8080/category/categories/');
@@ -30,6 +32,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
       console.error('Error fetching categories:', error);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.image) {
@@ -101,6 +104,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               onChange={handleChange}
               required
             />
+            
             <label>Category:</label>
             <select name="category_id" value={formData.category_id} onChange={handleChange} required>
               <option value="">Select a category</option>
