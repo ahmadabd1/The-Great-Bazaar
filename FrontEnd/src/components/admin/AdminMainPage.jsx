@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import CategoryComponent from './CategoryComponent';
-import { Container , Button } from 'react-bootstrap';
+
+
 
 const AdminMainPage = () => {
 
