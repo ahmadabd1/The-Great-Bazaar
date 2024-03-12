@@ -28,7 +28,7 @@ export default function NavBar() {
         <div className="items-center md:flex">
           <div className="flex items-center justify-between py-1 md:block md:py-3 ">
             <a href="/">
-              <img src="./src/assets/BazaarIcon.gif" width={100} height={40} />
+              <img src="http://localhost:5173/src/assets/BazaarIcon.gif" width={100} height={40} />
             </a>
             <div className="md:hidden">
               <button
