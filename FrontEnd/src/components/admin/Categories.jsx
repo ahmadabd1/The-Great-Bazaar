@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import useGet from '../customHooks/useGet';
 import useDelete from '../customHooks/useDelete';
-import usePost from '../customHooks/usePost2'; // Make sure you're using usePost
+import usePost from '../customHooks/usePost2'; 
 import AddCategoryModal from './AddCategoryModal';
 import '../style/admin_Categories.css';
 
 export default function Categories() {
   const { data: categories, loading: loadingCategories, error: errorLoading, refetch } = useGet('http://localhost:8080/category/categories/');
   const { deleteItem, isLoading: deleting, error: errorDeleting } = useDelete();
-  const { postData, loading: posting, error: postError } = usePost(); // Using usePost
+  const { postData, loading: posting, error: postError } = usePost(); 
   const [showAddCategory, setShowAddCategory] = useState(false);
 
   const handleDelete = async (id) => {
