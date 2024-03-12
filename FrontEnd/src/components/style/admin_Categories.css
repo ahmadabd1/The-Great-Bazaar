@@ -8,7 +8,11 @@
     margin-bottom: 20px;
     padding: 1%;
   }
-  
+  .category-image {
+    width: 100px; /* Or any size you prefer */
+    height: auto;
+    margin: 10px 0;
+  }
   .categories-container button {
     padding: 5%;
     margin: 5%;
