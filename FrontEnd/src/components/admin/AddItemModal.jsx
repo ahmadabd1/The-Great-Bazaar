@@ -5,8 +5,7 @@ import '../style/ModalAddItem.css';
 Modal.setAppElement('#root');
 
 function AddItemModal({ isOpen, closeModal, addItem }) {
-  const [showAdditionalFields, setShowAdditionalFields] = useState(false); // State to track if additional fields should be shown
-
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -17,32 +16,35 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     image: null,
     vendor: '',
   });
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/category/categories/')
-      .then(response => response.json())
-      .then(data => {
-        setCategories(data);
-      })
-      .catch(error => {
-        console.error('Error fetching categories:', error);
-      });
+    fetchCategories();
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/category/categories/');
+      if (response.ok) {
+        const data = await response.json();
+        setCategories(data);
+      } else {
+        console.error('Error fetching categories:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!formData.image) {
       alert('Please upload an image before adding an item.');
       return;
     }
-
     const data = new FormData();
     for (let key in formData) {
       data.append(key, formData[key]);
     }
-
     addItem(data);
     closeModal();
   };
@@ -74,7 +76,6 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               required
               className="mb-4 w-full"
             />
-
             <label className="mb-2">Description:</label>
             <input
               type="text"
@@ -84,34 +85,46 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               required
               className="mb-4 w-full"
             />
-
-        <label>Sell Price:</label>
-        <input type="number" name="sellPrice" value={formData.sellPrice} onChange={handleChange} required />
-        
-        <label>Buy Price:</label>
-        <input type="number" name="buyPrice" value={formData.buyPrice} onChange={handleChange} />
-
-        <label>Quantity:</label>
-        <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} required />
-        
-        <label>Category:</label>
-        <select name="category_id" value={formData.category_id} onChange={handleChange} required>
-          <option value="">Select a category</option>
-          {categories.map((category) => (
-            <option key={category._id} value={category._id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        
-        <label>Image:</label>
-        <input type="file" name="image" onChange={handleChange} />
-        
-        <label>Vendor:</label>
-        <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />
-
-        <button type="submit" className="submit-button">Add Item</button>
-        <button onClick={closeModal} className="cancel-button">Cancel</button>
+            <label>Sell Price:</label>
+            <input
+              type="number"
+              name="sellPrice"
+              value={formData.sellPrice}
+              onChange={handleChange}
+              required
+            />
+            <label>Buy Price:</label>
+            <input
+              type="number"
+              name="buyPrice"
+              value={formData.buyPrice}
+              onChange={handleChange}
+            />
+            <label>Quantity:</label>
+            <input
+              type="number"
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              required
+            />
+            <label>Category:</label>
+            <select name="category_id" value={formData.category_id} onChange={handleChange} required>
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            <label>Image:</label>
+            <input type="file" name="image" onChange={handleChange} />
+            <label>Vendor:</label>
+            <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />
+            <button type="submit" className="submit-button">Add Item</button>
+            <button onClick={closeModal} className="cancel-button">Cancel</button>
+          </div>
+        </div>
       </form>
     </Modal>
   );
