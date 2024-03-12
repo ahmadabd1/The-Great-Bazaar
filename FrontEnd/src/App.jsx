@@ -12,6 +12,8 @@ import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
 import Categories from "./components/admin/Categories";
+import ClientProfile from "./components/client/ClientProfile";
+import Item from "./components/client/Item"
 export default function App() {
   const location = useLocation();
 
@@ -33,10 +35,12 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin" element={<AdminMainPage />} />
+        <Route path="/client/item" element={<Item/>}/>
         <Route path="/client" element={<ClientMainPage />} />
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/admin/items" element={<Items />} />
         <Route path="/admin/statics" element={<Statics />} />
+        <Route path="/client/Profile" element={<ClientProfile/>}/>
         <Route path="/admin/categories" element={<Categories/>} />
       </Routes>
       <Footer />
