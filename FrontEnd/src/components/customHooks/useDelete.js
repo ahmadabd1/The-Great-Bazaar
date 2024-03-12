@@ -5,6 +5,7 @@ const useDelete = () => {
   const [error, setError] = useState(null);
 
   const deleteItem = async (route, id) => {
+    console.log(`${route}/${id}`);
     setIsLoading(true);
     setError(null);
     try {
