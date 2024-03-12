@@ -1,4 +1,3 @@
-// usePost.js
 import { useState } from 'react';
 
 function usePost() {
