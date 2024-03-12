@@ -1,5 +1,7 @@
 const category = require('../models/category');
 const { errorMessages } = require('../config');
+const cloudinary = require('../cloudinaryConfig');
+
 
 exports.get_categories = async (req, res) => {
     try {
@@ -23,23 +25,34 @@ exports.get_category = async (req, res) => {
 }
 
 
+
 exports.create_category = async (req, res) => {
+  let newCategoryData = {
+    name: req.body.name,
+    description: req.body.description,
+    parent_id: req.body.parent_id,
+  };
+  console.log(newCategoryData)
+  if (req.file) {
     try {
-        const { name, description, parent_id } = req.body;
-        if (!name) {
-            return res.status(400).json({ message: errorMessages.nameIsRequired });
-        }
-        if (!description) {
-            return res.status(400).json({ message: errorMessages.descriptionIsRequired });
-        }
-        const newCategory = new category({ name, description, parent_id });
-        await newCategory.save();
-        res.status(201).json({ message: "Category created successfully" });
-    } catch (error) {
-        console.error("Error creating category:", error);
-        res.status(500).json({ message: errorMessages.internalServerError });
+      const result = await cloudinary.uploader.upload(req.file.path);
+      newCategoryData.image_id = result.url; // Storing the URL returned by Cloudinary
+    } catch (uploadError) {
+      console.error("Error uploading image to Cloudinary:", uploadError);
+      return res.status(500).json({ message: "Failed to upload image." });
     }
+  }
+
+  try {
+    let newCategory = new category(newCategoryData);
+    await newCategory.save();
+    res.status(201).json(newCategory);
+  } catch (error) {
+    console.error("Error creating category:", error);
+    res.status(500).json({ message: "An error occurred while creating the category." });
+  }
 };
+
 
 exports.update_category = async (req, res) => {
     try {
