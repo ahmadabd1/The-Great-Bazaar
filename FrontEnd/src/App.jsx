@@ -1,6 +1,5 @@
 // App.js
 import { Route, Routes, useLocation } from "react-router-dom";
-import { useState } from "react";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import ClientMainPage from "./components/client/ClientMainPage";
@@ -15,7 +14,6 @@ import Statics from "./components/admin/Statics";
 import Categories from "./components/admin/Categories";
 export default function App() {
   const location = useLocation();
-  // const [userType, setUserType] = useState(localStorage.getItem('userType') | null);
 
   const renderNavbar = () => {
     switch (localStorage.getItem("userType")) {
