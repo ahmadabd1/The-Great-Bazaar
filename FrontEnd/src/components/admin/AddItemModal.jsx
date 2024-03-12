@@ -108,6 +108,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               onChange={handleChange}
               required
             />
+            
             <label>Category:</label>
             <select name="category_id" value={formData.category_id} onChange={handleChange} required>
               <option value="">Select a category</option>
