@@ -38,7 +38,6 @@ export default function App() {
         <Route path="/admin/items" element={<Items />} />
         <Route path="/admin/statics" element={<Statics />} />
         <Route path="/admin/categories" element={<Categories/>} />
-
       </Routes>
       <Footer />
     </>

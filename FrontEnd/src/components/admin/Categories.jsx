@@ -10,7 +10,8 @@ export default function Categories() {
   const [showAddCategory, setShowAddCategory] = useState(false);
 
   const handleDelete = async (id) => {
-    await deleteItem(`http://localhost:8080/category/${id}`);
+    console.log(id)
+    await deleteItem(`http://localhost:8080/category` , id);
     refetch(); 
   };
 
