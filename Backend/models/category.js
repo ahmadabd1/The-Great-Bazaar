@@ -8,17 +8,14 @@ const categorySchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
-    },
-    parentCategoryId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        default: null
     },
     parent_id: {
         type: String,
         required: false 
     },
+    image_id: {
+        type: String,
+      },
     created_at: {
         type: Date,
         default: Date.now
@@ -28,6 +25,10 @@ const categorySchema = new mongoose.Schema({
         default: Date.now
     },
     income: {
+        type: Number,
+        default: 0
+    },
+    soldQuantity : {
         type: Number,
         default: 0
     }

@@ -1,5 +1,6 @@
 const Item = require("../models/item");
 const { errorMessages } = require("../config");
+const cloudinary = require("../cloudinaryConfig");
 
 exports.get_item_byid = async (req, res) => {
   const Id = req.params.Id;
@@ -15,6 +16,7 @@ exports.get_item_byid = async (req, res) => {
     res.status(500).json({ message: errorMessages.SERVER_ERROR });
   }
 };
+
 exports.get_all_items = async (req, res) => {
   try {
     const items = await Item.find();
@@ -51,48 +53,30 @@ exports.delete_item = async (req, res) => {
 };
 
 exports.create_item = async (req, res) => {
-  const newItemData = req.body;
-  console.log(newItemData);
-  const { errorMessages } = require("../config");
-  const requiredFields = [
-    "name",
-    "description",
-    "sellPrice",
-    "quantity",
-    "category_id",
-  ];
-  const missingFields = [];
+  let newItemData = {
+    name: req.body.name,
+    description: req.body.description,
+    sellPrice: req.body.sellPrice,
+    quantity: req.body.quantity,
+    category_id: req.body.category_id,
+    vendor: req.body.vendor,
+    suggestedItem: req.body.suggestedItem,
+  };
 
-  requiredFields.forEach((field) => {
-    if (newItemData[field] === undefined || newItemData[field] === "") {
-      missingFields.push(field + " is required"); // Direct message, adjust as necessary
-    }
-  });
-
-  if (missingFields.length > 0) {
-    return res
-      .status(400)
-      .json({ message: "Missing fields: " + missingFields.join(", ") });
+  if (req.file) {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    newItemData.image_id = result.url;
   }
 
   try {
     let newItem = new Item(newItemData);
-    console.log(newItem.name);
-    const item = await newItem;
-    item.save();
+    await newItem.save();
     res.status(201).json(newItem);
   } catch (error) {
     console.error("Error creating item:", error);
-    if (error.code === 11000) {
-      // Adjust this condition based on your DB's error structure
-      return res
-        .status(400)
-        .json({ message: "Item with this ID already exists" });
-    }
-    // Send back a more generic error message (or specific if in development)
     res
       .status(500)
-      .json({ message: "An error occurred while creating the item" });
+      .json({ message: "An error occurred while creating the item." });
   }
 };
 

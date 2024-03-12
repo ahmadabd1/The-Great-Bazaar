@@ -24,7 +24,7 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image_url: {
+  image_id: {
     type: String,
   },
   created_at: {
@@ -45,6 +45,10 @@ const itemSchema = new mongoose.Schema({
   income: {
     type: Number,
     default: 0,
+  },
+  suggestedItem: {
+    type: Boolean,
+    default: false,
   },
 });
 
