@@ -1,7 +1,7 @@
 .NavBar {
   color: #fff;
   display: flex;
-  justify-content: space-between; /* Distribute space between elements */
+  justify-content: space-between; /* This will push the left and right sections to the edges */
   align-items: center;
   padding: 10px 0;
   width: 100%;
@@ -16,17 +16,28 @@
 .NavBarClient {
   list-style-type: none;
   display: flex;
-  align-items: center; /* Align items vertically */
+  align-items: center;
+  width: 100%; /* Ensure the nav takes full width */
   margin: 0;
   padding: 0;
 }
 
-.NavBarClient li {
-  padding: 10px 20px;
+.leftNav, .rightNav {
+  display: flex;
+  align-items: center;
 }
 
-.NavBarClient li:last-child {
-  margin-right: 0;
+.leftNav {
+  justify-content: flex-start; /* Align leftNav items to the left */
+}
+
+.rightNav {
+  justify-content: flex-end; /* Align rightNav items to the right */
+  flex-grow: 1; /* Allow rightNav to take up remaining space */
+}
+
+.NavBarClient li {
+  padding: 10px 20px;
 }
 
 .NavBarClient li a {
@@ -39,34 +50,14 @@
   color: #ddd;
 }
 
-.client,
-.categorys,
-.orders,
-.cart,
-.profile,
-.logout {
+.client, .categorys, .orders, .cart, .profile, .logout {
   transition: background-color 0.3s ease-in-out;
 }
 
-.client:hover,
-.categorys:hover,
-.orders:hover,
-.cart:hover,
-.logout:hover {
+.client:hover, .categorys:hover, .orders:hover, .cart:hover, .profile:hover, .logout:hover {
   background-color: #555;
 }
 
-.rightNav {
-  display: flex;
-  align-items: center;
-}
-
-.rightNav li {
-  margin-right: 20px;
-}
-.logout {
-  margin-left: 500px;
-}
 @media (max-width: 768px) {
   .NavBarClient {
     flex-direction: column;

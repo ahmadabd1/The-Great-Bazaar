@@ -13,7 +13,9 @@ import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
 import Categories from "./components/admin/Categories";
 import ClientProfile from "./components/client/ClientProfile";
-import Item from "./components/client/Item"
+import UsersPage from "./components/admin/UsersPage"
+import Item from "./components/client/Items"
+import ItemDetail from "./components/client/ItemDetail"
 export default function App() {
   const location = useLocation();
 
@@ -42,6 +44,9 @@ export default function App() {
         <Route path="/admin/statics" element={<Statics />} />
         <Route path="/client/Profile" element={<ClientProfile/>}/>
         <Route path="/admin/categories" element={<Categories/>} />
+        <Route path="/admin/clients" element={<UsersPage/>}/>
+        <Route path="/item/:id" element={<ItemDetail/>} />
+
       </Routes>
       <Footer />
     </>
