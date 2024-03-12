@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import '../style/LoginPage.css';
 
-const LoginPage = ({ handleUserType }) => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const [formType, setFormType] = useState('login'); // 'login' or 'signup'
   const [message, setMessage] = useState('');
@@ -48,15 +48,14 @@ const [user, setUser] = useState({ firstName: '', lastName: '' });
         if (message.includes('Login successful')) {
           const userType = message.includes('client') ? 'client' : 'admin';
           setMessage(userType);
-          handleUserType(userType);
-        
+        //  handleUserType(userType);
+          localStorage.setItem('userType', userType);
           navigate(`/${userType}`);
         } else {
           setMessage(message);
         }
       } else {
         setMessage('Signup successful');
-        // After successful signup, redirect to login
         setFormType('login');
       }
     } catch (error) {

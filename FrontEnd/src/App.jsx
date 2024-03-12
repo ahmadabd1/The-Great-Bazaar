@@ -6,22 +6,22 @@ import Home from "./components/Home";
 import ClientMainPage from "./components/client/ClientMainPage";
 import AdminMainPage from "./components/admin/AdminMainPage";
 import LoginPage from "./components/outside/LoginPage";
-import CategoryPage from './components/client/CategoryPage';
-import ClientNavbar from './components/client/ClientNavBar';
-import NavBar from './components/NavBar';
+import CategoryPage from "./components/client/CategoryPage";
+import ClientNavbar from "./components/client/ClientNavBar";
+import NavBar from "./components/NavBar";
 import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
 import Categories from "./components/admin/Categories";
 export default function App() {
   const location = useLocation();
-  const [userType, setUserType] = useState(null);
+  // const [userType, setUserType] = useState(localStorage.getItem('userType') | null);
 
   const renderNavbar = () => {
-    switch (userType) {
-      case 'admin':
+    switch (localStorage.getItem("userType")) {
+      case "admin":
         return <SideBar />;
-      case 'client':
+      case "client":
         return <ClientNavbar />;
       default:
         return <NavBar />;
@@ -33,7 +33,7 @@ export default function App() {
       {renderNavbar()}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage handleUserType={setUserType} />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/admin" element={<AdminMainPage />} />
         <Route path="/client" element={<ClientMainPage />} />
         <Route path="/category" element={<CategoryPage />} />
