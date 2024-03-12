@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import '../style/ModalAddItem.css';
@@ -15,6 +17,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     category_id: '',
     image: null,
     vendor: '',
+    suggestedItem:  false
   });
 
   useEffect(() => {
@@ -50,9 +53,12 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
   };
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value, files ,type, checked} = e.target;
+ if (type === 'checkbox') {
+    setFormData({ ...formData, [name]: checked });
+  } else {
     setFormData({ ...formData, [name]: files ? files[0] : value });
-  };
+  }  };
 
   return (
     <Modal
@@ -122,6 +128,14 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
             <input type="file" name="image" onChange={handleChange} />
             <label>Vendor:</label>
             <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />
+          <label>Suggested Item:</label>
+<input
+  type="checkbox"
+  name="suggestedItem"
+  checked={formData.suggestedItem}
+  onChange={handleChange}
+/>
+
             <button type="submit" className="submit-button">Add Item</button>
             <button onClick={closeModal} className="cancel-button">Cancel</button>
           </div>
