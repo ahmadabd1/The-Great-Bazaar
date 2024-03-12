@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import "../style/ModalAddItem.css"
+import '../style/ModalAddItem.css';
+
 Modal.setAppElement('#root');
 
 function AddItemModal({ isOpen, closeModal, addItem }) {
+  const [showAdditionalFields, setShowAdditionalFields] = useState(false); // State to track if additional fields should be shown
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -11,35 +14,42 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     buyPrice: '',
     quantity: '',
     category_id: '',
-    image_url: '',
+    image: null,
     vendor: '',
   });
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/category/categories/')
+      .then(response => response.json())
+      .then(data => {
+        setCategories(data);
+      })
+      .catch(error => {
+        console.error('Error fetching categories:', error);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Call addItem function with the formData
-    addItem(formData);
-    // Clear form data
-    setFormData({
-      name: '',
-      description: '',
-      sellPrice: '',
-      buyPrice: '',
-      quantity: '',
-      category_id: '',
-      image_url: '',
-      vendor: '',
-    });
-    // Close the modal
+
+    if (!formData.image) {
+      alert('Please upload an image before adding an item.');
+      return;
+    }
+
+    const data = new FormData();
+    for (let key in formData) {
+      data.append(key, formData[key]);
+    }
+
+    addItem(data);
     closeModal();
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, value, files } = e.target;
+    setFormData({ ...formData, [name]: files ? files[0] : value });
   };
 
   return (
@@ -47,6 +57,8 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
       isOpen={isOpen}
       onRequestClose={closeModal}
       contentLabel="Add Item Modal"
+      className="Modal"
+      overlayClassName="Overlay"
     >
       <h2>Add New Item</h2>
       <form onSubmit={handleSubmit}>
@@ -65,11 +77,18 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
         <label>Quantity:</label>
         <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} required />
         
-        <label>Category ID:</label>
-        <input type="text" name="category_id" value={formData.category_id} onChange={handleChange} required />
+        <label>Category:</label>
+        <select name="category_id" value={formData.category_id} onChange={handleChange} required>
+          <option value="">Select a category</option>
+          {categories.map((category) => (
+            <option key={category._id} value={category._id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
         
-        <label>Image URL:</label>
-        <input type="text" name="image_url" value={formData.image_url} onChange={handleChange} />
+        <label>Image:</label>
+        <input type="file" name="image" onChange={handleChange} />
         
         <label>Vendor:</label>
         <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />

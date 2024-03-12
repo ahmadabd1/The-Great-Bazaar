@@ -1,10 +1,15 @@
 {
   "dependencies": {
     "bcrypt": "^5.1.1",
+<<<<<<< HEAD
+=======
+    "cloudinary": "^2.0.3",
+>>>>>>> 788ccfb2e86b90ce01adeff6164097f6dbf280aa
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.1",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.0"
   }
 }

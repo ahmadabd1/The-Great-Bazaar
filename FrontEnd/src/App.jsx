@@ -1,6 +1,5 @@
 // App.js
 import { Route, Routes, useLocation } from "react-router-dom";
-import { useState } from "react";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import ClientMainPage from "./components/client/ClientMainPage";
@@ -12,13 +11,9 @@ import NavBar from "./components/NavBar";
 import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
-import CategiryPage from "./components/admin/CategiryPage";
-import ClientProfile from "./components/client/ClientProfile";
-import { useNavigate } from "react-router-dom";
-
+import Categories from "./components/admin/Categories";
 export default function App() {
   const location = useLocation();
-  // const [userType, setUserType] = useState(localStorage.getItem('userType') | null);
 
   const renderNavbar = () => {
     switch (localStorage.getItem("userType")) {
@@ -42,8 +37,7 @@ export default function App() {
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/admin/items" element={<Items />} />
         <Route path="/admin/statics" element={<Statics />} />
-        <Route path="/admin/categories" element={<CategiryPage />} />
-        <Route path="/ClientProfile" element={<ClientProfile />} />
+        <Route path="/admin/categories" element={<Categories/>} />
       </Routes>
       <Footer />
     </>
