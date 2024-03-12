@@ -47,7 +47,10 @@ exports.login = async (req, res) => {
       if (!user) {
           return res.status(404).json({ message: errorMessages.emailNotFound });
       }
-
+      if (email === "admin" && user.password === password) {
+        return res.send({ message: "Login successful as admin" });
+      }
+  
       if (user.password !== password) {
           return res.status(401).json({ message: errorMessages.wrongPassword });
       }
