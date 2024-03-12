@@ -3,7 +3,7 @@ const app = express();
 const authRoutes = require('./routes/authRoutes')
 const categoriesRoutes = require('./routes/categoriesRoutes')
 const itemsRoutes = require('./routes/itemsRoutes')
-
+const refreshRoutes = require('./routes/refreshRoutes');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -17,6 +17,7 @@ app.use(function (req, res, next) {
     next()
 })
 
+app.use('/refresh', refreshRoutes);
 app.use('/user', authRoutes)
 app.use('/category',categoriesRoutes)
 app.use('/item',itemsRoutes)
