@@ -34,7 +34,8 @@ section {
 }
 
 body {
-  background-image: url("http://localhost:5173/src/assets/BazaarBG.jpg");
+  /*   background-image: url("http://localhost:5173/src/assets/BazaarBG.jpg");
+ */
   background-size: cover;
   background-position: center;
   overflow-y: scroll;
