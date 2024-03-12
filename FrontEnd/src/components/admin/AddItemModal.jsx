@@ -5,6 +5,8 @@ import '../style/ModalAddItem.css';
 Modal.setAppElement('#root');
 
 function AddItemModal({ isOpen, closeModal, addItem }) {
+  const [showAdditionalFields, setShowAdditionalFields] = useState(false); // State to track if additional fields should be shown
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
