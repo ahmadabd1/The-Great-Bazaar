@@ -10,6 +10,18 @@ adminitems.css .search-bar {
   border-radius: 4px;
   box-sizing: border-box; /* Ensures padding doesn't affect width */
 }
+.success-message {
+  color: green;
+  margin: 10px 0;
+  margin-left: 30%;
+}
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+  margin-left: 30%;
+
+}
 
 .Items-Container {
   display: flex;

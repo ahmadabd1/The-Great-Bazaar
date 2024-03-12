@@ -25,14 +25,14 @@ exports.get_category = async (req, res) => {
 
 exports.create_category = async (req, res) => {
     try {
-        const { name, description } = req.body;
+        const { name, description, parent_id } = req.body;
         if (!name) {
             return res.status(400).json({ message: errorMessages.nameIsRequired });
         }
         if (!description) {
             return res.status(400).json({ message: errorMessages.descriptionIsRequired });
         }
-        const newCategory = new category({ name, description });
+        const newCategory = new category({ name, description, parent_id });
         await newCategory.save();
         res.status(201).json({ message: "Category created successfully" });
     } catch (error) {
@@ -53,16 +53,7 @@ exports.update_category = async (req, res) => {
     }
 };
 
-exports.get_subcategories = async (req, res) => {
-    try {
-        const { categoryId } = req.params;
-        const subcategories = await category.find({ parentCategoryId: categoryId });
-        res.status(200).json(subcategories);
-    } catch (error) {
-        console.error("Error getting subcategories:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-};
+
 exports.delete_category = async (req, res) => {
     try {
         const { categoryId } = req.params;
@@ -70,16 +61,6 @@ exports.delete_category = async (req, res) => {
         res.status(200).json({ message: "Category deleted successfully." });
     } catch (error) {
         console.error("Error deleting category:", error);
-        res.status(500).json({ message: errorMessages.internalServerError });
-    }
-};
-exports.delete_subcategory = async (req, res) => {
-    try {
-        const { subcategoryId } = req.params; // Use req.params to get subcategoryId
-        await category.findByIdAndDelete(subcategoryId);
-        res.status(200).json({ message: "Subcategory deleted successfully." });
-    } catch (error) {
-        console.error("Error deleting subcategory:", error);
         res.status(500).json({ message: errorMessages.internalServerError });
     }
 };
