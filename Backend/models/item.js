@@ -46,6 +46,10 @@ const itemSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  suggestedItem: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Item = mongoose.model("Item", itemSchema);

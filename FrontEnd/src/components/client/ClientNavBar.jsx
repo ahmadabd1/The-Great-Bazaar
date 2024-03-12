@@ -15,8 +15,10 @@ export default function ClientNavbar() {
         <li className='client'><Link to="/client">Home</Link></li>
         <li className='categorys'><Link to="/category">Category</Link></li>
         <li className='orders'><Link to="/orders">Orders</Link></li>
+        <li className='categorys'><Link to="/client/item">Item</Link></li>
+
         <li className='cart'><Link to="/cart">Cart</Link></li>
-        <li className='profile'><Link to="/ClientProfile">Profile</Link></li>
+        <li className='profile'><Link to="/client/Profile">Profile</Link></li>
 
         </div>
         <li className='logout'><Link to="/logout" onClick={logout}>Logout</Link></li>
