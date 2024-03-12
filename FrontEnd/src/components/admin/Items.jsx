@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useGet from "../customHooks/useGet";
 import useDelete from "../customHooks/useDelete";
+import usePost from "../customHooks/usePost2";
+import "../style/adminitems.css";
 import AddItemModal from "./AddItemModal";
 
 export default function Items() {
@@ -12,52 +14,62 @@ export default function Items() {
   } = useGet("http://localhost:8080/item/items");
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { deleteItem } = useDelete();
+  const { deleteItem, isLoading: isDeleting, error: deleteError } = useDelete();
+  const { postData, loading: posting, error: postError } = usePost();
+  const [shouldRefetch, setShouldRefetch] = useState(false);
+
+  useEffect(() => {
+    if (shouldRefetch) {
+      refetch();
+      setShouldRefetch(false);
+    }
+  }, [shouldRefetch, refetch]);
+
+  const handleDeleteItem = async (itemId) => {
+    await deleteItem("http://localhost:8080/item/item", itemId);
+    if (!deleteError) {
+      setShouldRefetch(true);
+    }
+  };
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
-  const handleDeleteItem = async (itemId) => {
-    const wasDeleted = await deleteItem(itemId);
-    if (wasDeleted) {
-      refetch();
-    }
-  };
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const addItem = async (newItemData) => {
+  const addItem = async (formData) => {
     try {
-      const response = await fetch("http://localhost:8080/item/item", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newItemData),
-      });
-
-      if (response.ok) {
-        refetch();
-        closeModal();
-      } else {
-        console.error("Failed to add the item");
+      const result = await postData(
+        "http://localhost:8080/item/item",
+        formData,
+        true,
+      ); // Pass true for FormData
+      if (result) {
+        setShouldRefetch(true);
       }
     } catch (error) {
       console.error("Error adding item:", error);
     }
   };
 
-  if (loadingItems) return <div>Loading...</div>;
-  if (itemsError) return <div>Error: {itemsError.message}</div>;
-
-  const filteredItems = items.filter(
+  // Filter items based on the search term
+  const filteredItems = items?.filter(
     (item) =>
-      item._id.toLowerCase().includes(searchTerm) ||
       item.name.toLowerCase().includes(searchTerm) ||
-      item.description.toLowerCase().includes(searchTerm),
+      item.description.toLowerCase().includes(searchTerm) ||
+      item._id.toLowerCase().includes(searchTerm),
   );
+
+  if (loadingItems || isDeleting || posting) return <div>Loading...</div>;
+  if (itemsError || deleteError || postError)
+    return (
+      <div>
+        Error:{" "}
+        {itemsError?.message || deleteError?.message || postError?.message}
+      </div>
+    );
 
   return (
     <div className="mb-20 ml-auto flex flex-col items-center">
@@ -73,33 +85,28 @@ export default function Items() {
         onChange={handleSearchChange}
         className="mb-10 w-2/5 rounded border border-gray-300 px-4 py-2"
       />
-
-      <div className="items-right grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {" "}
-        {filteredItems.map((item) => (
-          <div
-            key={item._id}
-            className="rounded border border-gray-300 bg-slate-50 p-3 shadow-md"
-            style={{ width: "200px" }}
-          >
-            <h2 className="mb-1 bg-slate-50 text-lg font-semibold">
-              {item.name}
-            </h2>{" "}
-            <p className="mb-1 text-sm">ID: {item._id}</p>{" "}
-            <p className="mb-2 text-sm">{item.description}</p>{" "}
-            <img
-              src={item.image_url}
-              alt={item.name}
-              className="mb-2 h-32 w-full rounded object-cover" // Adjust image size
-            />
-            <button
-              onClick={() => handleDeleteItem(item._id)}
-              className="w-full rounded bg-red-500 px-3 py-1 text-sm font-bold text-white" // Reduce button size
-            >
-              Delete Item
-            </button>
-          </div>
-        ))}
+      <div className="Items-Container">
+        {filteredItems &&
+          filteredItems.map((item) => (
+            <div key={item._id} className="item-container">
+              <h2 className="item-Name">{item.name}</h2>
+              <p className="item-id">ID: {item._id}</p>
+              <p className="item-desc">{item.description}</p>
+              {item.image_id && (
+                <img
+                  src={item.image_id}
+                  alt={item.name}
+                  className="item-image"
+                />
+              )}
+              <button
+                onClick={() => handleDeleteItem(item._id)}
+                className="delete-item-button"
+              >
+                Delete Item
+              </button>
+            </div>
+          ))}
       </div>
       <AddItemModal
         isOpen={isModalOpen}
