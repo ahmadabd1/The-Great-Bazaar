@@ -24,7 +24,7 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image_url: {
+  image_id: {
     type: String,
   },
   created_at: {

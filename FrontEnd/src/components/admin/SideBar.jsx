@@ -28,7 +28,7 @@ const SideBar = () => {
           <Link to="/admin/orders">Orders</Link>
         </li>
         <li>
-          <Link to="/admin/clents">Clients</Link>
+          <Link to="/admin/Clients">Clients</Link>
         </li>
       </ul>
       <Button variant="danger" className="logout-button" onClick={logout}>

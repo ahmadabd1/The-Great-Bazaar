@@ -10,11 +10,6 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    parentCategoryId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        default: null
-    },
     parent_id: {
         type: String,
         required: false 
