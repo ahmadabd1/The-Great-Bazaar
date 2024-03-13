@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
-import '../style/ModalAddItem.css';
-Modal.setAppElement('#root');
+import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
+import "../style/ModalAddItem.css";
+Modal.setAppElement("#root");
 function AddItemModal({ isOpen, closeModal, addItem }) {
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    sellPrice: '',
-    buyPrice: '',
-    quantity: '',
-    category_id: '',
+    name: "",
+    description: "",
+    sellPrice: "",
+    buyPrice: "",
+    quantity: "",
+    category_id: "",
     image: null,
-    vendor: '',
+    vendor: "",
+    suggestedItem: false,
   });
 
   useEffect(() => {
@@ -21,22 +22,24 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:8080/category/categories/');
+      const response = await fetch(
+        "http://localhost:8080/category/categories/",
+      );
       if (response.ok) {
         const data = await response.json();
         setCategories(data);
       } else {
-        console.error('Error fetching categories:', response.statusText);
+        console.error("Error fetching categories:", response.statusText);
       }
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error("Error fetching categories:", error);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.image) {
-      alert('Please upload an image before adding an item.');
+      alert("Please upload an image before adding an item.");
       return;
     }
     const data = new FormData();
@@ -47,9 +50,14 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     closeModal();
   };
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({ ...formData, [name]: files ? files[0] : value });
+    const { name, value, files, type, checked } = e.target;
+    if (type === "checkbox") {
+      setFormData({ ...formData, [name]: checked });
+    } else {
+      setFormData({ ...formData, [name]: files ? files[0] : value });
+    }
   };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -104,9 +112,14 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               onChange={handleChange}
               required
             />
-            
+
             <label>Category:</label>
-            <select name="category_id" value={formData.category_id} onChange={handleChange} required>
+            <select
+              name="category_id"
+              value={formData.category_id}
+              onChange={handleChange}
+              required
+            >
               <option value="">Select a category</option>
               {categories.map((category) => (
                 <option key={category._id} value={category._id}>
@@ -117,9 +130,26 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
             <label>Image:</label>
             <input type="file" name="image" onChange={handleChange} />
             <label>Vendor:</label>
-            <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />
-            <button type="submit" className="submit-button">Add Item</button>
-            <button onClick={closeModal} className="cancel-button">Cancel</button>
+            <input
+              type="text"
+              name="vendor"
+              value={formData.vendor}
+              onChange={handleChange}
+            />
+            <label>Suggested Item:</label>
+            <input
+              type="checkbox"
+              name="suggestedItem"
+              checked={formData.suggestedItem}
+              onChange={handleChange}
+            />
+
+            <button type="submit" className="submit-button">
+              Add Item
+            </button>
+            <button onClick={closeModal} className="cancel-button">
+              Cancel
+            </button>
           </div>
         </div>
       </form>

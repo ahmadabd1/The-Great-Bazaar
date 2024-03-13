@@ -1,51 +1,50 @@
 /* admin_Categories.css */
 .categories-container {
-    padding: 20px;
-    width: 120%;
-  }
-  
-  .categories-container h1 {
-    margin-bottom: 20px;
-    padding: 1%;
-  }
-  .category-image {
-    width: 100px; /* Or any size you prefer */
-    height: auto;
-    margin: 10px 0;
-  }
-  .categories-container button {
-    padding: 5%;
-    margin: 5%;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    width: fit-content;
-  }
-  
-  .categories-container ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .categories-container ul li {
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .categories-container ul li:last-child {
-    border-bottom: none;
-  }
-  
-  .categories-container ul li button {
-    padding: 5px 10px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
+  padding: 20px;
+  width: 120%;
+}
+
+.categories-container h1 {
+  margin-bottom: 20px;
+  padding: 1%;
+}
+.category-image {
+  width: 100px; /* Or any size you prefer */
+  height: auto;
+  margin: 10px 0;
+}
+.categories-container button {
+  padding: 5%;
+  margin: 5%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  /* width: fit-content; */
+}
+
+.categories-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.categories-container ul li {
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categories-container ul li:last-child {
+  border-bottom: none;
+}
+
+.categories-container ul li button {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

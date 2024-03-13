@@ -110,3 +110,20 @@ exports.editProfile = async (req, res) => {
     res.status(500).json({ message: errorMessages.internalServerError });
   }
 };
+exports.get_all_users = async (req, res) => {
+  try {
+    const users = await User.find(
+      {},
+      "firstName lastName email phoneNumber"
+    ).exec();
+    const usersWithFullName = users.map((user) => ({
+      fullName: user.firstName + " " + user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+    }));
+    res.status(200).json(usersWithFullName);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

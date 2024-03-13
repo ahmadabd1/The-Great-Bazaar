@@ -8,12 +8,15 @@ import LoginPage from "./components/outside/LoginPage";
 import CategoryPage from "./components/client/CategoryPage";
 import ClientNavbar from "./components/client/ClientNavBar";
 import NavBar from "./components/NavBar";
+import ClientSideBar from "./components/client/ClientSideBar";
 import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
 import Categories from "./components/admin/Categories";
 import ClientProfile from "./components/client/ClientProfile";
-import Item from "./components/client/Item"
+import UsersPage from "./components/admin/UsersPage"
+import Item from "./components/client/Items"
+import ItemDetail from "./components/client/ItemDetail"
 export default function App() {
   const location = useLocation();
 
@@ -22,7 +25,12 @@ export default function App() {
       case "admin":
         return <SideBar />;
       case "client":
-        return <ClientNavbar />;
+        return (
+          <>
+            <ClientNavbar />
+            <ClientSideBar />
+          </>
+        );
       default:
         return <NavBar />;
     }
@@ -42,6 +50,9 @@ export default function App() {
         <Route path="/admin/statics" element={<Statics />} />
         <Route path="/client/Profile" element={<ClientProfile/>}/>
         <Route path="/admin/categories" element={<Categories/>} />
+        <Route path="/admin/clients" element={<UsersPage/>}/>
+        <Route path="/item/:id" element={<ItemDetail/>} />
+
       </Routes>
       <Footer />
     </>
