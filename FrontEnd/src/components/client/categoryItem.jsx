@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 const CategoryItem = ({ category }) => {
   return (
     <div className="category-item">
-      <img src={category.imageUrl} alt={category.name} className="category-image" />
+      <img src={category.image_id} alt={category.name} className="category-image" />
       <h2>{category.name}</h2>
       <p>{category.description}</p>
+      
     </div>
   );
 }

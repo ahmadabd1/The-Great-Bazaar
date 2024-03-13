@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import useGet from '../customHooks/useGet';
 import useDelete from '../customHooks/useDelete';
+import usePost from '../customHooks/usePost2'; // Make sure you're using usePost
 import AddCategoryModal from './AddCategoryModal';
-import '../style/admin_Categories.css'
+import '../style/admin_Categories.css';
 
 export default function Categories() {
   const { data: categories, loading: loadingCategories, error: errorLoading, refetch } = useGet('http://localhost:8080/category/categories/');
   const { deleteItem, isLoading: deleting, error: errorDeleting } = useDelete();
+  const { postData, loading: posting, error: postError } = usePost(); // Using usePost
   const [showAddCategory, setShowAddCategory] = useState(false);
 
   const handleDelete = async (id) => {
-    console.log(id)
-    await deleteItem(`http://localhost:8080/category` , id);
+    console.log(id);
+    await deleteItem(`http://localhost:8080/category`, id);
     refetch(); 
   };
 
@@ -19,22 +21,9 @@ export default function Categories() {
     setShowAddCategory(true);
   };
 
-  const handleSaveNewCategory = async (categoryData) => {
+  const handleSaveNewCategory = async (formData) => {
     try {
-      const response = await fetch('http://localhost:8080/category/category/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(categoryData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log('Category created successfully:', result);
+      await postData('http://localhost:8080/category/category/', formData, true); // Pass true for FormData
       setShowAddCategory(false);
       refetch(); // Refetch the categories to update the list
     } catch (error) {
@@ -46,8 +35,8 @@ export default function Categories() {
     setShowAddCategory(false);
   };
 
-  if (loadingCategories || deleting) return <div>Loading...</div>;
-  if (errorLoading || errorDeleting) return <div>Error: {errorLoading?.message || errorDeleting?.message}</div>;
+  if (loadingCategories || deleting || posting) return <div>Loading...</div>;
+  if (errorLoading || errorDeleting || postError) return <div>Error: {errorLoading?.message || errorDeleting?.message || postError?.message}</div>;
 
   return (
     <div className="categories-container">
@@ -64,6 +53,9 @@ export default function Categories() {
         {categories && categories.map(category => (
           <li key={category._id}>
             {category.name}
+            {category.image_id && (
+              <img src={category.image_id} alt={category.name} className="category-image" />
+            )}
             <button onClick={() => handleDelete(category._id)}>Delete</button>
           </li>
         ))}

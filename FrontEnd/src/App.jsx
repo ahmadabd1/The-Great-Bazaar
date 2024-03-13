@@ -13,6 +13,10 @@ import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
 import Categories from "./components/admin/Categories";
+import ClientProfile from "./components/client/ClientProfile";
+import UsersPage from "./components/admin/UsersPage"
+import Item from "./components/client/Items"
+import ItemDetail from "./components/client/ItemDetail"
 export default function App() {
   const location = useLocation();
 
@@ -39,6 +43,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin" element={<AdminMainPage />} />
+        <Route path="/client/item" element={<Item/>}/>
         <Route path="/client" element={<ClientMainPage />} />
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/admin/items" element={<Items />} />
