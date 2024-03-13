@@ -9,12 +9,12 @@ Modal.setAppElement('#root');
 function AddItemModal({ isOpen, closeModal, addItem }) {
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    sellPrice: '',
-    buyPrice: '',
-    quantity: '',
-    category_id: '',
+    name: "",
+    description: "",
+    sellPrice: "",
+    buyPrice: "",
+    quantity: "",
+    category_id: "",
     image: null,
     vendor: '',
     suggestedItem:  false
@@ -41,7 +41,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.image) {
-      alert('Please upload an image before adding an item.');
+      alert("Please upload an image before adding an item.");
       return;
     }
     const data = new FormData();
@@ -51,7 +51,6 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     addItem(data);
     closeModal();
   };
-
   const handleChange = (e) => {
     const { name, value, files ,type, checked} = e.target;
  if (type === 'checkbox') {
@@ -144,5 +143,4 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     </Modal>
   );
 }
-
 export default AddItemModal;
