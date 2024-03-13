@@ -1,0 +1,67 @@
+/* Overall background and padding */
+.container {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Styling the header */
+h1 {
+  color: #333;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+}
+
+/* List styling */
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual item styling */
+li {
+  background: white;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 5px;
+  flex: 1 1 calc(33.333% - 20px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Link styling */
+a {
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #3498db;
+}
+
+/* Text styling for item details */
+p {
+  margin: 5px 0;
+  line-height: 1.5;
+  color: #666;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  ul {
+    flex-direction: column;
+  }
+
+  li {
+    flex: 1 1 auto;
+  }
+}
