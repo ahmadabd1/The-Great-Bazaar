@@ -8,6 +8,7 @@ import LoginPage from "./components/outside/LoginPage";
 import CategoryPage from "./components/client/CategoryPage";
 import ClientNavbar from "./components/client/ClientNavBar";
 import NavBar from "./components/NavBar";
+import ClientSideBar from "./components/client/ClientSideBar";
 import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
@@ -20,7 +21,12 @@ export default function App() {
       case "admin":
         return <SideBar />;
       case "client":
-        return <ClientNavbar />;
+        return (
+          <>
+            <ClientNavbar />
+            <ClientSideBar />
+          </>
+        );
       default:
         return <NavBar />;
     }
@@ -37,7 +43,7 @@ export default function App() {
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/admin/items" element={<Items />} />
         <Route path="/admin/statics" element={<Statics />} />
-        <Route path="/admin/categories" element={<Categories/>} />
+        <Route path="/admin/categories" element={<Categories />} />
       </Routes>
       <Footer />
     </>
