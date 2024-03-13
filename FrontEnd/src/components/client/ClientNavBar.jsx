@@ -3,6 +3,11 @@ import { useState } from "react";
 export default function NavBar() {
   const [state, setState] = useState(false);
 
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
+
   const leftNavigation = [
     {
       label: "Profile",
@@ -17,7 +22,8 @@ export default function NavBar() {
     { label: "Cart", path: "/userCart", icon: "fluent:cart-16-regular" },
     {
       label: "Logout",
-      path: "/loggedout",
+      path: "/logout",
+      onClick: { logout },
       icon: "fluent:arrow-exit-20-regular",
     },
   ];
