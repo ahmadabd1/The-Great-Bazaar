@@ -48,7 +48,11 @@ export default function App() {
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/admin/items" element={<Items />} />
         <Route path="/admin/statics" element={<Statics />} />
-        <Route path="/admin/categories" element={<Categories />} />
+        <Route path="/client/Profile" element={<ClientProfile/>}/>
+        <Route path="/admin/categories" element={<Categories/>} />
+        <Route path="/admin/clients" element={<UsersPage/>}/>
+        <Route path="/item/:id" element={<ItemDetail/>} />
+
       </Routes>
       <Footer />
     </>
