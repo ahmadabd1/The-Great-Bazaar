@@ -1,5 +1,12 @@
 import NavBarLink from "./NavBarLink";
 import { useState } from "react";
+
+// Assuming the logout function is defined here or imported
+const logout = () => {
+  localStorage.clear();
+  window.location.href = '/';
+};
+
 export default function NavBar() {
   const [state, setState] = useState(false);
 
@@ -19,6 +26,7 @@ export default function NavBar() {
       label: "Logout",
       path: "/loggedout",
       icon: "fluent:arrow-exit-20-regular",
+      onClick: logout, // Added logout function here
     },
   ];
 
@@ -31,10 +39,19 @@ export default function NavBar() {
     },
   ];
 
+  // Handle item click
+  const handleItemClick = (item) => {
+    if (item.label === "Logout") {
+      item.onClick(); // Call the logout function if the label is 'Logout'
+    } else {
+      setState(false); // Close the menu for other items
+    }
+  };
+
   return (
     <nav
       className="border-width: 1px; z-100 fixed left-0 right-0 top-0 shadow-lg backdrop-blur-md"
-      style={{ border: "3px solid rgba(0, 0, 0, 0.3" }}
+      style={{ border: "3px solid rgba(0, 0, 0, 0.3)" }}
     >
       <div>
         <div className="ml-10 items-center md:flex">
@@ -51,7 +68,7 @@ export default function NavBar() {
                 <li
                   key={idx}
                   className="ml-0 md:ml-4"
-                  onClick={() => setState(false)}
+                  onClick={() => handleItemClick(item)}
                 >
                   <NavBarLink
                     to={item.path}
@@ -100,21 +117,19 @@ export default function NavBar() {
           </div>
           <div className="ml-auto mr-12 mt-0 justify-self-center pb-3 md:block md:pb-0">
             <ul className="flex flex-col justify-end space-y-0 pr-0 md:flex md:flex-row">
-              {rightNavigation.map((item, idx) => {
-                return (
-                  <li
-                    key={idx}
-                    className="ml-0 md:ml-4"
-                    onClick={() => setState(false)}
-                  >
-                    <NavBarLink
-                      to={item.path}
-                      icon={item.icon}
-                      label={item.label}
-                    />
-                  </li>
-                );
-              })}
+              {rightNavigation.map((item, idx) => (
+                <li
+                  key={idx}
+                  className="ml-0 md:ml-4"
+                  onClick={() => handleItemClick(item)}
+                >
+                  <NavBarLink
+                    to={item.path}
+                    icon={item.icon}
+                    label={item.label}
+                  />
+                </li>
+              ))}
             </ul>
           </div>
         </div>

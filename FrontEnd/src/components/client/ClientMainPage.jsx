@@ -1,55 +1,31 @@
 import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import axios from 'axios'; // Ensure axios is imported
 
 export default function Home() {
-  const features = [
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-  ];
+  const [features, setFeatures] = useState([]);
+
+  // Function to fetch items from your API and filter by suggested items
+  const fetchItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/item/items');
+      const suggestedItems = response.data.filter(item => item.suggestedItem);
+      const itemsToDisplay = suggestedItems.map(item => ({
+        icon: item.image_id, // Ensure the icon names are compatible with Iconify
+        title: item.name,
+        desc: item.description,
+      }));
+      setFeatures(itemsToDisplay);
+    } catch (error) {
+      console.error('Error fetching items:', error);
+    }
+  };
+
+  // Fetch items on component mount
+  useEffect(() => {
+    fetchItems();
+  }, []); // Empty dependency array means this effect runs once on mount
+
   return (
     <>
       <div
@@ -63,7 +39,6 @@ export default function Home() {
                 The Great Bazaar *CLIENT*
               </h1>
               <p className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-400 md:text-5xl lg:text-2xl">
-                {" "}
                 Clothes, Food, Electronics and More
               </p>
 
@@ -114,7 +89,7 @@ export default function Home() {
 
         <section
           className="p-25 py-50"
-          style={{ marginTop: "70px", border: "3px solid rgba(0, 0, 0, 0.3" }}
+          style={{ marginTop: "70px", border: "3px solid rgba(0, 0, 0, 0.3)" }}
         >
           <div className=" text-gray-600">
             <div className="relative z-10">
@@ -125,26 +100,16 @@ export default function Home() {
                 Enjoy all the goods from the Far East to the Abbasid Caliphate
               </p>
             </div>
-            <div className="absolute inset-0 mx-auto h-44 max-w-xs blur-[118px]"></div>
           </div>
           <div className="relative mt-12">
             <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((item, idx) => (
-                <li
-                  key={idx}
-                  className="space-y-3 rounded-lg border bg-white p-4"
-                >
+              <li key={idx} className="space-y-3 rounded-lg border bg-white p-4">
                   <div className="text-center">
-                    <Icon
-                      icon={item.icon}
-                      height={32}
-                      inline={true}
-                      className="inline-block"
-                    />
+                    {/* Displaying the image */}
+                    <img src={item.icon} alt={item.title} className="mx-auto h-32" />
                   </div>
-                  <h4 className="text-lg font-semibold text-gray-800">
-                    {item.title}
-                  </h4>
+                  <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
                   <p>{item.desc}</p>
                 </li>
               ))}
