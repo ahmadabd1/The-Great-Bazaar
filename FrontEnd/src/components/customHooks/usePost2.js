@@ -1,4 +1,5 @@
-import { useState } from 'react';
+// usePost.js
+import { useState } from "react";
 
 function usePost() {
   const [loading, setLoading] = useState(false);
@@ -9,8 +10,8 @@ function usePost() {
     setError(null);
     try {
       const response = await fetch(url, {
-        method: 'POST',
-        headers: isFormData ? {} : { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: isFormData ? {} : { "Content-Type": "application/json" },
         body: isFormData ? data : JSON.stringify(data),
       });
 

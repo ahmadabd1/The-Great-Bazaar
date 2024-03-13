@@ -67,6 +67,7 @@ exports.update_category = async (req, res) => {
 };
 
 
+
 exports.delete_category = async (req, res) => {
     try {
         const { categoryId } = req.params;
@@ -77,3 +78,4 @@ exports.delete_category = async (req, res) => {
         res.status(500).json({ message: errorMessages.internalServerError });
     }
 };
+

@@ -1,7 +1,6 @@
 const Item = require("../models/item");
 const { errorMessages } = require("../config");
 const cloudinary = require("../cloudinaryConfig");
-
 exports.get_item_byid = async (req, res) => {
   const Id = req.params.Id;
   console.log(Id);
@@ -16,7 +15,6 @@ exports.get_item_byid = async (req, res) => {
     res.status(500).json({ message: errorMessages.SERVER_ERROR });
   }
 };
-
 exports.get_all_items = async (req, res) => {
   try {
     const items = await Item.find();
@@ -26,7 +24,6 @@ exports.get_all_items = async (req, res) => {
     res.status(500).json({ message: errorMessages.SERVER_ERROR });
   }
 };
-
 exports.get_items_byCategoryId = async (req, res) => {
   const { categoryId } = req.params;
   try {
@@ -37,7 +34,6 @@ exports.get_items_byCategoryId = async (req, res) => {
     res.status(500).json({ message: errorMessages.SERVER_ERROR });
   }
 };
-
 exports.delete_item = async (req, res) => {
   const { Id } = req.params;
   try {
@@ -51,7 +47,6 @@ exports.delete_item = async (req, res) => {
     res.status(500).json({ message: errorMessages.SERVER_ERROR });
   }
 };
-
 exports.create_item = async (req, res) => {
   let newItemData = {
     name: req.body.name,
@@ -62,12 +57,10 @@ exports.create_item = async (req, res) => {
     vendor: req.body.vendor,
     suggestedItem: req.body.suggestedItem,
   };
-
   if (req.file) {
     const result = await cloudinary.uploader.upload(req.file.path);
     newItemData.image_id = result.url;
   }
-
   try {
     let newItem = new Item(newItemData);
     await newItem.save();
@@ -79,11 +72,9 @@ exports.create_item = async (req, res) => {
       .json({ message: "An error occurred while creating the item." });
   }
 };
-
 exports.update_item = async (req, res) => {
   const updatedItemData = req.body;
   const { id } = updatedItemData;
-
   try {
     const existingItem = await Item.findOne({ id });
     if (!existingItem) {

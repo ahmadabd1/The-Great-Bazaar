@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const categoriesHandler = require('../serverHandlers/categoriesHandler');
 const multer = require('multer');
+const verifyJWT = require('../middleware/verifyJWT');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -13,7 +14,7 @@ const storage = multer.diskStorage({
   });
   
   const upload = multer({ storage: storage });
-  
+router.use(verifyJWT);
 router.get('/categories', categoriesHandler.get_categories);
 router.get('/category', categoriesHandler.get_category);
 router.post('/category', upload.single('image'), categoriesHandler.create_category);

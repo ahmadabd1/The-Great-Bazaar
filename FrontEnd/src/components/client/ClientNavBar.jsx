@@ -1,11 +1,19 @@
 import { Link } from 'react-router-dom';
 import "../style/ClientNavbar.css"
-
+import axios from 'axios';
 export default function ClientNavbar() {
-  const logout = () => {
-    localStorage.clear();
-    window.location.href = '/';
-  };
+  const logout = async () => {
+    try {
+        const refreshToken = localStorage.getItem('refreshToken');
+        await axios.post('/user/logout', { refreshToken });
+        localStorage.clear();
+        window.location.href = '/';
+    } catch (error) {
+        console.error("Logout error:", error.response ? error.response.data : error.message);
+        localStorage.clear();
+        window.location.href = '/';
+    }
+};
 
   return (
     <nav className='NavBar'>

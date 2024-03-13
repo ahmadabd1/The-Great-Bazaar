@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import '../style/ModalAddItem.css';
 
+import '../style/ModalAddItem.css';
+
 Modal.setAppElement('#root');
 
 function AddItemModal({ isOpen, closeModal, addItem }) {
@@ -15,6 +17,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     buyPrice: '',
     quantity: '',
     category_id: '',
+    image: null,
     image: null,
     vendor: '',
     suggestedItem:  false
@@ -65,6 +68,8 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
       isOpen={isOpen}
       onRequestClose={closeModal}
       contentLabel="Add Item Modal"
+      className="Modal"
+      overlayClassName="Overlay"
       className="Modal"
       overlayClassName="Overlay"
     >

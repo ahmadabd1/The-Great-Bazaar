@@ -40,6 +40,7 @@ export default function Items() {
   const closeModal = () => setIsModalOpen(false);
 
   const addItem = async (formData) => {
+  const addItem = async (formData) => {
     try {
       const result = await postData(
         "http://localhost:8080/item/item",
@@ -116,3 +117,5 @@ export default function Items() {
     </div>
   );
 }
+}
+
