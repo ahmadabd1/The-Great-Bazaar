@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Ensure axios is imported
-
+import { useNavigate } from "react-router-dom";
 export default function Home() {
   const [features, setFeatures] = useState([]);
-
-  // Function to fetch items from your API and filter by suggested items
+  const navigate = useNavigate();
   const fetchItems = async () => {
     try {
       const response = await axios.get("http://localhost:8080/item/items");
       const suggestedItems = response.data.filter((item) => item.suggestedItem);
       const itemsToDisplay = suggestedItems.map((item) => ({
-        icon: item.image_id, // Ensure the icon names are compatible with Iconify
+        icon: item.image_id,
         title: item.name,
         desc: item.description,
       }));
@@ -20,11 +19,12 @@ export default function Home() {
     }
   };
 
-  // Fetch items on component mount
   useEffect(() => {
     fetchItems();
-  }, []); // Empty dependency array means this effect runs once on mount
-
+  }, []);
+  const handleStartShoppingClick = () => {
+    navigate("/client/item");
+  };
   return (
     <>
       <div
@@ -46,7 +46,7 @@ export default function Home() {
                 style={{ marginTop: "30px", height: "auto" }}
               >
                 <a
-                  href="javascript:void(0)"
+                  onClick={handleStartShoppingClick}
                   className="flex items-center justify-center gap-x-5 rounded-full bg-gray-800 px-4 py-2 font-medium  text-slate-200 duration-150 hover:bg-gray-700 active:bg-gray-900 md:inline-flex"
                 >
                   Start Shopping
