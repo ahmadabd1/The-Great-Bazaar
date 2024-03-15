@@ -1,31 +1,30 @@
-import { Icon } from "@iconify/react";
 import React, { useState, useEffect } from "react";
-import axios from 'axios'; // Ensure axios is imported
-
+import axios from "axios"; // Ensure axios is imported
+import { useNavigate } from "react-router-dom";
 export default function Home() {
   const [features, setFeatures] = useState([]);
-
-  // Function to fetch items from your API and filter by suggested items
+  const navigate = useNavigate();
   const fetchItems = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/item/items');
-      const suggestedItems = response.data.filter(item => item.suggestedItem);
-      const itemsToDisplay = suggestedItems.map(item => ({
-        icon: item.image_id, // Ensure the icon names are compatible with Iconify
+      const response = await axios.get("http://localhost:8080/item/items");
+      const suggestedItems = response.data.filter((item) => item.suggestedItem);
+      const itemsToDisplay = suggestedItems.map((item) => ({
+        icon: item.image_id,
         title: item.name,
         desc: item.description,
       }));
       setFeatures(itemsToDisplay);
     } catch (error) {
-      console.error('Error fetching items:', error);
+      console.error("Error fetching items:", error);
     }
   };
 
-  // Fetch items on component mount
   useEffect(() => {
     fetchItems();
-  }, []); // Empty dependency array means this effect runs once on mount
-
+  }, []);
+  const handleStartShoppingClick = () => {
+    navigate("/client/item");
+  };
   return (
     <>
       <div
@@ -47,7 +46,7 @@ export default function Home() {
                 style={{ marginTop: "30px", height: "auto" }}
               >
                 <a
-                  href="javascript:void(0)"
+                  onClick={handleStartShoppingClick}
                   className="flex items-center justify-center gap-x-5 rounded-full bg-gray-800 px-4 py-2 font-medium  text-slate-200 duration-150 hover:bg-gray-700 active:bg-gray-900 md:inline-flex"
                 >
                   Start Shopping
@@ -86,9 +85,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         <section
-          className="p-25 py-50"
+          className=""
           style={{ marginTop: "70px", border: "3px solid rgba(0, 0, 0, 0.3)" }}
         >
           <div className=" text-gray-600">
@@ -104,19 +102,39 @@ export default function Home() {
           <div className="relative mt-12">
             <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((item, idx) => (
-              <li key={idx} className="space-y-3 rounded-lg border bg-white p-4">
+                <li
+                  key={idx}
+                  className="space-y-3 rounded-lg border bg-white p-4"
+                >
                   <div className="text-center">
                     {/* Displaying the image */}
-                    <img src={item.icon} alt={item.title} className="mx-auto h-32" />
+                    <img
+                      src={item.icon}
+                      alt={item.title}
+                      className="mx-auto h-32"
+                    />
                   </div>
-                  <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
+                  <h4 className="text-lg font-semibold text-gray-800">
+                    {item.title}
+                  </h4>
                   <p>{item.desc}</p>
                 </li>
               ))}
             </ul>
           </div>
         </section>
+
+        {/* /////////////////////// */}
       </div>
+      {/* <footer className="bottom-0 left-0 right-0 bg-slate-400 bg-opacity-20 p-8 text-center">
+        <div className="mx-auto max-w-4xl text-slate-400">
+          <h2 className="mb-4 font-mono text-4xl">Contact Us</h2>
+          <p className="text-justify font-mono text-3xl">
+            Email: xxxxxxxxxxxxxxxxxxxxxx Email: xxxxxxxxxxxxxxxxxxxxxx Email:
+            xxxxxxxxxxxxxxxxxxxxxx Email: xxxxxxxxxxxxxxxxxxxxxx
+          </p>
+        </div>
+      </footer> */}
     </>
   );
 }
