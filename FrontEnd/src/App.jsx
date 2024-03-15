@@ -56,7 +56,7 @@ export default function App() {
         <Route path="/item/:id" element={<ItemDetail />} />
       </Routes>
       <Footer />
-      <BottomPage />
+      <BottomPage id="contact-us"/>
     </>
   );
 }
