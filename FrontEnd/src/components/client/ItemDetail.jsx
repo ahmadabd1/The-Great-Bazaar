@@ -20,14 +20,18 @@ const ItemDetail = () => {
   if (!item) {
     return <div>Loading...</div>;
   }
-
+  const addToCart = () => {
+    // Here you can implement the logic to add the item to the cart
+    // For simplicity, let's just log the item to the console
+    console.log("Item added to cart:", item);
+  };
   return (
     <div style={{ background: "#f0f0f0", padding: "20px", borderRadius: "5px" }}>
       <h1>{item.name}</h1>
       <p>Description: {item.description}</p>
       <p>Buy Price: {item.buyPrice}</p>
       <p>Sell Price: {item.sellPrice}</p>
-      <button>Add to Cart</button>
+      <button onClick={addToCart}>Add to Cart</button>
     </div>
   );
 };
