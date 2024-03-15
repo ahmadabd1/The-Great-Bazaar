@@ -5,13 +5,27 @@ import '../style/UpdateItemModal.css';
 export default function UpdateItemModal({ isOpen, closeModal, item, onUpdateSuccess }) {
   const [updatedItem, setUpdatedItem] = useState(item || {});
   const [selectedFile, setSelectedFile] = useState(null);
-  const { update, isLoading, error, response, isSuccess } = useUpdate();
+  const { update, isLoading, error, isSuccess } = useUpdate();
 
   useEffect(() => {
     if (item) {
       setUpdatedItem({ ...item, suggestedItem: item.suggestedItem || false });
     }
   }, [item]);
+
+  useEffect(() => {
+    let timeoutId;
+    if (isSuccess) {
+      timeoutId = setTimeout(() => {
+        onUpdateSuccess();
+      }, 2000);
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isSuccess, onUpdateSuccess]);
 
   if (!isOpen || !item) return null;
 
@@ -34,11 +48,11 @@ export default function UpdateItemModal({ isOpen, closeModal, item, onUpdateSucc
       return false;
     }
     if (!updatedItem.sellPrice) {
-      alert("Sell price is missing");
+      alert("Sell Price is missing");
       return false;
     }
     if (!updatedItem.buyPrice) {
-      alert("Buy price is missing");
+      alert("Buy Price is missing");
       return false;
     }
     if (!updatedItem.quantity) {
@@ -49,7 +63,6 @@ export default function UpdateItemModal({ isOpen, closeModal, item, onUpdateSucc
       alert("Vendor is missing");
       return false;
     }
-    // Add more validations as needed
     return true;
   };
 
@@ -72,9 +85,6 @@ export default function UpdateItemModal({ isOpen, closeModal, item, onUpdateSucc
     }
 
     await update('http://localhost:8080/item/item/', formData);
-    if (isSuccess) {
-      onUpdateSuccess();
-    }
   };
 
   return (
@@ -84,39 +94,45 @@ export default function UpdateItemModal({ isOpen, closeModal, item, onUpdateSucc
         <input
           type="text"
           name="name"
-          value={updatedItem?.name || ''}
+          value={updatedItem.name || ''}
           onChange={handleChange}
           placeholder="Name"
         />
         <input
           type="text"
           name="description"
-          value={updatedItem?.description || ''}
+          value={updatedItem.description || ''}
           onChange={handleChange}
           placeholder="Description"
         />
         <input
           type="number"
           name="sellPrice"
-          value={updatedItem?.sellPrice || ''}
+          value={updatedItem.sellPrice || ''}
           onChange={handleChange}
           placeholder="Sell Price"
         />
         <input
           type="number"
           name="buyPrice"
-          value={updatedItem?.buyPrice || ''}
+          value={updatedItem.buyPrice || ''}
           onChange={handleChange}
           placeholder="Buy Price"
         />
         <input
           type="number"
           name="quantity"
-          value={updatedItem?.quantity || ''}
+          value={updatedItem.quantity || ''}
           onChange={handleChange}
           placeholder="Quantity"
         />
-        {updatedItem.image_id && <img src={updatedItem.image_id} alt="Current" style={{ width: '100px', height: '100px' }} />}
+        {updatedItem.image_id && (
+          <img
+            src={updatedItem.image_id}
+            alt="Current"
+            style={{ width: '100px', height: '100px' }}
+          />
+        )}
         <input
           type="file"
           name="image"
@@ -126,16 +142,16 @@ export default function UpdateItemModal({ isOpen, closeModal, item, onUpdateSucc
           <input
             type="checkbox"
             name="suggestedItem"
-            checked={updatedItem?.suggestedItem || false}
+            checked={updatedItem.suggestedItem || false}
             onChange={handleChange}
             className="checkbox-input"
           />
-          <span className="checkbox-label">Suggested Item</span>
+          Suggested Item
         </label>
         <input
           type="text"
           name="vendor"
-          value={updatedItem?.vendor || ''}
+          value={updatedItem.vendor || ''}
           onChange={handleChange}
           placeholder="Vendor"
         />
