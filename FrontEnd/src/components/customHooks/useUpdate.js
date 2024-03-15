@@ -9,37 +9,26 @@ const useUpdate = () => {
   const update = async (url, data) => {
     setIsLoading(true);
     setError(null);
-    setResponse(null);
     setIsSuccess(false);
-
-    return new Promise((resolve, reject) => {
-      fetch(url, {
+  
+    try {
+      const response = await fetch(url, {
         method: 'PUT',
         body: data,
-      })
-      .then(response => {
-        setResponse(response);
-        if (!response.ok) {
-          response.json().then(responseData => {
-            setError(responseData.message || 'Failed to update item');
-            reject(responseData.message);
-          });
-        } else {
-          response.json().then(responseData => {
-            setIsSuccess(true);
-            resolve(responseData);
-          });
-        }
-      })
-      .catch(error => {
-        setError(error.message);
-        reject(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
-    });
+      const responseData = await response.json();
+      setResponse(responseData);
+      if (!response.ok) {
+        throw new Error(responseData.message || 'Failed to update item');
+      }
+      setIsSuccess(true);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
 
   return { update, isLoading, error, response, isSuccess };
 };
