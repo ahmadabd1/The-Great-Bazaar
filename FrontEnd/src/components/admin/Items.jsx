@@ -4,6 +4,7 @@ import useDelete from "../customHooks/useDelete";
 import usePost from "../customHooks/usePost2";
 import "../style/adminitems.css";
 import AddItemModal from "./AddItemModal";
+import UpdateItemModal from "./UpdateItemModal";
 
 export default function Items() {
   const {
@@ -12,8 +13,11 @@ export default function Items() {
     error: itemsError,
     refetch,
   } = useGet("http://localhost:8080/item/items");
+
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const { deleteItem, isLoading: isDeleting, error: deleteError } = useDelete();
   const { postData, loading: posting, error: postError } = usePost();
   const [shouldRefetch, setShouldRefetch] = useState(false);
@@ -32,44 +36,45 @@ export default function Items() {
     }
   };
 
+  const handleUpdateItem = (item) => {
+    setSelectedItem(item);
+    setIsUpdateModalOpen(true);
+  };
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsUpdateModalOpen(false);
+    setSelectedItem(null);
+  };
 
   const addItem = async (formData) => {
     try {
-      const result = await postData(
-        "http://localhost:8080/item/item",
-        formData,
-        true,
-      ); // Pass true for FormData
-      if (result) {
-        setShouldRefetch(true);
-      }
+      await postData("http://localhost:8080/item/item", formData, true);
+      setShouldRefetch(true);
     } catch (error) {
       console.error("Error adding item:", error);
     }
   };
 
-  // Filter items based on the search term
-  const filteredItems = items?.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm) ||
-      item.description.toLowerCase().includes(searchTerm) ||
-      item._id.toLowerCase().includes(searchTerm),
+  const handleUpdateSuccess = () => {
+    closeModal();
+    refetch();
+  };
+
+  const filteredItems = items?.filter(item =>
+    item.name.toLowerCase().includes(searchTerm) ||
+    item.description.toLowerCase().includes(searchTerm) ||
+    item._id.toLowerCase().includes(searchTerm)
   );
 
   if (loadingItems || isDeleting || posting) return <div>Loading...</div>;
   if (itemsError || deleteError || postError)
-    return (
-      <div>
-        Error:{" "}
-        {itemsError?.message || deleteError?.message || postError?.message}
-      </div>
-    );
+    return <div>Error: {itemsError?.message || deleteError?.message || postError?.message}</div>;
 
   return (
     <div className="mb-20 ml-auto flex flex-col items-center">
@@ -100,6 +105,12 @@ export default function Items() {
                 />
               )}
               <button
+                onClick={() => handleUpdateItem(item)}
+                className="update-item-button"
+              >
+                Update
+              </button>
+              <button
                 onClick={() => handleDeleteItem(item._id)}
                 className="delete-item-button"
               >
@@ -112,6 +123,12 @@ export default function Items() {
         isOpen={isModalOpen}
         closeModal={closeModal}
         addItem={addItem}
+      />
+      <UpdateItemModal
+        isOpen={isUpdateModalOpen}
+        closeModal={closeModal}
+        item={selectedItem}
+        onUpdateSuccess={handleUpdateSuccess}
       />
     </div>
   );
