@@ -4,7 +4,7 @@ import { useState } from "react";
 // Assuming the logout function is defined here or imported
 const logout = () => {
   localStorage.clear();
-  window.location.href = '/';
+  window.location.href = "/";
 };
 
 export default function NavBar() {
@@ -34,17 +34,25 @@ export default function NavBar() {
     { label: "Home", path: "/client", icon: "fluent:home-12-regular" },
     {
       label: "Contact Us",
-      path: "/BLANK2",
+      path: "/",
       icon: "fluent:contact-card-ribbon-16-regular",
     },
   ];
 
-  // Handle item click
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   const handleItemClick = (item) => {
     if (item.label === "Logout") {
-      item.onClick(); // Call the logout function if the label is 'Logout'
+      item.onClick();
+    } else if (item.label === "Contact Us") {
+      scrollToBottom();
     } else {
-      setState(false); // Close the menu for other items
+      setState(false);
     }
   };
 

@@ -1,6 +1,5 @@
-import { Icon } from "@iconify/react";
 import React, { useState, useEffect } from "react";
-import axios from 'axios'; // Ensure axios is imported
+import axios from "axios"; // Ensure axios is imported
 
 export default function Home() {
   const [features, setFeatures] = useState([]);
@@ -8,16 +7,16 @@ export default function Home() {
   // Function to fetch items from your API and filter by suggested items
   const fetchItems = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/item/items');
-      const suggestedItems = response.data.filter(item => item.suggestedItem);
-      const itemsToDisplay = suggestedItems.map(item => ({
+      const response = await axios.get("http://localhost:8080/item/items");
+      const suggestedItems = response.data.filter((item) => item.suggestedItem);
+      const itemsToDisplay = suggestedItems.map((item) => ({
         icon: item.image_id, // Ensure the icon names are compatible with Iconify
         title: item.name,
         desc: item.description,
       }));
       setFeatures(itemsToDisplay);
     } catch (error) {
-      console.error('Error fetching items:', error);
+      console.error("Error fetching items:", error);
     }
   };
 
@@ -86,9 +85,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         <section
-          className="p-25 py-50"
+          className=""
           style={{ marginTop: "70px", border: "3px solid rgba(0, 0, 0, 0.3)" }}
         >
           <div className=" text-gray-600">
@@ -104,19 +102,39 @@ export default function Home() {
           <div className="relative mt-12">
             <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((item, idx) => (
-              <li key={idx} className="space-y-3 rounded-lg border bg-white p-4">
+                <li
+                  key={idx}
+                  className="space-y-3 rounded-lg border bg-white p-4"
+                >
                   <div className="text-center">
                     {/* Displaying the image */}
-                    <img src={item.icon} alt={item.title} className="mx-auto h-32" />
+                    <img
+                      src={item.icon}
+                      alt={item.title}
+                      className="mx-auto h-32"
+                    />
                   </div>
-                  <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
+                  <h4 className="text-lg font-semibold text-gray-800">
+                    {item.title}
+                  </h4>
                   <p>{item.desc}</p>
                 </li>
               ))}
             </ul>
           </div>
         </section>
+
+        {/* /////////////////////// */}
       </div>
+      {/* <footer className="bottom-0 left-0 right-0 bg-slate-400 bg-opacity-20 p-8 text-center">
+        <div className="mx-auto max-w-4xl text-slate-400">
+          <h2 className="mb-4 font-mono text-4xl">Contact Us</h2>
+          <p className="text-justify font-mono text-3xl">
+            Email: xxxxxxxxxxxxxxxxxxxxxx Email: xxxxxxxxxxxxxxxxxxxxxx Email:
+            xxxxxxxxxxxxxxxxxxxxxx Email: xxxxxxxxxxxxxxxxxxxxxx
+          </p>
+        </div>
+      </footer> */}
     </>
   );
 }
