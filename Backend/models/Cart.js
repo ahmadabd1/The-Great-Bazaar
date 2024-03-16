@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const itemSchema = new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -9,13 +9,8 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  sellPrice: {
-    type: Number,
-    required: true,
-  },
   buyPrice: {
     type: Number,
-    required: true,
   },
   quantity: {
     type: Number,
@@ -32,27 +27,12 @@ const itemSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  updated_at: {
-    type: Date,
-    default: Date.now,
-  },
   vendor: {
     type: String,
   },
-  soldQuantity: {
-    type: Number,
-    default: 0,
-  },
-  income: {
-    type: Number,
-    default: 0,
-  },
-  suggestedItem: {
-    type: Boolean,
-    default: false,
-  },
+
 });
 
-const Item = mongoose.model("Item", itemSchema);
+const Cart = mongoose.model("Cart", cartSchema);
 
-module.exports = Item;
+module.exports = Cart;
