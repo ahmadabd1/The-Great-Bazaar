@@ -8,7 +8,7 @@ import LoginPage from "./components/outside/LoginPage";
 import CategoryPage from "./components/client/CategoryPage";
 import ClientNavbar from "./components/client/ClientNavBar";
 import NavBar from "./components/NavBar";
-
+import ContactUs  from "./components/client/ContactUs"
 import ClientSideBar from "./components/client/ClientSideBar";
 import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
@@ -18,6 +18,7 @@ import ClientProfile from "./components/client/ClientProfile";
 import UsersPage from "./components/admin/UsersPage";
 import Item from "./components/client/Items";
 import ItemDetail from "./components/client/ItemDetail";
+import AboutUs from "./components/AboutUs"
 import BottomPage from "./components/client/BottomPage";
 export default function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ export default function App() {
         return <NavBar />;
     }
   };
+  
 
   return (
     <>
@@ -54,9 +56,12 @@ export default function App() {
         <Route path="/admin/categories" element={<Categories />} />
         <Route path="/admin/clients" element={<UsersPage />} />
         <Route path="/item/:id" element={<ItemDetail />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
+
       </Routes>
+      
       <Footer />
-      <BottomPage />
+      {/* <BottomPage id="contact-us"/> */}
     </>
   );
 }

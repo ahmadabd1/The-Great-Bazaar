@@ -13,7 +13,7 @@ export default function NavBar() {
   const leftNavigation = [
     {
       label: "Profile",
-      path: "/userProfile",
+      path: "/client/Profile",
       icon: "fluent:book-contacts-32-regular",
     },
     {

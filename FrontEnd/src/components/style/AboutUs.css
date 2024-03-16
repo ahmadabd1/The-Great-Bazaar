@@ -1,0 +1,26 @@
+.about-us-container {
+  padding: 3px;
+  margin: 20px auto;
+  max-width: 1000px; /* Increase width */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+.about-us-content {
+  text-align: justify;
+}
+
+.about-us-content h2,
+.about-us-content h3 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.about-us-content p {
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  margin-bottom: 10px;
+}
