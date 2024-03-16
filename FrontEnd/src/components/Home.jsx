@@ -26,6 +26,7 @@ export default function Home() {
         icon: item.image_id, // Assuming `image_id` is the image URL or identifier
         title: item.name,
         desc: item.description,
+        price : item.buyPrice
       }));
       setFeatures(itemsToDisplay);
     } catch (error) {
@@ -135,12 +136,14 @@ export default function Home() {
     <div className="relative mt-12" style={{ marginLeft: "41px" }}>
       <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {features.map((item, idx) => (
-          <li key={idx} className="space-y-3 rounded-lg p-4" style={{ height: '250px', width: '200px', backdropFilter: 'blur(10px)' }}>
+          <li key={idx} className="space-y-3 rounded-lg p-4" style={{ height: '270px', width: '200px', backdropFilter: 'blur(10px)' }}>
             <div className="text-center">
-              <img src={item.icon} alt={item.title} style={{ height: '150px', width: '150px' }} className="inline-block" />
+              <img src={item.icon} alt={item.title} style={{ height: '130px', width: '130px' }} className="inline-block" />
             </div>
             <h4 className="text-lg font-semibold text-black-800">{item.title}</h4>
-            <p>{item.desc}</p>
+            <p>{item.desc}</p>         
+          <p>{item.price}$</p>
+
           </li>
         ))}
       </ul>
