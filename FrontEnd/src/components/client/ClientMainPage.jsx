@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Ensure axios is imported
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 export default function Home() {
   const [features, setFeatures] = useState([]);
+  const [userName, setUserName] = useState(""); // State to store the user's full name
   const navigate = useNavigate();
+
   const fetchItems = async () => {
     try {
       const response = await axios.get("http://localhost:8080/item/items");
@@ -19,9 +22,33 @@ export default function Home() {
     }
   };
 
+const fetchUserDetails = async () => {
+  try {
+    const userEmail = localStorage.getItem('userEmail');
+    if (!userEmail) {
+      console.error("User email not found");
+      return;
+    }
+    
+    const response = await axios.post("http://localhost:8080/user/user/details", { email: userEmail });
+    const { firstName, lastName } = response.data;
+    setUserName(`${firstName} ${lastName}`);
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+  }
+};
+
+useEffect(() => {
+  fetchItems();
+  fetchUserDetails();
+}, []);
+
+
   useEffect(() => {
     fetchItems();
+    fetchUserDetails();
   }, []);
+
   const handleStartShoppingClick = () => {
     navigate("/client/item");
   };
@@ -35,7 +62,7 @@ export default function Home() {
           <div className="gap-10 overflow-hidden py-10 md:flex">
             <div className="flex-1 space-y-10">
               <h1 className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-200 md:text-5xl lg:text-6xl">
-                The Great Bazaar *CLIENT*
+                {userName ? `${userName}'s Great Bazaar` : "The Great Bazaar"}
               </h1>
               <p className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-400 md:text-5xl lg:text-2xl">
                 Clothes, Food, Electronics and More
