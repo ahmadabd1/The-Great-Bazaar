@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function userCart () {
+export default function UserCart () {
     
 
   return (
