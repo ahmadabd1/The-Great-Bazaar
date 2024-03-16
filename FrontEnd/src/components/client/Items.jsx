@@ -16,34 +16,48 @@ const Item = () => {
   }, []);
 
   return (
-    <div style={{ padding: "20px", borderRadius: "5px" }}>
-      <h1 style={{ fontSize: '18px' }}>Items</h1> 
-      {/* Adjusted styles for ul */}
+    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+      <h1 style={{ fontSize: '24px', textAlign: 'center', margin: '20px 0' }}>Items</h1> 
       <ul style={{ 
           display: 'flex', 
           flexWrap: 'wrap', 
           listStyle: 'none', 
-          padding: 0, 
-          maxWidth: '50%', // Limiting maximum width
-          margin: 'auto' // Centering the list
+          padding: 0,
+          justifyContent: 'center',
         }}>
-        {items.map(item => (
-          // Adjusted styles for li
-          <li key={item._id} style={{ 
-              background: "white", 
-              margin: "4px", 
-              padding: "1px", 
-              borderRadius: "5px", 
-              flex: "0 1 calc(25% - 10px)" // Adjusted flex basis for smaller items
-            }}> 
-            <Link to={`/item/${item._id}`} style={{ textDecoration: 'none', color: 'black' }}>
-              <p style={{ margin: '5px 0', fontSize: '14px' }}>Name: {item.name}</p>
-              <p style={{ margin: '5px 0', fontSize: '14px' }}>Description: {item.description}</p>
-              <p style={{ margin: '5px 0', fontSize: '14px' }}>Buy Price: {item.buyPrice}</p>
-              <p style={{ margin: '5px 0', fontSize: '14px' }}>Sell Price: {item.sellPrice}</p> 
-            </Link>
-          </li>
-        ))}
+     {items.map(item => (
+  <li key={item._id} style={{ 
+      background: "#f9f9f9", 
+      margin: "10px", 
+      padding: "20px", 
+      borderRadius: "8px", 
+      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+      width: "calc(25% - 20px)",
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between', // This ensures the space distribution
+      alignItems: 'center',
+    }}>
+    <Link to={`/item/${item._id}`} style={{ textDecoration: 'none', color: 'black', display: 'flex', flexDirection: 'column', height: '100%' }}>
+      {item.image_id && (
+        <div style={{ flex: 1 }}> {/* This will allow the image container to grow and push the text down */}
+          <img 
+            src={item.image_id} 
+            alt={item.name} 
+            style={{ width: '100%', height: 'auto', marginBottom: '15px', borderRadius: '4px' }} 
+          />
+        </div>
+      )}
+      <div style={{ textAlign: 'center', marginTop: 'auto' }}> {/* This margin-top:auto will also push the content to the bottom */}
+        <h2 style={{ fontSize: '16px', marginBottom: '10px' }}>{item.name}</h2>
+        <p style={{ fontSize: '14px', color: '#555' }}>{item.description}</p>
+        <p style={{ fontSize: '14px', marginTop: '10px' }}><strong>Buy:</strong> {item.buyPrice}$</p>
+        <p style={{ fontSize: '14px' }}><strong>Sell:</strong> {item.sellPrice}$</p>
+      </div>
+    </Link>
+  </li>
+))}
+
       </ul>
     </div>
   );
