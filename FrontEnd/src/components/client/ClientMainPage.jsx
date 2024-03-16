@@ -126,15 +126,6 @@ export default function Home() {
 
         {/* /////////////////////// */}
       </div>
-      {/* <footer className="bottom-0 left-0 right-0 bg-slate-400 bg-opacity-20 p-8 text-center">
-        <div className="mx-auto max-w-4xl text-slate-400">
-          <h2 className="mb-4 font-mono text-4xl">Contact Us</h2>
-          <p className="text-justify font-mono text-3xl">
-            Email: xxxxxxxxxxxxxxxxxxxxxx Email: xxxxxxxxxxxxxxxxxxxxxx Email:
-            xxxxxxxxxxxxxxxxxxxxxx Email: xxxxxxxxxxxxxxxxxxxxxx
-          </p>
-        </div>
-      </footer> */}
     </>
   );
 }
