@@ -21,7 +21,7 @@ export default function NavBar() {
       path: "/userOrders",
       icon: "fluent:shopping-bag-16-regular",
     },
-    { label: "Cart", path: "/userCart", icon: "fluent:cart-16-regular" },
+    { label: "Cart", path: "/client/userCart", icon: "fluent:cart-16-regular" },
     {
       label: "Logout",
       path: "/loggedout",
