@@ -1,141 +1,135 @@
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
+  font-family: Arial, sans-serif;
 }
 
-.add-item-button {
-  display: block;
-  background-color: #4caf50;
-  color: white;
-  padding: 0.6rem 1.2rem; /* Adjusted padding */
-  margin: 1rem 0;
-  font-size: 1rem; /* Adjusted font size */
+.add-item-button,
+.update-item-button,
+.delete-item-button {
+  margin: 5px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 0.3rem;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  margin-left: 30%;
+  transition: background-color 0.3s;
 }
 
-.add-item-button:hover {
-  background-color: #367c39;
+.add-item-button:hover,
+.update-item-button:hover,
+.delete-item-button:hover {
+  background-color: #0056b3;
 }
 
 .search-bar,
 .category-dropdown {
-  width: 60%; /* Adjusted width */
-  padding: 0.6rem 1rem; /* Adjusted padding */
-  margin-left: 30%; /* Adjusted left margin */
-  margin-bottom: 1rem; /* Adjusted bottom margin */
-  border-radius: 0.3rem;
+  padding: 10px;
+  margin: 10px 0;
   border: 1px solid #ddd;
-  font-size: 0.9rem; /* Adjusted font size */
+  border-radius: 4px;
+  width: calc(100% - 22px); /* Adjust width to account for padding and border */
 }
 
-.Items-Container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-around;
-  margin-left: 250px; /* Adjusted for sidebar */
-}
-.item-container {
-  background: rgba(0, 0, 0, 0.6); /* Slightly transparent black for contrast */
-  padding: 1rem;
-  border-radius: 0.5rem;
-  width: calc(33.33% - 1rem); /* Three items per row */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-bottom: 1rem;
-  transition: transform 0.2s ease-in-out;
-  backdrop-filter: blur(5px); /* Add blur effect */
-  -webkit-backdrop-filter: blur(5px); /* Add blur effect for Safari */
+.Items-Table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.item-container:hover {
-  transform: translateY(-5px);
+.Items-Table th,
+.Items-Table td {
+  text-align: left;
+  padding: 12px;
+  transition: background-color 0.3s;
 }
 
-.item-Name,
-.item-desc {
-  margin-bottom: 0.5rem;
-  color: #f4f4f4; /* Bright text color */
+.Items-Table th {
+  color: white;
+  font-size: 16px;
+  position: relative;
+  background-color: transparent;
+  z-index: 2;
+}
+
+.Items-Table th {
+  color: white;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(10px); /* For Safari 9+ */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #d1d5db;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.Items-Table td {
+  background-color: white;
+  font-size: 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+.Items-Table tr:last-child td {
+  border-bottom: none;
+}
+
+.Items-Table tr:nth-child(even) td {
+  background-color: #f8f9fa;
+}
+
+.Items-Table tr:hover td {
+  background-color: #e9ecef;
 }
 
 .item-image {
-  width: 100%;
+  width: 100px;
   height: auto;
-  object-fit: cover; /* Make sure the images fit well */
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+.add-item-button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #28a745; /* Green color for add button */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-item-button:hover {
+  background-color: #218838; /* Darker green on hover */
 }
 
 .update-item-button,
 .delete-item-button {
-  padding: 0.4rem 0.8rem; /* Adjusted padding */
-  margin-right: 0.5rem;
+  margin: 5px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 0.3rem;
+  border-radius: 4px;
+  color: white;
   cursor: pointer;
-  margin: 4%;
+  transition: background-color 0.3s;
 }
 
 .update-item-button {
-  background-color: #1094ab9a;
-  color: #eee;
-}
-
-.delete-item-button {
-  background-color: #f44336;
-  color: white;
+  background-color: #28a745; /* Green color for update button */
 }
 
 .update-item-button:hover {
-  background-color: #06c6e0;
+  background-color: #218838; /* Darker green on hover */
+}
+
+.delete-item-button {
+  background-color: #dc3545; /* Red color for delete button */
 }
 
 .delete-item-button:hover {
-  background-color: #d63a2f;
-}
-
-/* Responsive styles */
-@media (max-width: 1024px) {
-  .Items-Container {
-    margin-left: 0; /* Remove margin for smaller screens */
-  }
-
-  .item-container {
-    width: calc(50% - 1rem); /* Two items per row on smaller screens */
-  }
-}
-
-@media (max-width: 768px) {
-  .add-item-button,
-  .search-bar,
-  .category-dropdown {
-    width: 80%; /* Adjusted width */
-    margin-left: 10%; /* Adjusted left margin */
-    margin-right: 10%; /* Adjusted right margin */
-  }
-
-  .item-container {
-    width: calc(33.33% - 1rem); /* Three items per row on smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 1rem; /* Adjust padding for smaller screens */
-  }
-
-  .item-container {
-    width: calc(50% - 1rem); /* Two items per row on even smaller screens */
-  }
-
-  .add-item-button,
-  .search-bar,
-  .category-dropdown {
-    width: 90%; /* Adjusted width */
-    margin-left: 5%; /* Adjusted left margin */
-    margin-right: 5%; /* Adjusted right margin */
-  }
+  background-color: #c82333; /* Darker red on hover */
 }
