@@ -14,11 +14,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/cart', upload.single('image'), cartsHandler);
-router.get('/cart/:Id', cartsHandler);
-// router.get('/items', itemsHandler.get_all_items);
-// router.get('/items/:categoryId', itemsHandler.get_items_byCategoryId);
-// router.delete('/item/:Id', itemsHandler.delete_item);
-// router.put('/item', itemsHandler.update_item);
+
+router.get('/allCart',cartsHandler.get_allCartItems);
+router.post('/addToCart', cartsHandler.add_CartItem);
+// Delete a cart by ID
+router.delete('/deleteFromCart:id', cartsHandler.getCart,cartsHandler.deleteFromCart );
+router.patch('/updateCart:id', cartsHandler.getCart,cartsHandler.updateCart);
 
 module.exports = router;
