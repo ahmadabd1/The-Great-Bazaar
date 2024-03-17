@@ -62,6 +62,7 @@ export default function UserCart(props) {
         </tbody>
       </table>
       <div>Total Price: ${totalPrice}</div>
+      <button>Payment</button>
     </div>
   );
 }

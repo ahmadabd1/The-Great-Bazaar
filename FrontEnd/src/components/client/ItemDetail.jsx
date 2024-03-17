@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import UserCart from './userCart';
+// import UserCart from './userCart';
+// import Item from '../../../../Backend/models/item';
 
 const ItemDetail = () => {
   const [item, setItem] = useState(null);
@@ -43,7 +44,7 @@ const ItemDetail = () => {
       <p style={{ fontSize: '16px', textAlign: 'center', margin: '5px 0' }}>{item.description}</p> 
       <p style={{ fontSize: '16px', margin: '5px 0' }}>Buy Price: {item.buyPrice}$</p> 
       <p style={{ fontSize: '16px', margin: '5px 0' }}>Sell Price: {item.sellPrice}$</p> 
-      <button style={{ padding: '8px 16px', fontSize: '14px', cursor: 'pointer', marginTop: '10px' }}>Add to Cart</button>
+      <button onClick={()=>addToCart(item)} style={{ padding: '8px 16px', fontSize: '14px', cursor: 'pointer', marginTop: '10px' }}>Add to Cart</button>
     </div>
   );
 };
