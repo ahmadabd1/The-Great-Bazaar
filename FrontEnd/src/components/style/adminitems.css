@@ -1,128 +1,141 @@
-adminitems.css .search-bar {
-  width: 30%;
-  padding: 10px;
-  margin: 20px;
-  margin-left: 30%;
-  font-size: 16px;
-  border: 1px solid #aaa; /* Lighter border color */
-  background-color: #fff; /* White background for visibility */
-  color: #333; /* Dark text for contrast */
-  border-radius: 4px;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.success-message {
-  color: green;
-  margin: 10px 0;
+
+.add-item-button {
+  display: block;
+  background-color: #4caf50;
+  color: white;
+  padding: 0.6rem 1.2rem; /* Adjusted padding */
+  margin: 1rem 0;
+  font-size: 1rem; /* Adjusted font size */
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
   margin-left: 30%;
 }
 
-.error-message {
-  color: red;
-  margin: 10px 0;
-  margin-left: 30%;
+.add-item-button:hover {
+  background-color: #367c39;
+}
 
+.search-bar,
+.category-dropdown {
+  width: 60%; /* Adjusted width */
+  padding: 0.6rem 1rem; /* Adjusted padding */
+  margin-left: 30%; /* Adjusted left margin */
+  margin-bottom: 1rem; /* Adjusted bottom margin */
+  border-radius: 0.3rem;
+  border: 1px solid #ddd;
+  font-size: 0.9rem; /* Adjusted font size */
 }
 
 .Items-Container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 20px;
-  padding: 20px;
-  margin-left: 250px; /* Space for sidebar */
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  gap: 1rem;
+  justify-content: space-around;
+  margin-left: 250px; /* Adjusted for sidebar */
 }
-
 .item-container {
-  border: 1px solid #aaa; /* Lighter border color */
-  background-color: #fff; /* White background for visibility */
-  color: #333; /* Dark text for contrast */
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 300px; /* Maximum width for each item */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.3s ease-in-out;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  background: rgba(0, 0, 0, 0.6); /* Slightly transparent black for contrast */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: calc(33.33% - 1rem); /* Three items per row */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease-in-out;
+  backdrop-filter: blur(5px); /* Add blur effect */
+  -webkit-backdrop-filter: blur(5px); /* Add blur effect for Safari */
 }
 
 .item-container:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
 }
 
-.item-Name {
-  color: #007bff; /* Bright blue for the item name */
-  margin: 0 0 10px 0;
-  font-size: 1.2em;
-}
-
-.item-id {
-  color: #28a745; /* Green for the ID */
-  font-size: 0.9em;
-  margin: 0 0 5px 0;
-}
-
+.item-Name,
 .item-desc {
-  color: #17a2b8; /* Light blue for the description */
-  font-size: 1em;
+  margin-bottom: 0.5rem;
+  color: #f4f4f4; /* Bright text color */
 }
 
-.add-item-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius: 5px;
-  width: 20%;
-  margin-left: 30%;
+.item-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Make sure the images fit well */
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
 }
+
+.update-item-button,
 .delete-item-button {
-  background-color: #b51d20;
-  color: white;
+  padding: 0.4rem 0.8rem; /* Adjusted padding */
+  margin-right: 0.5rem;
   border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
+  border-radius: 0.3rem;
   cursor: pointer;
-  border-radius: 5px;
+  margin: 4%;
 }
 
-.add-item-button:hover,
+.update-item-button {
+  background-color: #1094ab9a;
+  color: #eee;
+}
+
+.delete-item-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.update-item-button:hover {
+  background-color: #06c6e0;
+}
+
 .delete-item-button:hover {
-  background-color: white;
-  color: black;
-  border: 1px solid #007bff;
+  background-color: #d63a2f;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Responsive styles */
+@media (max-width: 1024px) {
   .Items-Container {
-    flex-direction: column;
-    align-items: center;
-    margin-left: 0;
-    padding: 10px;
-  }
-
-  .search-bar {
-    width: calc(100% - 20px);
-    margin: 10px auto; /* Center the search bar */
-    display: block;
+    margin-left: 0; /* Remove margin for smaller screens */
   }
 
   .item-container {
-    width: 90%;
-    max-width: none;
+    width: calc(50% - 1rem); /* Two items per row on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .add-item-button,
+  .search-bar,
+  .category-dropdown {
+    width: 80%; /* Adjusted width */
+    margin-left: 10%; /* Adjusted left margin */
+    margin-right: 10%; /* Adjusted right margin */
+  }
+
+  .item-container {
+    width: calc(33.33% - 1rem); /* Three items per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem; /* Adjust padding for smaller screens */
+  }
+
+  .item-container {
+    width: calc(50% - 1rem); /* Two items per row on even smaller screens */
+  }
+
+  .add-item-button,
+  .search-bar,
+  .category-dropdown {
+    width: 90%; /* Adjusted width */
+    margin-left: 5%; /* Adjusted left margin */
+    margin-right: 5%; /* Adjusted right margin */
   }
 }

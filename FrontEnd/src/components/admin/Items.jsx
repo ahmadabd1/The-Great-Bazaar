@@ -8,7 +8,10 @@ import UpdateItemModal from "./UpdateItemModal";
 
 export default function Items() {
   const { data: items, loading: loadingItems, error: itemsError, refetch } = useGet("http://localhost:8080/item/items");
+  const { data: categories, loading: loadingCategories, error: categoriesError } = useGet("http://localhost:8080/category/categories/");
+  
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -29,6 +32,10 @@ export default function Items() {
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
+  };
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
   };
 
   const openModal = () => setIsModalOpen(true);
@@ -54,24 +61,30 @@ export default function Items() {
   };
 
   const filteredItems = items?.filter(item =>
-    item.name.toLowerCase().includes(searchTerm) ||
+    (item.name.toLowerCase().includes(searchTerm) ||
     item.description.toLowerCase().includes(searchTerm) ||
-    item._id.toLowerCase().includes(searchTerm)
+    item._id.toLowerCase().includes(searchTerm)) &&
+    (selectedCategory === "" || item.category_id === selectedCategory)
   );
 
-  if (loadingItems || isDeleting || posting) return <div>Loading...</div>;
-  if (itemsError || deleteError || postError)
-    return <div>Error: {itemsError?.message || deleteError?.message || postError?.message}</div>;
+  if (loadingItems || isDeleting || posting || loadingCategories) return <div>Loading...</div>;
+  if (itemsError || deleteError || postError || categoriesError)
+    return <div>Error: {itemsError?.message || deleteError?.message || postError?.message || categoriesError?.message}</div>;
 
   return (
-    <div className="mb-20 ml-auto flex flex-col items-center">
-      <button onClick={openModal} className="mb-10 w-2/5 rounded bg-blue-500 px-4 py-2 font-bold text-white">Add New Item</button>
-      <input type="text" placeholder="Search by ID, name, or description..." onChange={handleSearchChange} className="mb-10 w-2/5 rounded border border-gray-300 px-4 py-2" />
+    <div className="container">
+      <button onClick={openModal} className="add-item-button">Add New Item</button>
+      <input type="text" placeholder="Search by ID, name, or description..." onChange={handleSearchChange} className="search-bar" />
+      <select value={selectedCategory} onChange={handleCategoryChange} className="category-dropdown">
+        <option value="">All Categories</option>
+        {categories.map(category => (
+          <option key={category._id} value={category._id}>{category.name}</option>
+        ))}
+      </select>
       <div className="Items-Container">
         {filteredItems && filteredItems.map((item) => (
           <div key={item._id} className="item-container">
             <h2 className="item-Name">{item.name}</h2>
-            <p className="item-id">ID: {item._id}</p>
             <p className="item-desc">{item.description}</p>
             {item.image_id && <img src={item.image_id} alt={item.name} className="item-image" />}
             <button onClick={() => handleUpdateItem(item)} className="update-item-button">Update</button>

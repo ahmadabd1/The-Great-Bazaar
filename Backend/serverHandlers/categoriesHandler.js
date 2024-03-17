@@ -67,17 +67,33 @@ exports.get_categoriesid = async (req, res) => {
     res.status(500).send("Internal server error");
   }
 };
+
+
 exports.update_category = async (req, res) => {
   try {
-    const categoryId = req.body.categoryId;
-    const updatedData = req.body.updatedData;
-    await category.findByIdAndUpdate(categoryId, updatedData);
-    res.status(200).json({ message: "Category updated successfully" });
+    const categoryId = req.params.categoryId; 
+    let updatedData = {
+      name: req.body.name,
+      description: req.body.description,
+    };
+
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path);
+      updatedData.image_id = result.url; // Ensure you have logic to handle this in your model
+    }
+
+    const updatedCategory = await category.findByIdAndUpdate(categoryId, updatedData, { new: true });
+    if (!updatedCategory) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+
+    res.status(200).json({ message: "Category updated successfully", category: updatedCategory });
   } catch (error) {
     console.error("Error updating category:", error);
-    res.status(500).json({ message: errorMessages.internalServerError });
+    res.status(500).json({ message: "Error updating category", error: error.message });
   }
 };
+
 
 exports.delete_category = async (req, res) => {
   try {

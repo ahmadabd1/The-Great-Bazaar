@@ -21,7 +21,7 @@ router.post(
   upload.single("image"),
   categoriesHandler.create_category
 );
-router.put("/category", categoriesHandler.update_category);
+router.put("/:categoryId", upload.single("image"), categoriesHandler.update_category);
 router.delete("/:categoryId", categoriesHandler.delete_category);
 router.get("/category/:categoryId", categoriesHandler.get_categoriesid);
 module.exports = router;
