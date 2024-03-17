@@ -32,6 +32,7 @@ export default function App() {
           <>
             <ClientNavbar />
             <ClientSideBar />
+            {/* {location.pathname.includes("/client/item") && <ClientSideBar />} */}
           </>
         );
       default:
