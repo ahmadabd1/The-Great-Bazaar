@@ -19,6 +19,7 @@ import UsersPage from "./components/admin/UsersPage";
 import Item from "./components/client/Items";
 import ItemDetail from "./components/client/ItemDetail";
 import BottomPage from "./components/client/BottomPage";
+import UserCart from "./components/client/userCart";
 export default function App() {
   const location = useLocation();
 
@@ -54,6 +55,7 @@ export default function App() {
         <Route path="/admin/categories" element={<Categories />} />
         <Route path="/admin/clients" element={<UsersPage />} />
         <Route path="/item/:id" element={<ItemDetail />} />
+        <Route path="/userCart" element={<UserCart />} />
       </Routes>
       <Footer />
       {/* <BottomPage id="contact-us"/> */}
