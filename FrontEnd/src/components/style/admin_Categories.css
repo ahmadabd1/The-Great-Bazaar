@@ -1,96 +1,116 @@
 /* admin_Categories.css */
 .categories-container {
+  color: #f4f4f4; /* Bright text color for readability */
   padding: 20px;
-  width: 120%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  width: 150% ;
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
 }
 
 .categories-container h1 {
+  text-align: center;
+  color: #f4f4f4;
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  padding: 1%;
 }
-.category-image {
-  width: 100px; /* Or any size you prefer */
-  height: auto;
-  margin: 10px 0;
-}
-.categories-container button {
-  padding: 5%;
-  margin: 5%;
-  background-color: #007bff;
+
+.add-new-category {
+  display: block;
+  width: max-content;
+  margin: 0 auto 20px auto;
+  background-color: #007bff; /* A bright blue for contrast */
   color: white;
   border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-new-category:hover {
+  background-color: #0056b3;
+}
+
+.categories-container2 {
+  background-color: rgba(0, 0, 0, 0.6); /* Dark background with opacity */
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  height: auto; /* Adjust height to be auto for dynamic content */
+  overflow-y: auto; /* Add scroll for overflow */
 }
 
 .categories-container ul {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
-.categories-container ul li {
-  padding: 10px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
+.categories-container li {
+  background-color: rgba(0, 0, 0, 0.8); /* Darker background for each category */
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 5px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
 }
 
-.categories-container ul li:last-child {
-  border-bottom: none;
+.categories-container li:hover {
+  background-color: rgba(0, 0, 0, 0.9); /* Slightly lighten on hover */
 }
 
-.categories-container ul li button {
-  padding: 5px 10px;
-  background-color: #dc3545;
+.categories-container li img {
+  border-radius: 50%;
+  margin-right: 15px;
+  width: 180px; /* Increase the size of the image */
+  height: 180px; /* Maintain the aspect ratio */
+}
+
+.delete-button, .update-button {
   color: white;
-  border: none;
-  cursor: pointer;
-}
-
-
-
-.categories-container h1 {
-  margin-bottom: 20px;
-  padding: 1%;
-}
-.category-image {
-  width: 100px; /* Or any size you prefer */
-  height: auto;
-  margin: 10px 0;
-}
-.categories-container button {
-  padding: 5%;
-  margin: 5%;
   background-color: #007bff;
-  color: white;
   border: none;
-  cursor: pointer;
-  /* width: fit-content; */
-}
-
-.categories-container ul {
-  list-style: none;
-  padding: 0;
-}
-
-.categories-container ul li {
-  padding: 10px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.categories-container ul li:last-child {
-  border-bottom: none;
-}
-
-.categories-container ul li button {
   padding: 5px 10px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 5%;
+}
+
+.delete-button:hover {
+  background-color: #dc3545; /* Red on hover for delete */
+}
+
+.update-button:hover {
+  background-color: #28a745; /* Green on hover for update */
+}
+
+@media (max-width: 768px) {
+  .categories-container {
+    margin-left: 0;
+    padding: 10px;
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  .categories-container h1 {
+    font-size: 2rem;
+  }
+
+  .categories-container li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .delete-button, .update-button {
+    margin-top: 10px;
+  }
+
+  .categories-container li img {
+    width: 60px; /* Slightly smaller on mobile */
+    height: 60px;
+  }
 }
