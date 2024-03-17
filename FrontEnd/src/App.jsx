@@ -20,6 +20,7 @@ import Item from "./components/client/Items";
 import ItemDetail from "./components/client/ItemDetail";
 import AboutUs from "./components/AboutUs";
 import BottomPage from "./components/client/BottomPage";
+import UserCart from "./components/client/userCart";
 export default function App() {
   const location = useLocation();
 
