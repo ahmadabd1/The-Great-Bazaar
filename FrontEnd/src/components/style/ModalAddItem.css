@@ -1,19 +1,16 @@
 .Modal {
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 15px;
-  width: 80%;
-  max-width: 600px;
-  position: absolute;
-  left: 50%;
+  position: fixed;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  font-size: 16px;
-  z-index: 1000;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  width: 547px;
+  max-height: 88%;
   overflow-y: auto;
-  max-height: 90vh;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .Overlay {
@@ -23,102 +20,66 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 1000;
 }
 
-.Modal h2 {
-  color: #333;
-  font-size: 28px;
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-
-.Modal form {
-  display: grid;
-  grid-template-columns: 1fr 2fr; /* 1fr for labels and 2fr for inputs */
-  column-gap: 20px;
-  row-gap: 10px;
-  align-items: center;
-}
-
-.Modal label {
-  grid-column: 1 / 2; /* Place labels in the first column */
-  text-align: right;
-}
-
-.Modal input,
-.Modal select,
-.Modal textarea,
-.Modal button {
-  grid-column: 2 / 3; /* Place inputs/selects/textareas/buttons in the second column */
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.Modal input:focus,
-.Modal select:focus,
-.Modal textarea:focus {
-  border-color: #007bff;
-}
-
-.Modal button {
-  grid-column: 1 / 3; /* Buttons span across both columns */
-  margin-top: 20px;
-}
-
-.submit-button {
-  background-color: #28a745;
+.submit-button,
+.cancel-button {
+  display: inline-block;
   color: white;
-  margin-right: 10px;
-}
-
-.submit-button:hover {
-  background-color: #218838;
-  transform: translateY(-2px);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
 }
 
 .cancel-button {
-  background-color: #dc3545;
-  color: white;
+  background-color: #6c757d;
 }
 
+.submit-button:hover {
+  background-color: green;
+}
 .cancel-button:hover {
-  background-color: #c82333;
-  transform: translateY(-2px);
+  background-color: gray;
 }
 
-@media (max-width: 768px) {
-  .Modal {
-    width: 90%;
-    padding: 20px;
-  }
+input[type="text"],
+input[type="number"],
+select {
+  width: calc(100% - 2rem);
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
 
-  .Modal h2 {
-    font-size: 24px;
-  }
+input[type="file"] {
+  margin-bottom: 1rem;
+}
 
-  .Modal form {
-    grid-template-columns: 1fr; /* Stack form fields vertically */
-  }
+label {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  vertical-align: middle;
+}
 
-  .Modal label {
-    text-align: left; /* Align labels to the left on small screens */
-    grid-column: 1 / 2; /* Take full width on small screens */
-  }
+/* Wrapper for each label-input/select pair */
 
-  .Modal input,
-  .Modal select,
-  .Modal textarea,
-  .Modal button {
-    grid-column: 1 / 2; /* Take full width on small screens */
-    margin-top: 10px; /* Add some space above each input */
-  }
+.form-group label {
+  margin-bottom: -47px;
+  display: inline-block; /* Ensure both are inline-block */
+  vertical-align: middle;
+}
 
-  .Modal button {
-    margin-top: 20px; /* Add more space above buttons */
-  }
+.form-group input,
+select {
+  display: inline-block; /* Ensure both are inline-block */
+  vertical-align: middle;
+  width: calc(100% - 2rem);
+  margin-right: 190px; /* Adjust width if necessary, consistent with the global input style */
+  /* Other input styles */
 }

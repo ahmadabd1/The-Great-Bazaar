@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import '../style/ModalAddItem.css';
 
 Modal.setAppElement('#root');
 
@@ -67,11 +66,13 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
       className="Modal"
       overlayClassName="Overlay"
     >
-      <h2>Add New Item</h2>
-      <form onSubmit={handleSubmit} className="flex flex-wrap">
+      <form onSubmit={handleSubmit} className="form-group">
         {/* Left side */}
         <div className="w-full pr-2 md:w-1/2">
+        <div class="form-group">
+
           <div className="flex w-full flex-col">
+          
             <label className="mb-2">Name:</label>
             <input
               type="text"
@@ -79,7 +80,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               value={formData.name}
               onChange={handleChange}
               required
-              className="mb-4 w-full"
+    className="input-field"
             />
             <label className="mb-2">Description:</label>
             <input
@@ -88,7 +89,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               value={formData.description}
               onChange={handleChange}
               required
-              className="mb-4 w-full"
+    className="input-field"
             />
             <label>Sell Price:</label>
             <input
@@ -97,6 +98,8 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               value={formData.sellPrice}
               onChange={handleChange}
               required
+                  className="input-field"
+
             />
             <label>Buy Price:</label>
             <input
@@ -104,6 +107,8 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               name="buyPrice"
               value={formData.buyPrice}
               onChange={handleChange}
+                  className="input-field"
+
             />
             <label>Quantity:</label>
             <input
@@ -111,6 +116,8 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               name="quantity"
               value={formData.quantity}
               onChange={handleChange}
+                  className="input-field"
+
               required
             />
             
@@ -124,19 +131,24 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
               ))}
             </select>
             <label>Image:</label>
-            <input type="file" name="image" onChange={handleChange} />
+            <input type="file" name="image" onChange={handleChange}     className="input-field"
+/>
             <label>Vendor:</label>
-            <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} />
+            <input type="text" name="vendor" value={formData.vendor} onChange={handleChange}     className="input-field"
+/>
           <label>Suggested Item:</label>
 <input
   type="checkbox"
   name="suggestedItem"
   checked={formData.suggestedItem}
   onChange={handleChange}
+      className="input-field"
+
 />
 
             <button type="submit" className="submit-button">Add Item</button>
             <button onClick={closeModal} className="cancel-button">Cancel</button>
+          </div>
           </div>
         </div>
       </form>
