@@ -22,6 +22,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  refreshToken: {
+    type: String,
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ['admin', 'client'], 
+    default: 'client' 
+  },
 });
 
 const User = mongoose.model("User", userSchema);
