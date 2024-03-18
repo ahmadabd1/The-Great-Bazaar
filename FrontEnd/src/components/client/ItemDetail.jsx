@@ -11,7 +11,8 @@ const ItemDetail = () => {
   useEffect(() => {
     axios.get(`http://localhost:8080/item/item/${id}`)
       .then(response => {
-        console.log(response.data);
+        console.log(response.data.buyPrice);
+        console.log("added item")
         setItem(response.data);
       })
       .catch(error => {
@@ -30,6 +31,7 @@ const ItemDetail = () => {
   const addToCart = (item) => {
     setCartItems([...cartItems, item]); // Add item to cartItems array
     console.log("Item added to cart:", item);
+    alert("item added to cart")
   };
   return (
     <div style={{  height: '350px', width: '250px', backdropFilter: 'blur(10px)', padding: "20px", borderRadius: "5px", display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '300px', margin: 'auto' }}>
