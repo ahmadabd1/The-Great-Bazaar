@@ -66,7 +66,7 @@ export default function Items() {
     return <div>Error: {itemsError?.message || deleteError?.message || postError?.message || categoriesError?.message}</div>;
 
   return (
-    <div className="container">
+    <div className="containerclass">
       <button onClick={openModal} className="add-item-button">Add New Item</button>
       <input type="text" placeholder="Search by ID, name, or description..." onChange={handleSearchChange} className="search-bar" />
       <select value={selectedCategory} onChange={handleCategoryChange} className="category-dropdown">

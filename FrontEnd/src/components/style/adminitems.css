@@ -1,26 +1,58 @@
-.container {
-  max-width: 1200px;
+.containerclass {
+  max-width: 1300px;
   margin: auto;
+  padding: 10px;
+  background: #f5f5f5;
   font-family: Arial, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Enhanced button styles */
 .add-item-button,
 .update-item-button,
 .delete-item-button {
-  margin: 5px;
+  margin: 20px;
   padding: 10px 20px;
   border: none;
-  border-radius: 4px;
-  background-color: #007bff;
+  border-radius: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
   color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  text-align: center; /* Center the text */
+  display: inline-block; /* Use inline-block or block for text-align to work */
+  width: auto; /* You can set a specific width if necessary */
 }
 
-.add-item-button:hover,
-.update-item-button:hover,
+.update-item-button {
+  background-color: #2c3e50; /* Dark blue background */
+}
+
+.update-item-button:hover {
+  background-color: #273c4f; /* Slightly darker on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.delete-item-button {
+  background-color: #dc3545; /* Red background */
+}
+
 .delete-item-button:hover {
-  background-color: #0056b3;
+  background-color: #c82333; /* Slightly darker on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.add-item-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.add-item-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
 }
 
 .search-bar,
@@ -29,58 +61,36 @@
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: calc(100% - 22px); /* Adjust width to account for padding and border */
+  width: calc(100% - 22px);
 }
 
 .Items-Table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
+  border-collapse: collapse;
   margin-top: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
 }
 
 .Items-Table th,
 .Items-Table td {
-  text-align: left;
-  padding: 12px;
+  text-align: center;
+  padding: 20px;
   transition: background-color 0.3s;
 }
 
 .Items-Table th {
+  background-color: #2c3e50;
   color: white;
-  font-size: 16px;
-  position: relative;
-  background-color: transparent;
-  z-index: 2;
-}
-
-.Items-Table th {
-  color: white;
-  font-size: 16px;
-  background-color: rgba(255, 255, 255, 0.5);
-  -webkit-backdrop-filter: blur(10px); /* For Safari 9+ */
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #d1d5db;
+  font-size: 18px;
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 10; /* Lower than modal */
 }
 
 .Items-Table td {
   background-color: white;
-  font-size: 14px;
+  font-size: 16px;
   border-bottom: 1px solid #ddd;
-}
-
-.Items-Table tr:last-child td {
-  border-bottom: none;
-}
-
-.Items-Table tr:nth-child(even) td {
-  background-color: #f8f9fa;
 }
 
 .Items-Table tr:hover td {
@@ -91,45 +101,4 @@
   width: 100px;
   height: auto;
   border-radius: 4px;
-}
-.add-item-button {
-  margin: 5px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #28a745; /* Green color for add button */
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.add-item-button:hover {
-  background-color: #218838; /* Darker green on hover */
-}
-
-.update-item-button,
-.delete-item-button {
-  margin: 5px;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.update-item-button {
-  background-color: #28a745; /* Green color for update button */
-}
-
-.update-item-button:hover {
-  background-color: #218838; /* Darker green on hover */
-}
-
-.delete-item-button {
-  background-color: #dc3545; /* Red color for delete button */
-}
-
-.delete-item-button:hover {
-  background-color: #c82333; /* Darker red on hover */
 }
