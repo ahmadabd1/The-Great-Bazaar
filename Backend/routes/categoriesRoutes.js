@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const categoriesHandler = require('../serverHandlers/categoriesHandler');
-const verifyJWT = require('../middleware/verifyJWT');
-router.use(verifyJWT);
 const multer = require('multer');
 
 const storage = multer.diskStorage({
