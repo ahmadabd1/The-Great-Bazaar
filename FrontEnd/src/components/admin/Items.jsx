@@ -71,7 +71,7 @@ export default function Items() {
       <input type="text" placeholder="Search by ID, name, or description..." onChange={handleSearchChange} className="search-bar" />
       <select value={selectedCategory} onChange={handleCategoryChange} className="category-dropdown">
         <option value="">All Categories</option>
-        {categories.map(category => (
+        {categories?.map(category => (
           <option key={category._id} value={category._id}>{category.name}</option>
         ))}
       </select>
@@ -85,17 +85,23 @@ export default function Items() {
           </tr>
         </thead>
         <tbody>
-          {filteredItems && filteredItems.map((item) => (
-            <tr key={item._id}>
-              <td>{item.image_id && <img src={item.image_id} alt={item.name} className="item-image" />}</td>
-              <td>{item.name}</td>
-              <td>{item.description}</td>
-              <td>
-                <button onClick={() => handleUpdateItem(item)} className="update-item-button">Update</button>
-                <button onClick={() => handleDeleteItem(item._id)} className="delete-item-button">Delete</button>
-              </td>
+          {filteredItems?.length > 0 ? (
+            filteredItems.map((item) => (
+              <tr key={item._id}>
+                <td>{item.image_id ? <img src={item.image_id} alt={item.name} className="item-image" /> : 'No image'}</td>
+                <td>{item.name}</td>
+                <td>{item.description}</td>
+                <td>
+                  <button onClick={() => handleUpdateItem(item)} className="update-item-button">Update</button>
+                  <button onClick={() => handleDeleteItem(item._id)} className="delete-item-button">Delete</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4">No items found</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
       <AddItemModal isOpen={isModalOpen} closeModal={closeModal} addItem={addItem} />
