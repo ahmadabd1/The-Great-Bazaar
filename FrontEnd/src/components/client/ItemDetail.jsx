@@ -23,13 +23,27 @@ const ItemDetail = () => {
   if (!item) {
     return <div>Loading...</div>;
   }
+  const cartData ={
+    userId : userInfo._id,
+    itemsCart : {},
+    totalItems: 0,
+    totalPrice: 0
+
+  }
   // const addToCart = () => {
   //   // Here you can implement the logic to add the item to the cart
   //   // For simplicity, let's just log the item to the console
   //   console.log("Item added to cart:", item);
   // };
-  const addToCart = (item) => {
+  const addToCart =async (item) => {
     setCartItems([...cartItems, item]); // Add item to cartItems array
+    try {
+      const response = await axios.post('http://localhost:8080/cart/addToCart'); // Adjust endpoint as needed
+      setCartItems(response.data); // Assuming the response data is an array of cart items
+      calculateTotalPrice(response.data);
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+    }
     console.log("Item added to cart:", item);
     alert("item added to cart")
   };
