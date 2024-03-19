@@ -15,7 +15,6 @@ export default function Categories() {
   const [currentCategory, setCurrentCategory] = useState(null);
 
   const handleDelete = async (id) => {
-    console.log(id);
     await deleteItem(`http://localhost:8080/category`, id);
     refetch(); 
   };
@@ -31,7 +30,7 @@ export default function Categories() {
 
   const handleSaveNewCategory = async (formData) => {
     try {
-      await postData('http://localhost:8080/category/category/', formData, true);
+      await postData('http://localhost:8080/category/category/', formData);
       setShowAddCategory(false);
       refetch();
     } catch (error) {
@@ -58,7 +57,7 @@ export default function Categories() {
   return (
     <div className="categories-container">
       <h1>Categories</h1>
-      <button  className='add-new-category'onClick={handleAddCategoryClick}>Add New Category</button>
+      <button className='add-new-category' onClick={handleAddCategoryClick}>Add New Category</button>
       {showAddCategory && (
         <AddCategoryModal
           categories={categories}
@@ -66,18 +65,27 @@ export default function Categories() {
           onCancel={handleCancel}
         />
       )}
-      <div className='categories-container2'>
-      <ul>
-        {categories && categories.map(category => (
-          <li key={category._id}>
-            <img src={category.image_id} alt={category.name} style={{ width: '50px', height: '50px' }} />
-            {category.name}
-            <button className='delete-button' onClick={() => handleDelete(category._id)}>Delete</button>
-            <button className='update-button' onClick={() => handleUpdateClick(category)}>Update</button>
-          </li>
-        ))}
-      </ul>
-      </div>
+      <table className='categories-table'>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categories && categories.map(category => (
+            <tr key={category._id}>
+              <td><img src={category.image_id} alt={category.name} className="category-image" /></td>
+              <td>{category.name}</td>
+              <td>
+                <button className='update-button' onClick={() => handleUpdateClick(category)}>Update</button>
+                <button className='delete-button' onClick={() => handleDelete(category._id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       {showUpdateCategory && (
         <UpdateCategoryModal
           category={currentCategory}
