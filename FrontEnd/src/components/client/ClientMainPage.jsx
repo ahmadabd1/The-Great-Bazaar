@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import useUserInfo from '../customHooks/useUserInfo';
+
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [features, setFeatures] = useState([]);
   const [userName, setUserName] = useState(""); // State to store the user's full name
+  const { userInfo, loading, error } = useUserInfo();
+
   const navigate = useNavigate();
 
   const fetchItems = async () => {
