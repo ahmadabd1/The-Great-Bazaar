@@ -1,4 +1,3 @@
-// App.js
 import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -17,12 +16,17 @@ import Categories from "./components/admin/Categories";
 import ClientProfile from "./components/client/ClientProfile";
 import UsersPage from "./components/admin/UsersPage";
 import Item from "./components/client/Items";
+import ItemsPage from "./components/client/ItemsPage";
 import ItemDetail from "./components/client/ItemDetail";
+import ItemsAll from "./components/client/ItemsAll";
 import AboutUs from "./components/AboutUs";
 import BottomPage from "./components/client/BottomPage";
 import UserCart from "./components/client/userCart";
+import FilteredItems from "./components/client/FilteredItems"; // Import the FilteredItems component
+
 export default function App() {
   const location = useLocation();
+  // const showSidebar = location.pathname === "/client/ItemsAll";
 
   const renderNavbar = () => {
     switch (localStorage.getItem("userType")) {
@@ -32,8 +36,8 @@ export default function App() {
         return (
           <>
             <ClientNavbar />
-            <ClientSideBar />
-            {/* {location.pathname.includes("/client/item") && <ClientSideBar />} */}
+            {/* <ClientSideBar /> */}
+            {location.pathname.includes("/client/item") && <ClientSideBar />}
           </>
         );
       default:
@@ -44,6 +48,7 @@ export default function App() {
   return (
     <>
       {renderNavbar()}
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
@@ -57,11 +62,20 @@ export default function App() {
         <Route path="/admin/categories" element={<Categories />} />
         <Route path="/admin/clients" element={<UsersPage />} />
         <Route path="/item/:id" element={<ItemDetail />} />
+        <Route path="/client/ItemsPage" element={<ItemsPage />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/filtereditems/:category" element={<FilteredItems />} />
+        <Route
+          path="/client/ItemsAll"
+          element={
+            <>
+              <ItemsAll />
+            </>
+          }
+        />
       </Routes>
-
       <Footer />
-      <BottomPage id="contact-us" />
+      {/* <BottomPage id="contact-us" /> */}
     </>
   );
 }
