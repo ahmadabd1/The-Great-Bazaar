@@ -1,0 +1,49 @@
+/* styles.css */
+
+.cart-container {
+    margin: 20px auto;
+    max-width: 600px;
+  }
+  
+  .cart-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .cart-table th,
+  .cart-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .cart-table th {
+    text-align: left;
+  }
+  
+  .cart-total {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+/* cart.css */
+
+.cart-button {
+    min-width: 80px; /* Set a minimum width for the button */
+    padding: 10px 20px; /* Adjust padding as needed */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .cart-button:hover {
+    background-color: #0056b3;
+  }
+  
+  
