@@ -1,53 +1,17 @@
 import React, { useState } from "react";
-import AddCategoryModal from "../admin/AddCategoryModal"; // Adjust the import path as needed
 import useGet from "../customHooks/useGet"; // Import useGet hook if available
 
 const ClientSideBar = ({ filterItems }) => {
   const { data: categories } = useGet(
     "http://localhost:8080/category/categories/",
   );
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedPrice, setSelectedPrice] = useState(null);
-  const [selectedRating, setSelectedRating] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // useEffect(() => {
-  //   // You may want to do something with categories once they are fetched, like set default category filters
-  //   // For example, setSelectedCategory(categories[0]?.name);
-  // }, [categories]);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
+    const category = e.target.value;
+    setSelectedCategory(category);
     filterItems({
-      category: e.target.value,
-      price: selectedPrice,
-      rating: selectedRating,
-    });
-  };
-
-  const handlePriceChange = (e) => {
-    setSelectedPrice(e.target.value);
-    filterItems({
-      category: selectedCategory,
-      price: e.target.value,
-      rating: selectedRating,
-    });
-  };
-
-  const handleRatingChange = (e) => {
-    setSelectedRating(e.target.value);
-    filterItems({
-      category: selectedCategory,
-      price: selectedPrice,
-      rating: e.target.value,
+      category: category,
     });
   };
 
@@ -62,9 +26,10 @@ const ClientSideBar = ({ filterItems }) => {
         <select
           id="categorySelect"
           className="text-m p-l mb-20 ml-5 h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
-          value={"selectedCategory"}
+          value={selectedCategory}
           onChange={handleCategoryChange}
         >
+          <option value="">All</option>
           {categories &&
             categories.map((category) => (
               <option key={category._id} value={category.name}>
