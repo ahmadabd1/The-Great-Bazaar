@@ -95,8 +95,10 @@ const FilteredItems = () => {
           filteredItems.map((item) => (
             <div key={item._id} className="rounded-md border p-4">
            <Link to={`/item/${item._id}`} key={item._id} >
-              <h2 className="text-lg font-semibold">{item.name}</h2>
-              <p className="text-sm text-gray-600">{item.description}</p>
+              <h2 className="text-lg font-semibold text-white">{item.name}</h2>
+              <p className="text-sm text-gray-600 text-white">{item.description}</p>
+              <p className="text-sm text-gray-600 text-white">{item.buyPrice}$</p>
+
               {item.image_id && (
                 <img
                   src={item.image_id}

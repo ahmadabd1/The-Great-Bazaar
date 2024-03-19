@@ -55,9 +55,10 @@
 .select,
 .fileInput {
   flex-grow: 1; /* Allows input fields to grow and fill the remaining space */
-  border: 1px solid #ccc;
+  border: 1px solid #ccc !important;
   border-radius: 4px;
-  height: 40px; /* Sets the height of the input fields */
+  height: 40px;
+  background-color: #e0dede !important; /* Sets the height of the input fields */
 }
 .form-group label {
   display: block;
@@ -92,7 +93,7 @@
 }
 
 .addButton {
-  background-color: #4caf50; /* Standard green button */
+  background-color: #4caf50 !important; /* Standard green button */
   color: black;
 }
 
@@ -101,7 +102,7 @@
 }
 
 .cancelButton {
-  background-color: #f44336; /* Standard red button */
+  background-color: #f44336 !important; /* Standard red button */
   color: black;
 }
 
