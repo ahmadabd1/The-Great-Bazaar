@@ -80,6 +80,8 @@ export default function FilteredItems() {
         {filteredItems &&
           filteredItems.map((item) => (
             <div key={item._id} className="rounded-md border p-4">
+                        <Link to={`/item/${item._id}`} style={{ textDecoration: 'none', color: 'black', display: 'flex', flexDirection: 'column', height: '100%' }}>
+
               <h2 className="text-lg font-semibold">{item.name}</h2>
               <p className="text-sm text-gray-600">{item.description}</p>
               {item.image_id && (
@@ -89,8 +91,11 @@ export default function FilteredItems() {
                   className="mt-2 h-32 w-full object-cover"
                 />
               )}
-            </div>
+              </Link>
+               </div>
+
           ))}
+                   
       </div>
     </div>
   );
