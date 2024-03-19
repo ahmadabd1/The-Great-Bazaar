@@ -64,6 +64,8 @@ export default function App() {
         <Route path="/item/:id" element={<ItemDetail />} />
         <Route path="/client/ItemsPage" element={<ItemsPage />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+                <Route path="/userCart" element={<UserCart />}/>
+
         <Route path="/filtereditems/:category" element={<FilteredItems />} />
         <Route
           path="/client/ItemsAll"
