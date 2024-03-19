@@ -24,13 +24,7 @@ export default function Home() {
   };
 
 const fetchUserDetails = async () => {
-  try {
-    const userEmail = localStorage.getItem('userEmail');
-    if (!userEmail) {
-      console.error("User email not found");
-      return;
-    }
-    
+  try {  
     const response = await axios.post("http://localhost:8080/user/user/details", { email: userEmail });
     const { firstName, lastName } = response.data;
     setUserName(`${firstName} ${lastName}`);

@@ -55,7 +55,6 @@ export default function App() {
         <Route path="/AboutUs" element={<ProtectedRoute><AboutUs /></ProtectedRoute>} />
         <Route path="/userCart" element={<ProtectedRoute><UserCart /></ProtectedRoute>}/>
       </Routes>      <Footer />
-       {/* <BottomPage id="contact-us"/> */}
     </>
   );
 }
