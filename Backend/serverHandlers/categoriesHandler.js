@@ -68,10 +68,9 @@ exports.get_categoriesid = async (req, res) => {
   }
 };
 
-
 exports.update_category = async (req, res) => {
   try {
-    const categoryId = req.params.categoryId; 
+    const categoryId = req.params.categoryId;
     let updatedData = {
       name: req.body.name,
       description: req.body.description,
@@ -82,18 +81,26 @@ exports.update_category = async (req, res) => {
       updatedData.image_id = result.url; // Ensure you have logic to handle this in your model
     }
 
-    const updatedCategory = await category.findByIdAndUpdate(categoryId, updatedData, { new: true });
+    const updatedCategory = await category.findByIdAndUpdate(
+      categoryId,
+      updatedData,
+      { new: true }
+    );
     if (!updatedCategory) {
       return res.status(404).json({ message: "Category not found" });
     }
 
-    res.status(200).json({ message: "Category updated successfully", category: updatedCategory });
+    res.status(200).json({
+      message: "Category updated successfully",
+      category: updatedCategory,
+    });
   } catch (error) {
     console.error("Error updating category:", error);
-    res.status(500).json({ message: "Error updating category", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error updating category", error: error.message });
   }
 };
-
 
 exports.delete_category = async (req, res) => {
   try {

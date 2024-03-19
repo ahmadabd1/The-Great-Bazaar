@@ -90,11 +90,15 @@ const FilteredItems = () => {
 
       {/* Display filtered items */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      
         {filteredItems &&
           filteredItems.map((item) => (
             <div key={item._id} className="rounded-md border p-4">
-              <h2 className="text-lg font-semibold">{item.name}</h2>
-              <p className="text-sm text-gray-600">{item.description}</p>
+           <Link to={`/item/${item._id}`} key={item._id} >
+              <h2 className="text-lg font-semibold text-white">{item.name}</h2>
+              <p className="text-sm text-gray-600 text-white">{item.description}</p>
+              <p className="text-sm text-gray-600 text-white">{item.buyPrice}$</p>
+
               {item.image_id && (
                 <img
                   src={item.image_id}
@@ -102,6 +106,7 @@ const FilteredItems = () => {
                   className="mt-2 h-32 w-full object-cover"
                 />
               )}
+            </Link>
             </div>
           ))}
       </div>
