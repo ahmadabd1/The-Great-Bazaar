@@ -1,39 +1,84 @@
-.form-container {
-  max-width: 400px;
-  margin: 0 auto;
+.user-profile {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-group button {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background-color: #007bff;
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background to blend with dark */
+  border-radius: 10px;
   color: #fff;
-  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 130%;
+}
+
+.user-info, .edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user-email, .user-name, .user-phone {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.edit-button, .save-changes-button, .cancel-button {
+  padding: 10px 15px;
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  align-self: center;
+  max-width: 200px;
 }
 
-.form-group button:hover {
-  background-color: #0056b3;
+.edit-button:hover, .save-changes-button:hover, .cancel-button:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+input[type="text"], input[type="password"] {
+  padding: 10px;
+  border: 1px solid #777;
+  background-color: #333;
+  border-radius: 5px;
+  color: #fff;
+  transition: border 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+  border-color: #aaa;
+}
+
+input[type="text"]:read-only {
+  background-color: #444;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-toggle-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+}
+
+.password-toggle-icon:hover {
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .user-profile {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .edit-button, .save-changes-button, .cancel-button {
+    width: 100%;
+  }
 }
