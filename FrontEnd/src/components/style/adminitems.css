@@ -55,12 +55,14 @@
   background-color: #218838;
   transform: translateY(-2px);
 }
-
+.search-bar {
+  background-color: white !important;
+}
 .search-bar,
 .category-dropdown {
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd !important;
   border-radius: 4px;
   width: calc(100% - 22px);
 }

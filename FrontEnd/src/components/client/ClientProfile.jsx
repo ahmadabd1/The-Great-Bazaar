@@ -106,7 +106,7 @@ const MyComponent = () => {
       {!isEditing && (
         <div className="user-info">
           <p className="user-email">User Email: {userInfo.email}</p>
-          <p className="user-name">User Name: {userInfo.firstName} {userInfo.lastName}</p>
+          <p className="user-name">Full Name: {userInfo.firstName} {userInfo.lastName}</p>
           <p className="user-phone">Phone Number: {userInfo.phoneNumber}</p>
           <button className="edit-button" onClick={() => setIsEditing(true)}>Edit Profile</button>
         </div>

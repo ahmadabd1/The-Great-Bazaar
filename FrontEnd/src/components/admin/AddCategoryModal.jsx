@@ -13,7 +13,7 @@ export default function AddCategoryModal({ categories, onSave, onCancel }) {
     formData.append('description', description);
     if (parentId) formData.append('parent_id', parentId);
     if (image) formData.append('image', image);
-
+    console.log(formData)
     onSave(formData);
   };
 
@@ -47,8 +47,10 @@ export default function AddCategoryModal({ categories, onSave, onCancel }) {
         type="file"
         onChange={(e) => setImage(e.target.files[0])}
       />
+      <div style={{marginBottom:"15px"}}>
       <button onClick={handleSave}>Create</button>
       <button onClick={onCancel}>Cancel</button>
+      </div>
     </div>
   );
 }
