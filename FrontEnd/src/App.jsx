@@ -21,7 +21,7 @@ import ItemDetail from "./components/client/ItemDetail";
 import ItemsAll from "./components/client/ItemsAll";
 import AboutUs from "./components/AboutUs";
 import BottomPage from "./components/client/BottomPage";
-import UserCart from "./components/client/userCart";
+
 import UserCart from "./components/client/userCart";
 import FilteredItems from "./components/client/FilteredItems"; // Import the FilteredItems component
 
