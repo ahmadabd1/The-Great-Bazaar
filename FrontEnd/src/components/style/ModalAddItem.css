@@ -1,16 +1,14 @@
 .Modal {
-  position: fixed;
+  position: inherit;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 90%;
-  width: 547px;
-  max-height: 88%;
-  overflow-y: auto;
+  /* width: 500px; */
+  max-height: 98%;
+  /* overflow-y: auto; */
 }
 
 .Overlay {
@@ -23,63 +21,94 @@
   z-index: 1000;
 }
 
-.submit-button,
-.cancel-button {
-  display: inline-block;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 1rem;
-  margin-right: 0.5rem;
+.modal-content {
+  padding: 1px;
 }
 
-.cancel-button {
-  background-color: #6c757d;
-}
-
-.submit-button:hover {
-  background-color: green;
-}
-.cancel-button:hover {
-  background-color: gray;
-}
-
-input[type="text"],
-input[type="number"],
-select {
-  width: calc(100% - 2rem);
-  padding: 0.5rem;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
-}
-
-input[type="file"] {
-  margin-bottom: 1rem;
-}
-
-label {
-  display: inline-block;
-  margin-right: 10px;
+.modal-title {
   font-size: 20px;
   font-weight: bold;
-  cursor: pointer;
-  vertical-align: middle;
+  margin-bottom: 16px;
 }
 
-/* Wrapper for each label-input/select pair */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
 
+.label {
+  font-size: 14px;
+  flex: 0 0 auto; /* The label doesn't grow but keeps the width it needs */
+  margin-right: 10px; /* Maintains space between label and input */
+  text-align: left; /* Aligns the text to the left */
+}
+.label,
+.input,
+.select,
+.fileInput,
+.checkbox {
+  margin: 0;
+  padding: 8px;
+  display: block; /* Makes sure the input takes the full width of its flex item */
+}
+.input,
+.select,
+.fileInput {
+  flex-grow: 1; /* Allows input fields to grow and fill the remaining space */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 40px; /* Sets the height of the input fields */
+}
 .form-group label {
-  margin-bottom: -47px;
-  display: inline-block; /* Ensure both are inline-block */
-  vertical-align: middle;
+  display: block;
+  /* margin-bottom: 5px; */
+}
+.form-group {
+  display: flex;
+  align-items: center; /* Keeps items aligned vertically in the center */
+  justify-content: flex-start; /* Aligns items to the start (left) */
+  margin-bottom: 10px; /* Maintains spacing between each form group */
 }
 
-.form-group input,
-select {
-  display: inline-block; /* Ensure both are inline-block */
-  vertical-align: middle;
-  width: calc(100% - 2rem);
-  margin-right: 190px; /* Adjust width if necessary, consistent with the global input style */
-  /* Other input styles */
+.checkbox {
+  /* For checkboxes, we don't need them to grow too much */
+  flex: 0 0 auto; /* Don't grow, don't shrink, based on content */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.addButton,
+.cancelButton {
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 8px;
+  border: none; /* Add this line if you want to remove the default border */
+  outline: none; /* Add this line to remove the outline */
+}
+
+.addButton {
+  background-color: #4caf50; /* Standard green button */
+  color: black;
+}
+
+.addButton:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.cancelButton {
+  background-color: #f44336; /* Standard red button */
+  color: black;
+}
+
+.cancelButton:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+button:focus {
+  outline: none; /* Removes the focus outline to match modern style */
 }

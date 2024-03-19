@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-
+import '../style/ModalAddItem.css';
 Modal.setAppElement('#root');
-
 function AddItemModal({ isOpen, closeModal, addItem }) {
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
@@ -58,7 +57,7 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
     setFormData({ ...formData, [name]: files ? files[0] : value });
   }  };
 
-  return (
+return (
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
@@ -66,63 +65,37 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
       className="Modal"
       overlayClassName="Overlay"
     >
-      <form onSubmit={handleSubmit} className="form-group">
-        {/* Left side */}
-        <div className="w-full pr-2 md:w-1/2">
-        <div class="form-group">
+      <div className="modal-content">
+        {/* <h2 className="modal-title">Add New Item</h2> */}
+        <form onSubmit={handleSubmit} className="modal-form">
+          <div className="form-group">
+            <label className="label">Name:</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="input" />
+          </div>
 
-          <div className="flex w-full flex-col">
-          
-            <label className="mb-2">Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-    className="input-field"
-            />
-            <label className="mb-2">Description:</label>
-            <input
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              required
-    className="input-field"
-            />
-            <label>Sell Price:</label>
-            <input
-              type="number"
-              name="sellPrice"
-              value={formData.sellPrice}
-              onChange={handleChange}
-              required
-                  className="input-field"
+          <div className="form-group">
+            <label className="label">Description:</label>
+            <input type="text" name="description" value={formData.description} onChange={handleChange} required className="input" />
+          </div>
 
-            />
-            <label>Buy Price:</label>
-            <input
-              type="number"
-              name="buyPrice"
-              value={formData.buyPrice}
-              onChange={handleChange}
-                  className="input-field"
+          <div className="form-group">
+            <label className="label">Sell Price:</label>
+            <input type="number" name="sellPrice" value={formData.sellPrice} onChange={handleChange} required className="input" />
+          </div>
 
-            />
-            <label>Quantity:</label>
-            <input
-              type="number"
-              name="quantity"
-              value={formData.quantity}
-              onChange={handleChange}
-                  className="input-field"
+          <div className="form-group">
+            <label className="label">Buy Price:</label>
+            <input type="number" name="buyPrice" value={formData.buyPrice} onChange={handleChange} className="input" />
+          </div>
 
-              required
-            />
-            
-            <label>Category:</label>
-            <select name="category_id" value={formData.category_id} onChange={handleChange} required>
+          <div className="form-group">
+            <label className="label">Quantity:</label>
+            <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} required className="input" />
+          </div>
+
+          <div className="form-group">
+            <label className="label">Category:</label>
+            <select name="category_id" value={formData.category_id} onChange={handleChange} required className="select">
               <option value="">Select a category</option>
               {categories.map((category) => (
                 <option key={category._id} value={category._id}>
@@ -130,29 +103,32 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
                 </option>
               ))}
             </select>
-            <label>Image:</label>
-            <input type="file" name="image" onChange={handleChange}     className="input-field"
-/>
-            <label>Vendor:</label>
-            <input type="text" name="vendor" value={formData.vendor} onChange={handleChange}     className="input-field"
-/>
-          <label>Suggested Item:</label>
-<input
-  type="checkbox"
-  name="suggestedItem"
-  checked={formData.suggestedItem}
-  onChange={handleChange}
-      className="input-field"
-
-/>
-
-            <button type="submit" className="submit-button">Add Item</button>
-            <button onClick={closeModal} className="cancel-button">Cancel</button>
           </div>
+
+          <div className="form-group">
+            <label className="label">Image:</label>
+            <input type="file" name="image" onChange={handleChange} className="fileInput" />
           </div>
-        </div>
-      </form>
+
+          <div className="form-group">
+            <label className="label">Vendor:</label>
+            <input type="text" name="vendor" value={formData.vendor} onChange={handleChange} className="input" />
+          </div>
+
+          <div className="form-group">
+            <label className="label">Suggested Item:</label>
+            <input type="checkbox" name="suggestedItem" checked={formData.suggestedItem} onChange={handleChange} className="checkbox" />
+          </div>
+
+         <div className="form-actions">
+  <button type="submit" className="addButton">Add Item</button>
+  <button type="button" onClick={closeModal} className="cancelButton">Cancel</button>
+</div>
+
+        </form>
+      </div>
     </Modal>
   );
-}
+
+              }
 export default AddItemModal;
