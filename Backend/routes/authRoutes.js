@@ -6,5 +6,5 @@ router.post("/signup", userHandler.signup);
 router.post("/login", userHandler.login);
 router.put("/profile/:userId", userHandler.editProfile);
 router.get("/users", userHandler.get_all_users);
-router.get("/user/details", userHandler.UserDetails);
+router.get("/:email", userHandler.UserDetails);
 module.exports = router;

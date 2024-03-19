@@ -50,6 +50,8 @@ const [user, setUser] = useState({ firstName: '', lastName: '' });
           setMessage(userType);
         //  handleUserType(userType);
           localStorage.setItem('userType', userType);
+          localStorage.setItem('userEmail', formData.email);
+
           navigate(`/${userType}`);
         } else {
           setMessage(message);

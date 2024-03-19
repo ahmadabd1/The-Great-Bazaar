@@ -8,7 +8,6 @@ import LoginPage from "./components/outside/LoginPage";
 import CategoryPage from "./components/client/CategoryPage";
 import ClientNavbar from "./components/client/ClientNavBar";
 import NavBar from "./components/NavBar";
-import ContactUs  from "./components/client/ContactUs"
 import ClientSideBar from "./components/client/ClientSideBar";
 import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";

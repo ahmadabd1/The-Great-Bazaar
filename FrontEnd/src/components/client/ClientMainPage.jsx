@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import useUserInfo from '../customHooks/useUserInfo';
+
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [features, setFeatures] = useState([]);
   const [userName, setUserName] = useState(""); // State to store the user's full name
+  const { userInfo, loading, error } = useUserInfo();
+
   const navigate = useNavigate();
 
   const fetchItems = async () => {
@@ -25,15 +29,12 @@ export default function Home() {
 
 const fetchUserDetails = async () => {
   try {
-    const userEmail = localStorage.getItem('userEmail');
+    const userEmail =  localStorage.getItem('userEmail');
     if (!userEmail) {
       console.error("User email not found");
       return;
     }
-    
-    const response = await axios.post("http://localhost:8080/user/user/details", { email: userEmail });
-    const { firstName, lastName } = response.data;
-    setUserName(`${firstName} ${lastName}`);
+    console.log(userInfo)
   } catch (error) {
     console.error("Error fetching user details:", error);
   }
@@ -45,10 +46,7 @@ useEffect(() => {
 }, []);
 
 
-  useEffect(() => {
-    fetchItems();
-    fetchUserDetails();
-  }, []);
+
 
   const handleStartShoppingClick = () => {
     navigate("/client/item");
