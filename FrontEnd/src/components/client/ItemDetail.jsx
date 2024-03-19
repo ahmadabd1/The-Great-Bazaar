@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+// import UserCart from './userCart';
+// import Item from '../../../../Backend/models/item';
 
 const ItemDetail = () => {
   const [item, setItem] = useState(null);
@@ -9,7 +11,8 @@ const ItemDetail = () => {
   useEffect(() => {
     axios.get(`http://localhost:8080/item/item/${id}`)
       .then(response => {
-        console.log(response.data);
+        console.log(response.data.buyPrice);
+        console.log("added item")
         setItem(response.data);
       })
       .catch(error => {
@@ -20,10 +23,15 @@ const ItemDetail = () => {
   if (!item) {
     return <div>Loading...</div>;
   }
-  const addToCart = () => {
-    // Here you can implement the logic to add the item to the cart
-    // For simplicity, let's just log the item to the console
+  // const addToCart = () => {
+  //   // Here you can implement the logic to add the item to the cart
+  //   // For simplicity, let's just log the item to the console
+  //   console.log("Item added to cart:", item);
+  // };
+  const addToCart = (item) => {
+    setCartItems([...cartItems, item]); // Add item to cartItems array
     console.log("Item added to cart:", item);
+    alert("item added to cart")
   };
   return (
     <div style={{  height: '350px', width: '250px', backdropFilter: 'blur(10px)', padding: "20px", borderRadius: "5px", display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '300px', margin: 'auto' }}>
@@ -38,7 +46,7 @@ const ItemDetail = () => {
       <p style={{ fontSize: '16px', textAlign: 'center', margin: '5px 0' }}>{item.description}</p> 
       <p style={{ fontSize: '16px', margin: '5px 0' }}>Buy Price: {item.buyPrice}$</p> 
       <p style={{ fontSize: '16px', margin: '5px 0' }}>Sell Price: {item.sellPrice}$</p> 
-      <button style={{ padding: '8px 16px', fontSize: '14px', cursor: 'pointer', marginTop: '10px' }}>Add to Cart</button>
+      <button onClick={()=>addToCart(item)} style={{ padding: '8px 16px', fontSize: '14px', cursor: 'pointer', marginTop: '10px' }}>Add to Cart</button>
     </div>
   );
 };
