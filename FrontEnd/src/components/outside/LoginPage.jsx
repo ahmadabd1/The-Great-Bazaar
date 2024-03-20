@@ -40,6 +40,7 @@ const LoginPage = () => {
     }
 
     try {
+   
       const responseData = await postData(endpoint, formData);
       if (formType === 'login') {
         const { message } = responseData;
@@ -47,6 +48,7 @@ const LoginPage = () => {
           const userType = message.includes('client') ? 'client' : 'admin';
           setMessage(userType);
         //  handleUserType(userType);
+        localStorage.setItem('accessToken', responseData.accessToken);
           localStorage.setItem('userType', userType);
           localStorage.setItem('userEmail', formData.email);
 

@@ -10,4 +10,5 @@ router.put("/profile/:userId", userHandler.editProfile);
 router.get("/users", userHandler.get_all_users);
 router.get("/user/details", userHandler.UserDetails);
 router.post('/logout', userHandler.logout);
+router.get("/:email", userHandler.UserDetails);
 module.exports = router;

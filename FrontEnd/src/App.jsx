@@ -19,6 +19,7 @@ import Item from "./components/client/Items";
 import ItemsPage from "./components/client/ItemsPage";
 import ItemDetail from "./components/client/ItemDetail";
 import ItemsAll from "./components/client/ItemsAll";
+import ProtectedRoute from './ProtectedRoute';
 import AboutUs from "./components/AboutUs";
 import BottomPage from "./components/client/BottomPage";
 import UserCart from "./components/client/userCart";
