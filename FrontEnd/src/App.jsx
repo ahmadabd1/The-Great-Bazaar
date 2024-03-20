@@ -13,6 +13,9 @@ import SideBar from "./components/admin/SideBar";
 import Items from "./components/admin/Items";
 import Statics from "./components/admin/Statics";
 import CategiryPage from './components/admin/CategiryPage'
+import Item from "./components/client/Item";
+import AboutUs from "./components/client/AboutUs";
+
 export default function App() {
   const location = useLocation();
   const [userType, setUserType] = useState(null);
@@ -40,7 +43,8 @@ export default function App() {
         <Route path="/admin/items" element={<Items />} />
         <Route path="/admin/statics" element={<Statics />} />
         <Route path="/admin/categories" element={<CategiryPage />} />
-
+        <Route path="/client/Item" element={<Item />} /> 
+        <Route path="/client/AboutUs" element={<AboutUs />} />
       </Routes>
       <Footer />
     </>

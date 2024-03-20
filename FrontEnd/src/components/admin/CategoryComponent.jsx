@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Button } from 'react-bootstrap';
 import { BsTrash, BsEye, BsPencil, BsPlusCircle, BsDash, BsPlus } from 'react-icons/bs';
-import "../style/CategoryComponent.css";
+import "../style/CategoryComponent.css";  //???
 
 const CategoryComponent = ({ category, deleteCategory, deleteSubcategory }) => {
   const [subCategories, setSubCategories] = useState([])

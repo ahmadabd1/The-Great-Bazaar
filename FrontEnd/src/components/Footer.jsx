@@ -18,7 +18,7 @@ export default function Footer() {
             <span className="hidden 2xlo:inline-block">2xl</span>
           </div>
           <div>
-            <NavLink to="/about" className="text-slate-200">
+            <NavLink to="/client/AboutUs" className="text-slate-200">
               <span>About Us</span>
             </NavLink>
             &nbsp;|&nbsp;
