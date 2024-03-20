@@ -52,7 +52,7 @@ export default function UserCart(props) {
               <td>{item.itemsCart[0].name}</td>
               <td>${item.itemsCart[0].sellPrice}</td>
               <td>
-                <button className="cart-button" onClick={() => handleDeleteCartItem(item._id)}>Delete</button>
+                <button className="cart-button" onClick={() => handleDeleteCartItem(item.itemsCart[0]._id)}>Delete</button>
               </td>
             </tr>
           ))}
