@@ -32,6 +32,7 @@ const MyComponent = () => {
     }
   }, [userInfo]);
 
+  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (name in passwords) {
