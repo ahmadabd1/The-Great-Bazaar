@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const { errorMessages } = require("../config");
 //const bcrypt = require('bcrypt');
-
 exports.signup = async (req, res) => {
   try {
     const { firstName, lastName, email, password, phoneNumber } = req.body;
@@ -32,7 +31,6 @@ exports.signup = async (req, res) => {
     res.status(500).json({ message: errorMessages.internalServerError });
   }
 };
-
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -40,26 +38,21 @@ exports.login = async (req, res) => {
     if (!user) {
       return res.send({ message: errorMessages.emailNotFound });
     }
-
     if (email === "admin" && user.password === password) {
       return res.send({ message: "Login successful as admin" });
     }
-
     if (user.password !== password) {
       return res.send({ message: errorMessages.wrongPassword });
       return res.send({ message: errorMessages.wrongPassword });
     }
-
     return res.send({ message: "Login successful as client" });
   } catch (error) {
     res.send({ message: errorMessages.internalServerError });
     res.send({ message: errorMessages.internalServerError });
   }
 };
-
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
-
 exports.editProfile = async (req, res) => {
   try {
     // Check for validation errors
@@ -69,24 +62,20 @@ exports.editProfile = async (req, res) => {
     }
     const userId = req.params.userId;
     const { firstName, lastName, email, currentPassword, newPassword, newPasswordRepeat, phoneNumber } = req.body;
-
     // Ensure firstName and lastName are present
     if (!firstName || !lastName) {
       return res.status(400).json({ message: "firstName and lastName are required." });
     }
-
     // Fetch the user by ID
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     // Update user data
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
     user.phoneNumber = phoneNumber;
-
     // Password update logic
     if (currentPassword && newPassword && newPasswordRepeat) {
       if (!await bcrypt.compare(currentPassword, user.password)) {
@@ -101,7 +90,6 @@ exports.editProfile = async (req, res) => {
       user.password = await bcrypt.hash(newPassword, 10);
     }
     console.log('123')
-
     // Save the updated user data
     await user.save();
     res.status(200).json({ message: "Profile updated successfully" });
@@ -110,8 +98,6 @@ exports.editProfile = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
 exports.get_all_users = async (req, res) => {
   try {
     const users = await User.find(
@@ -129,16 +115,13 @@ exports.get_all_users = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 exports.UserDetails = async (req, res) => {
   try {
     const { email } = req.params; // Extracting email from route parameters
-
     const user = await User.findOne({ email }); // Finding user by email in your database
     if (!user) {
       return res.status(404).send({ message: "User not found" }); // If user not found, return a 404 response
     }
-
     // If user found, return user details in JSON response
     res.status(200).json(user);
   } catch (error) {
@@ -146,4 +129,15 @@ exports.UserDetails = async (req, res) => {
     res.status(500).json({ message: "Internal server error" }); // Return a generic error response if something goes wrong
   }
 };
+
+
+
+
+
+
+
+
+
+
+
 
