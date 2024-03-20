@@ -2,9 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2;
 require('dotenv').config({ path: './config.env' });
-
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const app = express();
-
+app.use(cookieParser());
 // Cloudinary Configuration
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
@@ -19,12 +20,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // CORS Middleware
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-    next();
-});
+const corsOptions = {
+    origin: 'http://localhost:5173', 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization, Content-Length, X-Requested-With',
+    credentials: true, 
+    optionsSuccessStatus: 200,
+  };
+  app.use(cors(corsOptions));
+
 
 // Routes
 const authRoutes = require('./routes/authRoutes');

@@ -1,12 +1,5 @@
-
-
-
 const AdminMainPage = () => {
+  return <div></div>;
+};
 
-
-  return (
-   <div>hello admin Ahmad</div>
-  )
-}
-
-export default AdminMainPage
+export default AdminMainPage;

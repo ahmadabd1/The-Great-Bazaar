@@ -1,27 +1,64 @@
-import { Link } from "react-router-dom";
-import "../style/ClientNavbar.css";
-import axios from "axios";
-export default function ClientNavbar() {
-  const logout = async () => {
-    try {
-      const refreshToken = localStorage.getItem("refreshToken");
-      await axios.post("/user/logout", { refreshToken });
-      localStorage.clear();
-      window.location.href = "/";
-    } catch (error) {
-      console.error(
-        "Logout error:",
-        error.response ? error.response.data : error.message,
-      );
-      localStorage.clear();
-      window.location.href = "/";
+import NavBarLink from "./NavBarLink";
+import { useState } from "react";
+
+const logout = () => {
+  localStorage.clear();
+  window.location.href = "/";
+};
+
+export default function NavBar() {
+  const [state, setState] = useState(false);
+
+  const leftNavigation = [
+    {
+      label: "Profile",
+      path: "/client/Profile",
+      icon: "fluent:book-contacts-32-regular",
+    },
+    {
+      label: "Orders",
+      path: "/userOrders",
+      icon: "fluent:shopping-bag-16-regular",
+    },
+    { label: "Cart", path: "/userCart", icon: "fluent:cart-16-regular" },
+    {
+      label: "Logout",
+      path: "/loggedout",
+      icon: "fluent:arrow-exit-20-regular",
+      onClick: logout, // Added logout function here
+    },
+  ];
+
+  const rightNavigation = [
+    { label: "Home", path: "/client", icon: "fluent:home-12-regular" },
+    {
+      label: "Contact Us",
+      path: "/",
+      icon: "fluent:contact-card-ribbon-16-regular",
+    },
+  ];
+
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
+  const handleItemClick = (item) => {
+    if (item.label === "Logout") {
+      item.onClick();
+    } else if (item.label === "Contact Us") {
+      scrollToBottom();
+    } else {
+      setState(false);
     }
   };
 
   return (
     <nav
       className="border-width: 1px; z-100 fixed left-0 right-0 top-0 shadow-lg backdrop-blur-md"
-      style={{ border: "3px solid rgba(0, 0, 0, 0.3" }}
+      style={{ border: "3px solid rgba(0, 0, 0, 0.3)" }}
     >
       <div>
         <div className="ml-10 items-center md:flex">
@@ -38,7 +75,7 @@ export default function ClientNavbar() {
                 <li
                   key={idx}
                   className="ml-0 md:ml-4"
-                  onClick={() => setState(false)}
+                  onClick={() => handleItemClick(item)}
                 >
                   <NavBarLink
                     to={item.path}
@@ -87,21 +124,19 @@ export default function ClientNavbar() {
           </div>
           <div className="ml-auto mr-12 mt-0 justify-self-center pb-3 md:block md:pb-0">
             <ul className="flex flex-col justify-end space-y-0 pr-0 md:flex md:flex-row">
-              {rightNavigation.map((item, idx) => {
-                return (
-                  <li
-                    key={idx}
-                    className="ml-0 md:ml-4"
-                    onClick={() => setState(false)}
-                  >
-                    <NavBarLink
-                      to={item.path}
-                      icon={item.icon}
-                      label={item.label}
-                    />
-                  </li>
-                );
-              })}
+              {rightNavigation.map((item, idx) => (
+                <li
+                  key={idx}
+                  className="ml-0 md:ml-4"
+                  onClick={() => handleItemClick(item)}
+                >
+                  <NavBarLink
+                    to={item.path}
+                    icon={item.icon}
+                    label={item.label}
+                  />
+                </li>
+              ))}
             </ul>
           </div>
         </div>
