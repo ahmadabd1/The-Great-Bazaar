@@ -3,11 +3,11 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 // import UserCart from './userCart';
 // import Item from '../../../../Backend/models/item';
-
+import useUserInfo from '../customHooks/useUserInfo';
 const ItemDetail = () => {
   const [item, setItem] = useState(null);
   const { id } = useParams();
-
+  const { userInfo, loading, error, updateUserInfo } = useUserInfo();
   useEffect(() => {
     axios.get(`http://localhost:8080/item/item/${id}`)
       .then(response => {
@@ -25,7 +25,7 @@ const ItemDetail = () => {
   }
   const cartData ={
     userId : userInfo._id,
-    itemsCart : {},
+    itemsCart : [],
     totalItems: 0,
     totalPrice: 0
 
@@ -36,9 +36,12 @@ const ItemDetail = () => {
   //   console.log("Item added to cart:", item);
   // };
   const addToCart =async (item) => {
-    setCartItems([...cartItems, item]); // Add item to cartItems array
+    // setCartItems([...cartItems, item]); // Add item to cartItems array
+    cartData.itemsCart=[...cartData.itemsCart,item]
+    cartData.totalItems=1
+    cartData.totalPrice=2
     try {
-      const response = await axios.post('http://localhost:8080/cart/addToCart'); // Adjust endpoint as needed
+      const response = await axios.post('http://localhost:8080/cart/addToCart',cartData); // Adjust endpoint as needed
       setCartItems(response.data); // Assuming the response data is an array of cart items
       calculateTotalPrice(response.data);
     } catch (error) {
