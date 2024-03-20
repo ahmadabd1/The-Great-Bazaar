@@ -38,9 +38,10 @@ const ItemDetail = () => {
   const addToCart =async (item) => {
     // setCartItems([...cartItems, item]); // Add item to cartItems array
     cartData.itemsCart=[...cartData.itemsCart,item]
-    cartData.totalItems=1
-    cartData.totalPrice=2
+    cartData.totalItems+=1
+    cartData.totalPrice=cartData.totalItems*cartData.itemsCart.sellPrice
     try {
+
       const response = await axios.post('http://localhost:8080/cart/addToCart',cartData); // Adjust endpoint as needed
       setCartItems(response.data); // Assuming the response data is an array of cart items
       calculateTotalPrice(response.data);
