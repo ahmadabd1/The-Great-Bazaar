@@ -21,7 +21,7 @@ const ItemsPage = () => {
     },
     {
       icon: "../../src/assets/BazaarCategory2.jpg",
-      title: "Books and Paper",
+      title: "Books & Paper",
       desc: " The Abbasids abused the creation of paper to spread knowledge, you should too!",
     },
     {
@@ -50,10 +50,10 @@ const ItemsPage = () => {
         >
           <div className="cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4">
             <div className="text-center"></div>
-            <h4 className="text-black-800 text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_aqua]">
+            <h4 className="text-black-800 text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_black]">
               {features[0].title}
             </h4>
-            <p className="text-black-800 text-center font-mono text-lg font-semibold text-white drop-shadow-[0_3.2px_3.2px_aqua]">
+            <p className="text-black-800 text-center font-mono text-lg font-semibold text-white drop-shadow-[0_3.2px_3.2px_black]">
               {features[0].desc}
             </p>
           </div>
@@ -71,7 +71,7 @@ const ItemsPage = () => {
                   state: { category: item.title },
                 }}
               >
-                <div className="cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4">
+                <div className="bg cursor-pointer  space-y-3 rounded-lg border border-slate-400 p-4">
                   <div className="text-center">
                     <img
                       src={item.icon}
@@ -84,10 +84,10 @@ const ItemsPage = () => {
                       className="inline-block"
                     />
                   </div>
-                  <h4 className="text-black-800 text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_aqua]">
+                  <h4 className="text-black-800 border-solid text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_black]">
                     {item.title}
                   </h4>
-                  <p className="text-black-800 text-center font-mono text-lg font-semibold text-white drop-shadow-[0_3.2px_3.2px_aqua]">
+                  <p className="text-black-800 text-center font-mono text-lg font-semibold text-white drop-shadow-[0_3.2px_3.2px_black]">
                     {item.desc}
                   </p>
                 </div>
@@ -123,10 +123,10 @@ const ItemsPage = () => {
                       className="inline-block"
                     />
                   </div>
-                  <h4 className="text-black-800 text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_aqua]">
+                  <h4 className="text-black-800 text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_black]">
                     {item.title}
                   </h4>
-                  <p className="text-black-800 text-center font-mono text-lg font-semibold text-white drop-shadow-[0_3.2px_3.2px_aqua]">
+                  <p className="text-black-800 text-center font-mono text-lg font-semibold text-white drop-shadow-[0_3.2px_3.2px_black]">
                     {item.desc}
                   </p>
                 </div>
