@@ -5,11 +5,9 @@ import usePost from "../customHooks/usePost2";
 import "../style/adminitems.css";
 import AddItemModal from "./AddItemModal";
 import UpdateItemModal from "./UpdateItemModal";
-
 export default function Items() {
   const { data: items, loading: loadingItems, error: itemsError, refetch } = useGet("http://localhost:8080/item/items");
   const { data: categories, loading: loadingCategories, error: categoriesError } = useGet("http://localhost:8080/category/categories/");
-  
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,54 +15,43 @@ export default function Items() {
   const [selectedItem, setSelectedItem] = useState(null);
   const { deleteItem, isLoading: isDeleting, error: deleteError } = useDelete();
   const { postData, loading: posting, error: postError } = usePost();
-
   const handleDeleteItem = async (itemId) => {
     await deleteItem("http://localhost:8080/item/item", itemId);
     refetch();
   };
-
   const handleUpdateItem = (item) => {
     setSelectedItem(item);
     setIsUpdateModalOpen(true);
   };
-
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
-
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
-
   const openModal = () => setIsModalOpen(true);
-
   const closeModal = () => {
     setIsModalOpen(false);
     setIsUpdateModalOpen(false);
     setSelectedItem(null);
   };
-
   const addItem = async (formData) => {
     await postData("http://localhost:8080/item/item", formData);
     refetch();
   };
-
   const handleUpdateSuccess = () => {
     closeModal();
     refetch();
   };
-
   const filteredItems = items?.filter(item =>
     (item.name.toLowerCase().includes(searchTerm) ||
     item.description.toLowerCase().includes(searchTerm) ||
     item._id.toLowerCase().includes(searchTerm)) &&
     (selectedCategory === "" || item.category_id === selectedCategory)
   );
-
   if (loadingItems || isDeleting || posting || loadingCategories) return <div>Loading...</div>;
   if (itemsError || deleteError || postError || categoriesError)
     return <div>Error: {itemsError?.message || deleteError?.message || postError?.message || categoriesError?.message}</div>;
-
   return (
     <div className="containerclass">
       <button onClick={openModal} className="add-item-button">Add New Item</button>
@@ -91,9 +78,11 @@ export default function Items() {
                 <td>{item.image_id ? <img src={item.image_id} alt={item.name} className="item-image" /> : 'No image'}</td>
                 <td>{item.name}</td>
                 <td>{item.description}</td>
-                <td>
+                <td >
+                <div className="buttons">
                   <button onClick={() => handleUpdateItem(item)} className="update-item-button">Update</button>
                   <button onClick={() => handleDeleteItem(item._id)} className="delete-item-button">Delete</button>
+                </div>
                 </td>
               </tr>
             ))
