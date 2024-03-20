@@ -35,10 +35,15 @@ export default function Items() {
     setIsUpdateModalOpen(false);
     setSelectedItem(null);
   };
-  const addItem = async (formData) => {
-    await postData("http://localhost:8080/item/item", formData);
+const addItem = async (formData) => {
+  try {
+    await postData("http://localhost:8080/item/item", formData, true);
     refetch();
-  };
+  } catch (error) {
+    console.error("Error adding item:", error);
+  }
+};
+
   const handleUpdateSuccess = () => {
     closeModal();
     refetch();
