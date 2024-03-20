@@ -60,6 +60,7 @@ exports.login = async (req, res) => {
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
+
 exports.editProfile = async (req, res) => {
   try {
     // Check for validation errors
@@ -67,21 +68,16 @@ exports.editProfile = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
     const userId = req.params.userId;
     const { firstName, lastName, email, currentPassword, newPassword, newPasswordRepeat, phoneNumber } = req.body;
-
-    // Ensure firstName and lastName are present
-    if (!firstName || !lastName) {
-      return res.status(400).json({ message: "firstName and lastName are required." });
-    }
-
     // Fetch the user by ID
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Update user data
+    // Update non-password user data
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
@@ -89,18 +85,24 @@ exports.editProfile = async (req, res) => {
 
     // Password update logic
     if (currentPassword && newPassword && newPasswordRepeat) {
+      // Check if the current password is correct
       if (!await bcrypt.compare(currentPassword, user.password)) {
         return res.status(401).json({ message: "Current password is incorrect" });
       }
-      if (!newPassword.match(/.*[!@#$%^&*()_+-=\[\]{};':"\\|,.<>\/?].*/)) {
-        return res.status(400).json({ message: "New password must contain at least one special character" });
-      }
+
+      // Check if the new passwords match
       if (newPassword !== newPasswordRepeat) {
         return res.status(400).json({ message: "New passwords do not match" });
       }
+
+      // Check for password strength or requirements
+      if (!newPassword.match(/.*[!@#$%^&*()_+-=\[\]{};':"\\|,.<>\/?].*/)) {
+        return res.status(400).json({ message: "New password must contain at least one special character" });
+      }
+
+      // Update the password
       user.password = await bcrypt.hash(newPassword, 10);
     }
-    console.log('123')
 
     // Save the updated user data
     await user.save();
@@ -110,7 +112,6 @@ exports.editProfile = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 exports.get_all_users = async (req, res) => {
   try {

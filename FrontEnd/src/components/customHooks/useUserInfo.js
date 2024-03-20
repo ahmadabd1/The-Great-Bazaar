@@ -22,7 +22,6 @@ const useUserInfo = () => {
 
         const userData = await response.json();
         setUserInfo(userData);
-        console.log(userData)
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -33,7 +32,7 @@ const useUserInfo = () => {
     fetchUserInfo();
   }, []); 
 
-  return { userInfo, loading, error };
+  return { userInfo, setUserInfo, loading, error }; // Expose setUserInfo for external updates
 };
 
 export default useUserInfo;
