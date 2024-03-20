@@ -4,8 +4,10 @@ const cloudinary = require('cloudinary').v2;
 require('dotenv').config({ path: './config.env' });
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
 const app = express();
 app.use(cookieParser());
+
 // Cloudinary Configuration
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
@@ -35,11 +37,12 @@ const authRoutes = require('./routes/authRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
 const itemsRoutes = require('./routes/itemsRoutes');
 const refreshRoutes = require('./routes/refreshRoutes');
+const salesRoutes = require('./routes/salesRoutes');
 
 app.use('/user', authRoutes);
 app.use('/category', categoriesRoutes);
 app.use('/item', itemsRoutes);
 app.use('/refresh', refreshRoutes);
-
+app.use('/sales', salesRoutes);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
