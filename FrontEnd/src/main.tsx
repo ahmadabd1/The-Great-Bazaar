@@ -10,7 +10,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.Suspense fallback="Loading">
       <HelmetProvider>
         <BrowserRouter>
-          <App />
+        
+            <App />
+  
         </BrowserRouter>
       </HelmetProvider>
     </React.Suspense>

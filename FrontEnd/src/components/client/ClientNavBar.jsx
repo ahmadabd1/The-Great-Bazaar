@@ -1,7 +1,6 @@
 import NavBarLink from "./NavBarLink";
 import { useState } from "react";
 
-// Assuming the logout function is defined here or imported
 const logout = () => {
   localStorage.clear();
   window.location.href = "/";
