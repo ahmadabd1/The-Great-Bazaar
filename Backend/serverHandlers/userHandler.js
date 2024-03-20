@@ -60,28 +60,56 @@ exports.login = async (req, res) => {
 
 exports.editProfile = async (req, res) => {
   try {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     const userId = req.params.userId;
-    const { firstName, lastName, email, password, phoneNumber } = req.body;
+    const { firstName, lastName, email, currentPassword, newPassword, newPasswordRepeat, phoneNumber } = req.body;
 
+    // Ensure firstName and lastName are present
+    if (!firstName || !lastName) {
+      return res.status(400).json({ message: "firstName and lastName are required." });
+    }
+
+    // Fetch the user by ID
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // Update user data
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
-    user.password = password;
     user.phoneNumber = phoneNumber;
 
-    await user.save();
+    // Password update logic
+    if (currentPassword && newPassword && newPasswordRepeat) {
+      if (!await bcrypt.compare(currentPassword, user.password)) {
+        return res.status(401).json({ message: "Current password is incorrect" });
+      }
+      if (!newPassword.match(/.*[!@#$%^&*()_+-=\[\]{};':"\\|,.<>\/?].*/)) {
+        return res.status(400).json({ message: "New password must contain at least one special character" });
+      }
+      if (newPassword !== newPasswordRepeat) {
+        return res.status(400).json({ message: "New passwords do not match" });
+      }
+      user.password = await bcrypt.hash(newPassword, 10);
+    }
+    console.log('123')
 
+    // Save the updated user data
+    await user.save();
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     console.error("Error updating profile:", error);
-    res.status(500).json({ message: errorMessages.internalServerError });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 exports.get_all_users = async (req, res) => {
   try {
     const users = await User.find(
@@ -99,23 +127,21 @@ exports.get_all_users = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 exports.UserDetails = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email } = req.params; // Extracting email from route parameters
 
-    // Find the user by email
-    const user = await User.findOne({ email });
-
+    const user = await User.findOne({ email }); // Finding user by email in your database
     if (!user) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(404).send({ message: "User not found" }); // If user not found, return a 404 response
     }
 
-    res
-      .status(200)
-      .json({ firstName: user.firstName, lastName: user.lastName });
+    // If user found, return user details in JSON response
+    res.status(200).json(user);
   } catch (error) {
-    console.error("Error fetching user details:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error fetching user details:", error); // Log any errors that occur during the process
+    res.status(500).json({ message: "Internal server error" }); // Return a generic error response if something goes wrong
   }
 }
 exports.logout = async (req, res) => {

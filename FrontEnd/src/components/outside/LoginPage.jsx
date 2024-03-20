@@ -40,11 +40,22 @@ const LoginPage = () => {
     }
 
     try {
+   
       const responseData = await postData(endpoint, formData);
-      if (responseData.accessToken && responseData.refreshToken) {
+      if (formType === 'login') {
+        const { message } = responseData;
+        if (message.includes('Login successful')) {
+          const userType = message.includes('client') ? 'client' : 'admin';
+          setMessage(userType);
+        //  handleUserType(userType);
         localStorage.setItem('accessToken', responseData.accessToken);
-        localStorage.setItem('userType', responseData.role); 
-        navigate(responseData.role === 'admin' ? '/admin' : '/client'); 
+          localStorage.setItem('userType', userType);
+          localStorage.setItem('userEmail', formData.email);
+
+          navigate(`/${userType}`);
+        } else {
+          setMessage(message);
+        }
       } else {
         setMessage(responseData.message || 'An error occurred');
       }

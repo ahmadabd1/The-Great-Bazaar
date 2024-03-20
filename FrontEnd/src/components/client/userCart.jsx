@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../style/cart.css'; // Import your CSS file
 
 export default function UserCart(props) {
   const [cartItems, setCartItems] = useState([]);
@@ -34,13 +35,10 @@ export default function UserCart(props) {
     }
   };
 
-
- 
-
   return (
-    <div>
-      <h2>My Cart</h2>
-      <table>
+    <div className="cart-container">
+      <h2 className="cart-header">My Cart</h2>
+      <table className="cart-table">
         <thead>
           <tr>
             <th>Name</th>
@@ -51,18 +49,17 @@ export default function UserCart(props) {
         <tbody>
           {cartItems.map((item) => (
             <tr key={item._id}>
-             
               <td>{item.itemsCart[0].name}</td>
               <td>${item.itemsCart[0].sellPrice}</td>
               <td>
-                <button onClick={() => handleDeleteCartItem(item._id)}>Delete</button>
+                <button className="cart-button" onClick={() => handleDeleteCartItem(item.itemsCart[0]._id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div>Total Price: ${totalPrice}</div>
-      <button>Payment</button>
+      <div className="cart-total">Total Price: ${totalPrice}</div>
+      <button className="cart-button">Payment</button>
     </div>
   );
 }
