@@ -4,7 +4,6 @@ const cloudinary = require("../cloudinaryConfig");
 
 exports.get_item_byid = async (req, res) => {
   const Id = req.params.Id;
-  console.log(Id);
   try {
     const item = await Item.findOne({ _id: Id });
     if (!item) {
