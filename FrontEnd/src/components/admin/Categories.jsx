@@ -15,8 +15,9 @@ export default function Categories() {
   const [currentCategory, setCurrentCategory] = useState(null);
 
   const handleDelete = async (id) => {
+    console.log(id);
     await deleteItem(`http://localhost:8080/category`, id);
-    refetch(); 
+    refetch();
   };
 
   const handleAddCategoryClick = () => {
@@ -30,7 +31,7 @@ export default function Categories() {
 
   const handleSaveNewCategory = async (formData) => {
     try {
-      await postData('http://localhost:8080/category/category/', formData);
+      await postData('http://localhost:8080/category/category/', formData, true);
       setShowAddCategory(false);
       refetch();
     } catch (error) {
@@ -55,7 +56,7 @@ export default function Categories() {
   if (errorLoading || errorDeleting || postError) return <div>Error: {errorLoading?.message || errorDeleting?.message || postError?.message}</div>;
 
   return (
-    <div className="categories-container">
+    <div className="categoriesclass">
       <h1>Categories</h1>
       <button className='add-new-category' onClick={handleAddCategoryClick}>Add New Category</button>
       {showAddCategory && (
@@ -65,27 +66,30 @@ export default function Categories() {
           onCancel={handleCancel}
         />
       )}
-      <table className='categories-table'>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories && categories.map(category => (
-            <tr key={category._id}>
-              <td><img src={category.image_id} alt={category.name} className="category-image" /></td>
-              <td>{category.name}</td>
-              <td>
-                <button className='update-button' onClick={() => handleUpdateClick(category)}>Update</button>
-                <button className='delete-button' onClick={() => handleDelete(category._id)}>Delete</button>
-              </td>
+        <table className="categories-Table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {categories && categories.map(category => (
+              <tr key={category._id}>
+                <td><img src={category.image_id} alt={category.name} className="category-image"/></td>
+                <td>{category.name}</td>
+      <td >
+         <div className="buttons">
+                  <button className='update-item-button' onClick={() => handleUpdateClick(category)}>Update</button>
+
+                  <button className='delete-item-button' onClick={() => handleDelete(category._id)}>Delete</button>
+                </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       {showUpdateCategory && (
         <UpdateCategoryModal
           category={currentCategory}
@@ -93,6 +97,7 @@ export default function Categories() {
           onCancel={handleUpdateCancel}
         />
       )}
-    </div>
+            </div>
+
   );
 }
