@@ -110,8 +110,11 @@ button:hover {
 #chk:checked ~ .signup label {
   transform: scale(0.6);
 }
+.no-scroll-container {
+  overflow: hidden;
+}
 
 .error-message {
   color: red;
-  margin-top: 10px;
+  margin-top: 10px;
 }

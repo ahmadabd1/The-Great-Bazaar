@@ -2,10 +2,9 @@ import React from "react";
 
 export default function App() {
   return (
-    <footer className="bg-[#282113] bg-opacity-80">
+    <footer className=" bg-slate-800 bg-opacity-80 ">
       <div className="mx-6 py-2 text-center md:text-left">
         <div className="grid-1 ml-5 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* <!-- Contact section --> */}
           <div>
             <h6 className="mb-2 flex justify-center font-semibold uppercase text-white md:justify-start">
               Contact
@@ -32,7 +31,7 @@ export default function App() {
                 <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
                 <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
               </svg>
-              info@example.com
+              wlkalko@alo.wlk
             </p>
             <p className="mb-2 flex items-center justify-center text-white md:justify-start">
               <svg
@@ -47,32 +46,14 @@ export default function App() {
                   clipRule="evenodd"
                 />
               </svg>
-              + 01 234 567 88
-            </p>
-            <p className="flex items-center justify-center text-white md:justify-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="mr-3 h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M7.875 1.5C6.839 1.5 6 2.34 6 3.375v2.99c-.426.053-.851.11-1.274.174-1.454.218-2.476 1.483-2.476 2.917v6.294a3 3 0 003 3h.27l-.155 1.705A1.875 1.875 0 007.232 22.5h9.536a1.875 1.875 0 001.867-2.045l-.155-1.705h.27a3 3 0 003-3V9.456c0-1.434-1.022-2.7-2.476-2.917A48.716 48.716 0 0018 6.366V3.375c0-1.036-.84-1.875-1.875-1.875h-8.25zM16.5 6.205v-2.83A.375.375 0 0016.125 3h-8.25a.375.375 0 00-.375.375v2.83a49.353 49.353 0 019 0zm-.217 8.265c.178.018.317.16.333.337l.526 5.784a.375.375 0 01-.374.409H7.232a.375.375 0 01-.374-.409l.526-5.784a.373.373 0 01.333-.337 41.741 41.741 0 018.566 0zm.967-3.97a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H18a.75.75 0 01-.75-.75V10.5zM15 9.75a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V10.5a.75.75 0 00-.75-.75H15z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              + 01 234 567 89
+              + WLK ALO
             </p>
           </div>
           {/* CONTANT US SECTION */}
           <div className="m-1 ml-[28vh] flex w-[50vh] font-mono text-lg">
-            <p className=" text-white">
+            <p className="text-center text-white">
               "Have questions or inquiries? We're here to help! Feel free to
-              reach out to us via any of the following channels. Our dedicated
-              team is ready to assist you with any queries you may have. Don't
-              hesitate to get in touch with us. Your satisfaction is our
-              priority!"
+              reach out to us via any of the following channels."
             </p>
           </div>
 
