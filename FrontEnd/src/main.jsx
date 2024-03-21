@@ -4,6 +4,7 @@ import App from "./App";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import BottomPage from "./components/client/BottomPage";
 
 // Use createRoot from react-dom/client
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -14,5 +15,5 @@ root.render(
         <App />
       </BrowserRouter>
     </HelmetProvider>
-  </React.Suspense>
+  </React.Suspense>,
 );
