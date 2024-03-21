@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../style/cart.css'; // Import your CSS file
-
 export default function UserCart(props) {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    // Fetch cart items from backend when component mounts
     fetchCartItems();
   }, []);
 
   const fetchCartItems = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/cart/allCart'); // Adjust endpoint as needed
-      setCartItems(response.data); // Assuming the response data is an array of cart items
+      const response = await axios.get('http://localhost:8080/cart/allCart');
+      setCartItems(response.data);
       calculateTotalPrice(response.data);
     } catch (error) {
       console.error('Error fetching cart items:', error);
@@ -22,14 +20,17 @@ export default function UserCart(props) {
   };
 
   const calculateTotalPrice = (items) => {
-    const total = items.reduce((acc, item) => acc + item.itemsCart[0].sellPrice, 0);
+    const total = items.reduce((acc, item) => {
+      // Ensure that itemsCart[0] exists before accessing its sellPrice
+      return acc + (item.itemsCart && item.itemsCart[0] ? item.itemsCart[0].sellPrice : 0);
+    }, 0);
     setTotalPrice(total);
   };
 
   const handleDeleteCartItem = async (itemId) => {
     try {
-      await axios.delete(`/cart/deleteFromCart/${itemId}`); // Adjust endpoint as needed
-      fetchCartItems(); // Refetch cart items after deletion
+      await axios.delete(`/cart/deleteFromCart/${itemId}`);
+      fetchCartItems();
     } catch (error) {
       console.error('Error deleting cart item:', error);
     }
@@ -48,13 +49,16 @@ export default function UserCart(props) {
         </thead>
         <tbody>
           {cartItems.map((item) => (
-            <tr key={item._id}>
-              <td>{item.itemsCart[0].name}</td>
-              <td>${item.itemsCart[0].sellPrice}</td>
-              <td>
-                <button className="cart-button" onClick={() => handleDeleteCartItem(item.itemsCart[0]._id)}>Delete</button>
-              </td>
-            </tr>
+            // Ensure that itemsCart[0] exists before rendering its properties
+            item.itemsCart && item.itemsCart[0] ? (
+              <tr key={item._id}>
+                <td>{item.itemsCart[0].name}</td>
+                <td>${item.itemsCart[0].sellPrice}</td>
+                <td>
+                  <button className="cart-button" onClick={() => handleDeleteCartItem(item.itemsCart[0]._id)}>Delete</button>
+                </td>
+              </tr>
+            ) : null
           ))}
         </tbody>
       </table>

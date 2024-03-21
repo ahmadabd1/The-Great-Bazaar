@@ -1,14 +1,16 @@
 .Modal {
-  position: inherit;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* width: 500px; */
-  max-height: 98%;
-  /* overflow-y: auto; */
+  width: 700px;
+  height: 607px;
+  align-items: center;
+  /* max-height: 90vh; */
+  overflow-y: auto;
 }
 
 .Overlay {
@@ -58,7 +60,7 @@
   border: 1px solid #ccc !important;
   border-radius: 4px;
   height: 40px;
-  background-color: #e0dede !important; /* Sets the height of the input fields */
+  background-color: white !important; /* Sets the height of the input fields */
 }
 .form-group label {
   display: block;
@@ -87,6 +89,7 @@
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
+
   margin-left: 8px;
   border: none; /* Add this line if you want to remove the default border */
   outline: none; /* Add this line to remove the outline */
