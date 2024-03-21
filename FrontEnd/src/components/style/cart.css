@@ -1,0 +1,65 @@
+.cart-container {
+  max-width: 800px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  backdrop-filter: blur(10px); /* Apply a blur effect to the background */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  border: 1px solid rgba(255, 255, 255, 0.75); /* Optional: adds a subtle border */
+}
+.cart-header {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-table th {
+  /* background-color: #f9f9f9; */
+  color: #fff;
+}
+
+.cart-table td {
+  color: #fff;
+}
+
+.cart-button {
+  background-color: #5cb85c; /* Green background */
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 10px 20px; /* Top and bottom padding 10px, left and right padding 20px */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block; /* This will allow the width to be as long as the content plus padding */
+  font-size: 16px;
+  margin: 4px 2px; /* Spacing around the button */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  cursor: pointer;
+  border-radius: 4px; /* Rounded corners */
+  box-sizing: border-box; /* This makes sure padding is included in the width and height */
+}
+
+.cart-button:hover {
+  background-color: #4cae4c; /* Darker green on hover */
+}
+
+.cart-total {
+  text-align: right;
+  margin-top: 20px;
+  font-size: 20px;
+  color: #333;
+}

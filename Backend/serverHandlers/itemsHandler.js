@@ -4,7 +4,6 @@ const cloudinary = require("../cloudinaryConfig");
 
 exports.get_item_byid = async (req, res) => {
   const Id = req.params.Id;
-  console.log(Id);
   try {
     const item = await Item.findOne({ _id: Id });
     if (!item) {
@@ -57,6 +56,7 @@ exports.create_item = async (req, res) => {
     name: req.body.name,
     description: req.body.description,
     sellPrice: req.body.sellPrice,
+    buyPrice: req.body.buyPrice,
     quantity: req.body.quantity,
     category_id: req.body.category_id,
     vendor: req.body.vendor,
@@ -80,21 +80,30 @@ exports.create_item = async (req, res) => {
   }
 };
 
-exports.update_item = async (req, res) => {
-  const updatedItemData = req.body;
-  const { id } = updatedItemData;
 
+exports.update_item = async (req, res) => {
+  const { _id } = req.body; 
   try {
-    const existingItem = await Item.findOne({ id });
+    const existingItem = await Item.findById(_id);
     if (!existingItem) {
-      return res.status(404).json({ message: errorMessages.NOT_FOUND });
+      return res.status(404).json({ message: "Item not found" });
     }
-    // Update fields
-    Object.assign(existingItem, updatedItemData);
+    Object.keys(req.body).forEach(key => {
+      if (key !== '_id' && key !== 'image_id') {
+        existingItem[key] = req.body[key];
+      }
+    });
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path);
+      existingItem.image_id = result.url;
+    }
     await existingItem.save();
-    res.status(200).json(existingItem);
+    res.status(200).json({ message: "Item updated successfully", item: existingItem });
   } catch (error) {
     console.error("Error updating item:", error);
-    res.status(500).json({ message: errorMessages.SERVER_ERROR });
+    res.status(500).json({ message: "An error occurred while updating the item." });
   }
 };
+
+
+

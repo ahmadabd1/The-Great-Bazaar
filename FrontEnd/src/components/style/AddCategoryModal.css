@@ -1,43 +1,44 @@
 /* AddCategoryModal.css */
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-  
-  .modal h2 {
-    margin-top: 0;
-  }
-  
-  .modal input,
-  .modal select {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    box-sizing: border-box;
-  }
-  
-  .modal button {
-    padding: 8px 16px;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  
-  .modal button:first-of-type {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-  }
-  
-  .modal button:last-of-type {
-    background: none;
-    color: #333;
-    border: 1px solid #333;
-  }
-  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; /* Width is already increased to 500px */
+  height: 600px; /* Set a specific height, e.g., 600px */
+  background-color: white;
+  padding: 40px; /* Padding increased for better spacing */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow: auto; /* Add scroll if content is larger than the modal */
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+.modal button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.modal button:first-of-type {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+}
+
+.modal button:last-of-type {
+  background: none;
+  color: #333;
+  border: 1px solid #333;
+}

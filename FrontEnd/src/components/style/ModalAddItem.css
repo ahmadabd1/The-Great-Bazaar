@@ -1,16 +1,14 @@
 .Modal {
-  background: #fff;
-  padding: 25px;
+  position: inherit;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
   border-radius: 10px;
-  position: relative;
-  width: 60%;
-  max-width: 600px;
-  max-height: 80vh;
-  margin: auto;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  font-size: 14px; /* Adjusted font size for the entire modal */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* width: 500px; */
+  max-height: 98%;
+  /* overflow-y: auto; */
 }
 
 .Overlay {
@@ -19,80 +17,99 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  padding: 1px;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.modal-form {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 
-.ModalAddItem__Content {
-  background: #fff;
-  padding: 20px;
-  width: auto;
-  max-width: 400px;
-  min-width: 300px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.label {
+  font-size: 14px;
+  flex: 0 0 auto; /* The label doesn't grow but keeps the width it needs */
+  margin-right: 10px; /* Maintains space between label and input */
+  text-align: left; /* Aligns the text to the left */
 }
-
-.ModalAddItem__Header {
-  font-size: 1.2em; /* Adjusted header font size */
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.ModalAddItem__Form label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #444;
-  font-size: 14px; /* Adjusted label font size */
-}
-
-.ModalAddItem__Form input,
-.ModalAddItem__Form button {
-  width: 100%;
+.label,
+.input,
+.select,
+.fileInput,
+.checkbox {
+  margin: 0;
   padding: 8px;
-  margin-bottom: 15px;
+  display: block; /* Makes sure the input takes the full width of its flex item */
+}
+.input,
+.select,
+.fileInput {
+  flex-grow: 1; /* Allows input fields to grow and fill the remaining space */
+  border: 1px solid #ccc !important;
   border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 14px; /* Adjusted input and button font size */
+  height: 40px;
+  background-color: #e0dede !important; /* Sets the height of the input fields */
+}
+.form-group label {
+  display: block;
+  /* margin-bottom: 5px; */
+}
+.form-group {
+  display: flex;
+  align-items: center; /* Keeps items aligned vertically in the center */
+  justify-content: flex-start; /* Aligns items to the start (left) */
+  margin-bottom: 10px; /* Maintains spacing between each form group */
 }
 
-.ModalAddItem__Form input:focus,
-.ModalAddItem__Form button:focus {
-  outline: none;
-  border-color: #80bdff;
+.checkbox {
+  /* For checkboxes, we don't need them to grow too much */
+  flex: 0 0 auto; /* Don't grow, don't shrink, based on content */
 }
 
-.ModalAddItem__Form button.submit-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.addButton,
+.cancelButton {
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-left: 8px;
+  border: none; /* Add this line if you want to remove the default border */
+  outline: none; /* Add this line to remove the outline */
 }
 
-.ModalAddItem__Form button.submit-button:hover {
-  background-color: #0056b3;
+.addButton {
+  background-color: #4caf50 !important; /* Standard green button */
+  color: black;
 }
 
-.ModalAddItem__Form button.cancel-button {
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.addButton:hover {
+  background-color: #45a049; /* Darker green on hover */
 }
 
-.ModalAddItem__Form button.cancel-button:hover {
-  background-color: #545b62;
+.cancelButton {
+  background-color: #f44336 !important; /* Standard red button */
+  color: black;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .ModalAddItem__Content {
-    width: 90%;
-    padding: 15px;
-  }
+.cancelButton:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+button:focus {
+  outline: none; /* Removes the focus outline to match modern style */
 }

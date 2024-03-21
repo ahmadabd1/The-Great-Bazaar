@@ -1,67 +1,41 @@
 import { Icon } from "@iconify/react";
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-
+import axios from 'axios'; 
 export default function Home() {
-  const features = [
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-    {
-      icon: "icon-park:helmet",
-      title: "ITEM",
-      desc: "ITEM",
-    },
-  ];
-const navigate = useNavigate();
-    useEffect(() => {
-    switch (localStorage.getItem('userType')) {
-      case 'admin':
-        navigate('/admin')
-        break
-      case 'client':
-        navigate('/client')
-        break
-      
+ const [features, setFeatures] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Navigation logic based on user type
+    const userType = localStorage.getItem('userType');
+    if (userType === 'admin') {
+      navigate('/admin');
+    } else if (userType === 'client') {
+      navigate('/client');
+    } else {
+      fetchItems(); 
     }
-  }, [])
+  }, [navigate]);
+
+  const fetchItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/item/items');
+      const suggestedItems = response.data.filter(item => item.suggestedItem);
+      const itemsToDisplay = suggestedItems.map(item => ({
+        icon: item.image_id, // Assuming `image_id` is the image URL or identifier
+        title: item.name,
+        desc: item.description,
+        price : item.buyPrice
+      }));
+      setFeatures(itemsToDisplay);
+    } catch (error) {
+      console.error('Error fetching items:', error);
+    }
+  };
+  const handleStartStartShoppingClick = () => {
+    navigate("/login");
+  };
   return (
     <>
       <div
@@ -106,6 +80,7 @@ const navigate = useNavigate();
                 style={{ marginTop: "30px", height: "auto" }}
               >
                 <a
+                onClick={handleStartStartShoppingClick}
                   href="javascript:void(0)"
                   className="flex items-center justify-center gap-x-5 rounded-full bg-gray-800 px-4 py-2 font-medium  text-slate-200 duration-150 hover:bg-gray-700 active:bg-gray-900 md:inline-flex"
                 >
@@ -146,45 +121,36 @@ const navigate = useNavigate();
           </div>
         </section>
 
-        <section
-          className="p-25 py-50"
-          style={{ marginTop: "70px", border: "3px solid rgba(0, 0, 0, 0.3" }}
-        >
-          <div className=" text-gray-600">
-            <div className="relative z-10">
-              <h3 className="mb-4 font-mono text-4xl text-slate-200 md:text-4xl lg:text-4xl">
-                Preview Items
-              </h3>
-              <p className="md:text-1xl  lg:text-2s mb-4 font-mono text-2xl leading-none tracking-tight text-slate-400">
-                Enjoy all the goods from the Far East to the Abbasid Caliphate
-              </p>
+   
+       <div className="page content container text-center" style={{ marginTop: "150px" }}>
+  <section className="p-25 py-50" style={{ marginTop: "70px", border: "3px solid rgba(0, 0, 0, 0.3)" }}>
+    <div className="text-gray-600">
+      <div className="relative z-10">
+        <h3 className="mb-4 font-mono text-4xl text-slate-200 md:text-4xl lg:text-4xl">Preview Items</h3>
+        <p className="md:text-1xl lg:text-2xl mb-4 font-mono text-2xl leading-none tracking-tight text-slate-400">
+          Enjoy all the goods from the Far East to the Abbasid Caliphate
+        </p>
+      </div>
+      <div className="absolute inset-0 mx-auto h-44 max-w-xs blur-[118px]"></div>
+    </div>
+    <div className="relative mt-12" style={{ marginLeft: "41px" }}>
+      <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {features.map((item, idx) => (
+          <li key={idx} className="space-y-3 rounded-lg p-4" style={{ height: '270px', width: '200px', backdropFilter: 'blur(10px)' }}>
+            <div className="text-center">
+              <img src={item.icon} alt={item.title} style={{ height: '130px', width: '130px' }} className="inline-block" />
             </div>
-            <div className="absolute inset-0 mx-auto h-44 max-w-xs blur-[118px]"></div>
-          </div>
-          <div className="relative mt-12">
-            <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {features.map((item, idx) => (
-                <li
-                  key={idx}
-                  className="space-y-3 rounded-lg border bg-white p-4"
-                >
-                  <div className="text-center">
-                    <Icon
-                      icon={item.icon}
-                      height={32}
-                      inline={true}
-                      className="inline-block"
-                    />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-800">
-                    {item.title}
-                  </h4>
-                  <p>{item.desc}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+            <h4 className="text-lg font-semibold text-black-800">{item.title}</h4>
+            <p>{item.desc}</p>         
+          <p>{item.price}$</p>
+
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</div>
+
       </div>
     </>
   );

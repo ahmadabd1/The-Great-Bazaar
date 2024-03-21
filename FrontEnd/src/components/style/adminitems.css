@@ -1,128 +1,109 @@
-adminitems.css .search-bar {
-  width: 30%;
+.containerclass {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 700px;
+  margin: auto;
   padding: 10px;
-  margin: 20px;
-  margin-left: 30%;
-  font-size: 16px;
-  border: 1px solid #aaa; /* Lighter border color */
-  background-color: #fff; /* White background for visibility */
-  color: #333; /* Dark text for contrast */
-  border-radius: 4px;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
-}
-.success-message {
-  color: green;
-  margin: 10px 0;
-  margin-left: 30%;
-}
-
-.error-message {
-  color: red;
-  margin: 10px 0;
-  margin-left: 30%;
-
-}
-
-.Items-Container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 20px;
-  padding: 20px;
-  margin-left: 250px; /* Space for sidebar */
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
-}
-
-.item-container {
-  border: 1px solid #aaa; /* Lighter border color */
-  background-color: #fff; /* White background for visibility */
-  color: #333; /* Dark text for contrast */
+  background: #f5f5f5;
+  font-family: Arial, sans-serif;
   border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 300px; /* Maximum width for each item */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.3s ease-in-out;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.item-container:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+/* Enhanced button styles */
+.add-item-button,
+.update-item-button,
+.delete-item-button {
+  margin: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  color: white;
+  text-align: center; /* Center the text */
+  display: inline-block; /* Use inline-block or block for text-align to work */
+  width: auto; /* You can set a specific width if necessary */
 }
 
-.item-Name {
-  color: #007bff; /* Bright blue for the item name */
-  margin: 0 0 10px 0;
-  font-size: 1.2em;
+.update-item-button {
+  background-color: #2c3e50; /* Dark blue background */
 }
 
-.item-id {
-  color: #28a745; /* Green for the ID */
-  font-size: 0.9em;
-  margin: 0 0 5px 0;
+.update-item-button:hover {
+  background-color: #273c4f; /* Slightly darker on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
 }
 
-.item-desc {
-  color: #17a2b8; /* Light blue for the description */
-  font-size: 1em;
+.delete-item-button {
+  background-color: #dc3545; /* Red background */
+}
+
+.delete-item-button:hover {
+  background-color: #c82333; /* Slightly darker on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
 }
 
 .add-item-button {
-  background-color: #007bff;
+  background-color: #28a745;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius: 5px;
-  width: 20%;
-  margin-left: 30%;
-}
-.delete-item-button {
-  background-color: #b51d20;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius: 5px;
 }
 
-.add-item-button:hover,
-.delete-item-button:hover {
+.add-item-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+.search-bar {
+  background-color: white !important;
+}
+.search-bar,
+.category-dropdown {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd !important;
+  border-radius: 4px;
+  width: calc(100% - 22px);
+}
+.buttons {
+  display: flex;
+}
+.Items-Table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Items-Table th,
+.Items-Table td {
+  text-align: center;
+  padding: 20px;
+  transition: background-color 0.3s;
+}
+
+.Items-Table th {
+  background-color: #2c3e50;
+  color: white;
+  font-size: 18px;
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Lower than modal */
+}
+
+.Items-Table td {
   background-color: white;
-  color: black;
-  border: 1px solid #007bff;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .Items-Container {
-    flex-direction: column;
-    align-items: center;
-    margin-left: 0;
-    padding: 10px;
-  }
+.Items-Table tr:hover td {
+  background-color: #e9ecef;
+}
 
-  .search-bar {
-    width: calc(100% - 20px);
-    margin: 10px auto; /* Center the search bar */
-    display: block;
-  }
-
-  .item-container {
-    width: 90%;
-    max-width: none;
-  }
+.item-image {
+  width: 100px;
+  height: auto;
+  border-radius: 4px;
 }

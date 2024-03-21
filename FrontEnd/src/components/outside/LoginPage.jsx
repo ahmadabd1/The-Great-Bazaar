@@ -25,8 +25,6 @@ const LoginPage = () => {
       [name]: value,
     }));
   };
-const [user, setUser] = useState({ firstName: '', lastName: '' });
-
 
   const toggleForm = () => {
     setFormType(formType === 'login' ? 'signup' : 'login');
@@ -42,6 +40,7 @@ const [user, setUser] = useState({ firstName: '', lastName: '' });
     }
 
     try {
+   
       const responseData = await postData(endpoint, formData);
       if (formType === 'login') {
         const { message } = responseData;
@@ -49,20 +48,21 @@ const [user, setUser] = useState({ firstName: '', lastName: '' });
           const userType = message.includes('client') ? 'client' : 'admin';
           setMessage(userType);
         //  handleUserType(userType);
+        localStorage.setItem('accessToken', responseData.accessToken);
           localStorage.setItem('userType', userType);
+          localStorage.setItem('userEmail', formData.email);
+
           navigate(`/${userType}`);
         } else {
           setMessage(message);
         }
       } else {
-        setMessage('Signup successful');
-        setFormType('login');
+        setMessage(responseData.message || 'An error occurred');
       }
     } catch (error) {
       setMessage(error.message || `An error occurred while ${formType === 'login' ? 'logging in' : 'signing up'}`);
     }
   };
-
   return (
     <div className="main">
       <input type="checkbox" id="chk" aria-hidden="true" />
