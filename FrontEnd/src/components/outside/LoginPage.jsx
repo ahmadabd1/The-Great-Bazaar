@@ -1,19 +1,20 @@
-import usePost from '../customHooks/usePost';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import '../style/LoginPage.css';
+import React, { useState } from "react";
+import usePost from "../customHooks/usePost";
+import { useNavigate } from "react-router-dom";
+import "../style/LoginPage.css";
 
-const LoginPage = () => {
+function LoginPage() {
+  // State and functions for handling form submission
   const navigate = useNavigate();
-  const [formType, setFormType] = useState('login'); // 'login' or 'signup'
-  const [message, setMessage] = useState('');
+  const [formType, setFormType] = useState("login"); // 'login' or 'signup'
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phoneNumber: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phoneNumber: "",
   });
 
   const { postData } = usePost();
@@ -25,116 +26,178 @@ const LoginPage = () => {
       [name]: value,
     }));
   };
-const [user, setUser] = useState({ firstName: '', lastName: '' });
-
 
   const toggleForm = () => {
-    setFormType(formType === 'login' ? 'signup' : 'login');
+    setFormType(formType === "login" ? "signup" : "login");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const endpoint = formType === 'login' ? 'http://localhost:8080/user/login' : 'http://localhost:8080/user/signup';
+    const endpoint =
+      formType === "login"
+        ? "http://localhost:8080/user/login"
+        : "http://localhost:8080/user/signup";
 
-    if (formType === 'signup' && formData.password !== formData.confirmPassword) {
-      setMessage('Passwords do not match');
+    if (
+      formType === "signup" &&
+      formData.password !== formData.confirmPassword
+    ) {
+      setMessage("Passwords do not match");
       return;
     }
 
     try {
       const responseData = await postData(endpoint, formData);
-      if (formType === 'login') {
+      if (formType === "login") {
         const { message } = responseData;
-        if (message.includes('Login successful')) {
-          const userType = message.includes('client') ? 'client' : 'admin';
+        if (message.includes("Login successful")) {
+          const userType = message.includes("client") ? "client" : "admin";
           setMessage(userType);
-        //  handleUserType(userType);
-          localStorage.setItem('userType', userType);
-          localStorage.setItem('userEmail', formData.email);
-
+          localStorage.setItem("userType", userType);
+          localStorage.setItem("userEmail", formData.email);
           navigate(`/${userType}`);
         } else {
           setMessage(message);
         }
       } else {
-        setMessage('Signup successful');
-        setFormType('login');
+        setMessage("Signup successful");
+        setFormType("login");
       }
     } catch (error) {
-      setMessage(error.message || `An error occurred while ${formType === 'login' ? 'logging in' : 'signing up'}`);
+      setMessage(
+        error.message ||
+          `An error occurred while ${
+            formType === "login" ? "logging in" : "signing up"
+          }`,
+      );
     }
   };
 
   return (
-    <div className="main">
-      <input type="checkbox" id="chk" aria-hidden="true" />
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="chk" aria-hidden="true" onClick={toggleForm}>
-          {formType === 'login' ? 'Login' : 'Sign up'}
-        </label>
-         
-        {formType === 'signup' && (
-          <>
-            <input
-              name="firstName"
-              placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="lastName"
-              placeholder="Last Name"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-            />
-          </>
-        )}
+    <div className="mx-auto my-5  mt-16 h-[55%] w-[150vh]  rounded-lg p-20 opacity-85">
+      <div className="overflow-hidden rounded-md bg-gray-950 text-slate-400 shadow-md md:flex">
+        {/* Card Image */}
+        <div className="md:w-1/2">
+          <img
+            src=".\src\assets\BazaarCategory.jpg"
+            alt="login form"
+            className="h-[80vh] w-[full] rounded-lg object-cover object-center"
+          />
+        </div>
 
-        <input
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-
-        {formType === 'signup' && (
-          <>
-            <input
-              type="text"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              placeholder="Phone Number"
-              required
+        {/* Card Content */}
+        <div className="p-8 md:w-1/2">
+          {/* Logo */}
+          <div className="mb-4 flex items-center">
+            <img
+              src="./src/assets/BazaarIcon.gif"
+              className="w-25  h-28"
+              alt="Bazaar Icon"
             />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </>
-        )}
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+            <span className="whitespace-no-wrap mb-0 mr-2 text-center font-mono text-4xl text-slate-500">
+              The Great Bazaar
+            </span>
+          </div>
 
-        <button type="submit">{formType === 'login' ? 'Login' : 'Sign up'}</button>
-        {message && <div className="error-message">{message}</div>}
-      </form>
+          {/* Form Inputs */}
+          {formType === "signup" && (
+            <>
+              <input
+                name="firstName"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+                className="text-1xl m-5 mx-auto mt-4 block h-12 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
+              />
+              <input
+                name="lastName"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+                className="text-1xl m-5 mx-auto mt-4 block h-12 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
+              />
+            </>
+          )}
+
+          <input
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="text-1xl m-5 mx-auto mt-4 block h-12 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
+          />
+
+          {formType === "signup" && (
+            <>
+              <input
+                type="text"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                placeholder="Phone Number"
+                required
+                className="text-1xl m-5 mx-auto mt-4 block h-12 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
+              />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                className="text-1xl m-5 mx-auto mt-4 block h-12 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
+              />
+            </>
+          )}
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            className="text-1xl m-5 mx-auto mt-4 block h-12 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
+          />
+
+          {/* Login Button */}
+          <button
+            className="text-1xl mb-5 mt-10 w-full text-pretty rounded-lg bg-gray-800  px-6 py-3 text-center text-xl text-slate-500 hover:bg-cyan-600 hover:text-black"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            {formType === "login" ? "Login" : "Sign up"}
+          </button>
+          {message && <div className="mb-4 text-red-500">{message}</div>}
+
+          <p className="mb-6 mt-5 pt-2 text-center text-xl text-gray-700">
+            {formType === "login" ? "Don't have an account? " : ""}
+            <a
+              href="#!"
+              onClick={toggleForm}
+              className="text-xl font-semibold text-gray-400 hover:text-sky-400"
+            >
+              {formType === "login" ? "Register here" : "Login"}
+            </a>
+          </p>
+
+          {/* Links */}
+          <div className="ml-48 flex items-center">
+            <a href="#!" className="text-m me-2 text-gray-500">
+              Terms of use.
+            </a>
+            <a href="#!" className="text-m text-gray-500">
+              Privacy policy
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default LoginPage;
