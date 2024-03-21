@@ -34,7 +34,7 @@ export default function Footer() {
   return (
     <>
       {showFooter && (
-        <footer className="border-gray-300-lg fixed bottom-0 left-0 right-0 z-50 border-t backdrop-blur-md ">
+        <footer className="border-gray-300-lg  fixed bottom-0  left-0 right-0 z-50 border-t bg-slate-950 bg-opacity-50 backdrop-blur-md ">
           <div className="page container">
             <div className="mx-auto flex  max-w-screen-xl items-center justify-between px-3 py-1 md:px-1 md:py-3">
               <div className="justify-center text-slate-200">
@@ -54,9 +54,6 @@ export default function Footer() {
                   <span>Legal</span>
                 </NavLink>
                 &nbsp;|&nbsp;
-                <NavLink to="/contact" className="text-slate-200">
-                  <span>Join Us</span>
-                </NavLink>
               </div>
             </div>
           </div>

@@ -114,43 +114,41 @@ export default function Home() {
               border: "3px solid rgba(0, 0, 0, 0.3)",
             }}
           >
-            <div className="w-[105vh] text-gray-600">
+            <div className=" text-gray-600">
               <div className="relative z-10">
-                <h3 className="mb-4 text-center font-mono text-4xl text-slate-200 md:text-4xl lg:text-4xl">
+                <h3 className="mb-4  text-center font-mono text-4xl text-slate-200 md:text-4xl lg:text-4xl">
                   Preview Items
                 </h3>
-                <p className="md:text-1xl mb-4 font-mono text-3xl leading-none tracking-tight text-slate-400">
+                <p className="md:text-1xl absloute mb-4 text-center font-mono text-3xl leading-none tracking-tight text-slate-400">
                   Enjoy all the goods from the Far East to the Abbasid Caliphate
                 </p>
               </div>
               <div className="absolute inset-0 mx-auto h-44 max-w-xs"></div>
             </div>
             <div className="relative mt-12" style={{ marginLeft: "41px" }}>
-              <ul className="grid justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="rounded- grid justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 {features.map((item, idx) => (
                   <li
                     key={idx}
-                    className=" space-y-3 rounded-lg bg-black bg-opacity-30 p-4"
+                    className="rounded-xl border-2 border-black bg-sky-950 bg-opacity-30 hover:bg-sky-900 hover:bg-opacity-30  "
                     style={{
                       height: "270px",
                       width: "200px",
-                      border: "4px solid black", // Add a solid black border
-                      backdropFilter: "blur(2px)",
                     }}
                   >
                     <div className="text-center">
                       <img
                         src={item.icon}
                         alt={item.title}
-                        style={{ height: "130px", width: "130px" }}
-                        className="inline-block"
+                        style={{ height: "125px", width: "200px" }}
+                        className=" inline-block border-b-2 border-slate-950"
                       />
                     </div>
-                    <h4 className="text-black-800 text-xl font-bold text-slate-300">
+                    <h4 className="text-black-800 border-b-2 border-slate-950 p-2 font-mono text-xl text-slate-100 hover:text-sky-300">
                       {item.title}
                     </h4>
 
-                    <p className="text-black-800 text-2xl font-bold text-slate-400">
+                    <p className="text-black-800 font-mono text-2xl text-slate-300">
                       {item.price}$
                     </p>
                   </li>
@@ -159,8 +157,6 @@ export default function Home() {
             </div>
           </section>
         </div>
-
-        {/* /////////////////////// */}
       </div>
     </>
   );

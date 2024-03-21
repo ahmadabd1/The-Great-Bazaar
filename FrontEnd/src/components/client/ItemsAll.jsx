@@ -47,24 +47,36 @@ const FilteredItems = () => {
     return <div>Error: {itemsError?.message || categoriesError?.message}</div>;
 
   return (
-    <div className="container mx-auto p-8">
+    <div
+      className="absloutecontainer ml-56 mt-[13vh]"
+      style={{ height: "80%", width: "80%" }}
+    >
       {/* Client Side Bar */}
       <div
         className={`fixed left-0 top-[78px] h-full w-[13%] overflow-y-scroll border-r border-gray-900 bg-gray-800 bg-opacity-50`}
       >
-        <ul className="border-b border-gray-600">
+        <ul className=" border-gray-600">
           <Link to="/client/ItemsPage">
             <FiArrowLeft />
             <label className="ml-auto mt-2 w-full border-b border-gray-600 p-6 text-center font-mono text-xl text-slate-200">
               &lt; Back
             </label>
           </Link>
-          <label className="ml-auto mt-2 w-full border-b border-gray-600 p-6 text-center font-mono text-xl text-slate-200">
+          <div className="border-b-2 border-gray-600">
+            <input
+              type="text"
+              placeholder="Search by name"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="mb-8 w-full rounded-md border-b-2"
+            />
+          </div>
+          <label className="ml-auto mt-2 w-full  text-center font-mono text-xl text-slate-200">
             FilterCategory
           </label>
           <select
             id="categorySelect"
-            className="text-m p-l mb-20 ml-5 h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
+            className="text-m ml-5  h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -80,29 +92,21 @@ const FilteredItems = () => {
       </div>
 
       {/* Search input */}
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-        className="mb-4 w-full rounded-md border border-gray-300 px-4 py-2"
-      />
 
       {/* Display filtered items */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filteredItems &&
           filteredItems.map((item) => (
-            <div key={item._id} className="rounded-md border p-4">
+            <div
+              key={item._id}
+              className=" rounded-md border p-4 hover:bg-sky-500 hover:bg-opacity-50"
+            >
               <Link to={`/item/${item._id}`} key={item._id}>
                 <h2 className="text-lg font-semibold text-white">
                   {item.name}
                 </h2>
-                <p className="text-sm text-gray-600 text-white">
-                  {item.description}
-                </p>
-                <p className="text-sm text-gray-600 text-white">
-                  {item.buyPrice}$
-                </p>
+                <p className="text-sm  text-white">{item.description}</p>
+                <p className="text-sm  text-white">{item.buyPrice}$</p>
 
                 {item.image_id && (
                   <img

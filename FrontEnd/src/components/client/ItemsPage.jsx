@@ -5,7 +5,7 @@ const ItemsPage = () => {
   const [audio] = useState(new Audio("../../src/assets/MunadiVoice.mp3"));
 
   const playAudio = () => {
-    audio.volume = 1.0;
+    audio.volume = 1;
     audio.play();
   };
 
@@ -63,7 +63,7 @@ const ItemsPage = () => {
       style={{ marginLeft: "41px", padding: "0 40px" }}
     >
       {/* Upper container */}
-      <div className="mb-10 ml-[45vh] w-[30%]">
+      <div className="mb-10 ml-[67vh] w-[30%] hover:bg-sky-200 hover:bg-opacity-45">
         <Link to={{ pathname: "/client/ItemsAll" }}>
           <div className="cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4">
             <div className="text-center"></div>
@@ -79,9 +79,9 @@ const ItemsPage = () => {
 
       <div className="mr-4 flex justify-between">
         {/* Left container */}
-        <div className="m-2 flex w-[75%] flex-wrap">
+        <div className="m-2 flex w-[75%] flex-wrap ">
           {features.slice(1, 5).map((item, idx) => (
-            <div key={idx} className="mb-8 w-1/2">
+            <div key={idx} className="w-1/2 ">
               <Link
                 to={{
                   pathname: `/FilteredItems/${item.title}`,
@@ -89,7 +89,7 @@ const ItemsPage = () => {
                 }}
               >
                 <div
-                  className="bg m-4 mb-5 cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4"
+                  className="bg m-4 mb-5 cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4 hover:bg-sky-200 hover:bg-opacity-45"
                   style={{ height: "380px" }}
                 >
                   <div className="text-center">
@@ -117,13 +117,18 @@ const ItemsPage = () => {
           ))}
         </div>
         {/* Munadi */}
-        <img
-          className="mt-64 cursor-pointer"
-          src="../../src/assets/Munadi.gif"
-          alt="Munadi"
-          style={{ width: "30%", height: "80%" }}
-          onClick={playAudio}
-        />
+        <div className="mt-20   cursor-pointer">
+          <p className="ml-[5vh] w-[40vh] font-mono text-3xl text-slate-200 hover:text-sky-400">
+            {" "}
+            Click The Munadi!{" "}
+          </p>
+          <img
+            src="../../src/assets/Munadi.gif"
+            alt="Munadi"
+            style={{ width: "100%", height: "30%" }}
+            onClick={playAudio}
+          />
+        </div>
         {/* Right container */}
         <div className="m-2 flex w-[75%] flex-wrap">
           {features.slice(5, 9).map((item, idx) => (
@@ -135,7 +140,7 @@ const ItemsPage = () => {
                 }}
               >
                 <div
-                  className="bg m-4 mb-5 cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4"
+                  className="bg m-4 mb-5 cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4 hover:bg-sky-200 hover:bg-opacity-45"
                   style={{ height: "380px" }}
                 >
                   <div className="text-center">

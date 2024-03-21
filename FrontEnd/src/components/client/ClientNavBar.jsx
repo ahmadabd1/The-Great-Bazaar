@@ -58,7 +58,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className="border-width: 1px; z-100 fixed left-0 right-0 top-0 shadow-lg backdrop-blur-md"
+      className="border-width: 1px; z-100 fixed left-0  right-0 top-0  bg-slate-950 bg-opacity-30 shadow-lg backdrop-blur-md"
       style={{ border: "3px solid rgba(0, 0, 0, 0.3)" }}
     >
       <div>
