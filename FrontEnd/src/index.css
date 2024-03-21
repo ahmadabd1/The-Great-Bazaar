@@ -52,5 +52,5 @@ body {
   z-index: -1; /* Set a negative z-index to place it behind other content */
 }
 .blur-background {
-  filter: blur(10px); /* Adjust the blur radius as needed */
+  filter: blur(8px); /* Adjust the blur radius as needed */
 }

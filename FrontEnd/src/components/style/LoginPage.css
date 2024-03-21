@@ -103,3 +103,6 @@ button:hover {
 #chk:checked ~ .signup label {
   transform: scale(0.6);
 }
+.no-scroll-container {
+  overflow: hidden;
+}
