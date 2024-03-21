@@ -22,7 +22,7 @@ const ItemsPage = () => {
     {
       icon: "../../src/assets/BazaarCategory2.jpg",
       title: "Books & Paper",
-      desc: " The Abbasids abused the creation of paper to spread knowledge, you should too!",
+      desc: " Thank the Chineese for this one!",
     },
     {
       icon: "../../src/assets/BazaarCategory4.jpg",
@@ -32,8 +32,29 @@ const ItemsPage = () => {
     {
       icon: "../../src/assets/BazaarCategory3.jpg",
       title: "Food",
-      desc: "Just listen to our Munadi, He will tell you everything you need to know and hear about in the Bazaar",
+      desc: "Just listen to our Munadi, He will tell you everything you need to know",
     },
+    {
+      icon: "../../src/assets/BazaarCategory.jpg",
+      title: "Antiques",
+      desc: "The northern part of the Bazaar has all the Antiques",
+    },
+    {
+      icon: "../../src/assets/BazaarCategory2.jpg",
+      title: "Swords",
+      desc: " Shiny Swords to cut right through you fruits and veggies",
+    },
+    {
+      icon: "../../src/assets/BazaarCategory4.jpg",
+      title: "Matresses",
+      desc: "Persian, Asian, Arabic and pretty much everything",
+    },
+    {
+      icon: "../../src/assets/BazaarCategory3.jpg",
+      title: "Food",
+      desc: "Just listen to our Munadi, He will tell you everything you need to know",
+    },
+    // Two more items for each container
   ];
 
   return (
@@ -42,12 +63,8 @@ const ItemsPage = () => {
       style={{ marginLeft: "41px", padding: "0 40px" }}
     >
       {/* Upper container */}
-      <div className="mb-8   ml-96 w-[30%]">
-        <Link
-          to={{
-            pathname: "/client/ItemsAll",
-          }}
-        >
+      <div className="mb-10 ml-[45vh] w-[30%]">
+        <Link to={{ pathname: "/client/ItemsAll" }}>
           <div className="cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4">
             <div className="text-center"></div>
             <h4 className="text-black-800 text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_black]">
@@ -60,18 +77,21 @@ const ItemsPage = () => {
         </Link>
       </div>
 
-      <div className="gap-45 flex justify-center">
+      <div className="mr-4 flex justify-between">
         {/* Left container */}
-        <div className="flex w-64 flex-col justify-between">
-          {features.slice(1, 3).map((item, idx) => (
-            <div key={idx} className="mb-8">
+        <div className="m-2 flex w-[75%] flex-wrap">
+          {features.slice(1, 5).map((item, idx) => (
+            <div key={idx} className="mb-8 w-1/2">
               <Link
                 to={{
                   pathname: `/FilteredItems/${item.title}`,
                   state: { category: item.title },
                 }}
               >
-                <div className="bg cursor-pointer  space-y-3 rounded-lg border border-slate-400 p-4">
+                <div
+                  className="bg m-4 mb-5 cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4"
+                  style={{ height: "380px" }}
+                >
                   <div className="text-center">
                     <img
                       src={item.icon}
@@ -80,11 +100,12 @@ const ItemsPage = () => {
                         height: "150px",
                         width: "100%",
                         border: "1px solid #ccc",
+                        transition: "transform 0.3s ease-in-out",
                       }}
-                      className="inline-block"
+                      className="inline-block hover:scale-110 hover:transform"
                     />
                   </div>
-                  <h4 className="text-black-800 border-solid text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_black]">
+                  <h4 className="text-black-800 text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_black]">
                     {item.title}
                   </h4>
                   <p className="text-black-800 text-center font-mono text-lg font-semibold text-white drop-shadow-[0_3.2px_3.2px_black]">
@@ -95,22 +116,28 @@ const ItemsPage = () => {
             </div>
           ))}
         </div>
-
         {/* Munadi */}
         <img
-          className="mt-40 cursor-pointer"
+          className="mt-64 cursor-pointer"
           src="../../src/assets/Munadi.gif"
           alt="Munadi"
-          style={{ width: "50%", height: "90%" }}
+          style={{ width: "30%", height: "80%" }}
           onClick={playAudio}
         />
-
         {/* Right container */}
-        <div className="flex w-64 flex-col justify-between">
-          {features.slice(3, 5).map((item, idx) => (
-            <div key={idx} className="mb-8">
-              <Link to={`/FilteredItems/${item.title}`}>
-                <div className="space-y-3 rounded-lg border border-slate-400 p-4">
+        <div className="m-2 flex w-[75%] flex-wrap">
+          {features.slice(5, 9).map((item, idx) => (
+            <div key={idx} className="mb-8 w-1/2">
+              <Link
+                to={{
+                  pathname: `/FilteredItems/${item.title}`,
+                  state: { category: item.title },
+                }}
+              >
+                <div
+                  className="bg m-4 mb-5 cursor-pointer space-y-3 rounded-lg border border-slate-400 p-4"
+                  style={{ height: "380px" }}
+                >
                   <div className="text-center">
                     <img
                       src={item.icon}
@@ -119,8 +146,9 @@ const ItemsPage = () => {
                         height: "150px",
                         width: "100%",
                         border: "1px solid #ccc",
+                        transition: "transform 0.3s ease-in-out",
                       }}
-                      className="inline-block"
+                      className="inline-block hover:scale-110 hover:transform"
                     />
                   </div>
                   <h4 className="text-black-800 text-center font-mono text-3xl font-semibold text-white underline drop-shadow-[0_3.2px_3.2px_black]">
