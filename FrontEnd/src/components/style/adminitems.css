@@ -6,7 +6,29 @@
   background: #f5f5f5;
   font-family: Arial, sans-serif;
   border-radius: 8px;
+  margin-left: 50px;
+
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.description-cell {
+  max-height: 60px; /* Adjust the height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.description-expanded {
+  white-space: pre-wrap; /* To keep the formatting of your text */
+}
+
+.read-more-button,
+.show-less-button {
+  background: none;
+  color: #2c3e50;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* Enhanced button styles */
