@@ -4,8 +4,6 @@ const itemSchema = require('./item');
 const cartSchema = new mongoose.Schema({
   userId: String,
   itemsCart: [itemSchema.schema], // Reference the schema definition of itemSchema
-  totalItems: Number,
-  totalPrice: Number
 });
 
 const Cart = mongoose.model("Cart", cartSchema);

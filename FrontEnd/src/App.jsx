@@ -23,6 +23,7 @@ import AboutUs from "./components/AboutUs";
 import BottomPage from "./components/client/BottomPage";
 import UserCart from "./components/client/userCart";
 import FilteredItems from "./components/client/FilteredItems"; // Import the FilteredItems component
+import Payment from "./components/client/Payment";
 
 export default function App() {
   const location = useLocation();
@@ -65,6 +66,7 @@ export default function App() {
         <Route path="/client/ItemsPage" element={<ItemsPage />} />
         <Route path="/AboutUs" element={<AboutUs />} />
          <Route path="/userCart" element={<UserCart />}/>
+         <Route path="/payment" element={<Payment/>} />
         <Route path="/filtereditems/:category" element={<FilteredItems />} />
         <Route
           path="/client/ItemsAll"
