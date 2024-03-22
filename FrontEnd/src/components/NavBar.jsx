@@ -11,16 +11,11 @@ export default function NavBar() {
       path: "/login",
       icon: "fluent:people-team-20-regular",
     },
-    {
-      label: "Contact Us",
-      path: "/BLANK2",
-      icon: "fluent:contact-card-ribbon-16-regular",
-    },
   ];
 
   return (
     <nav
-      className="border-width: 2px; fixed left-0 right-0 top-0 z-50 shadow-lg backdrop-blur-md"
+      className="border-width: 2px; fixed left-0 right-0 top-0 z-0 bg-slate-950 bg-opacity-30 shadow-lg backdrop-blur-md"
       style={{ border: "3px solid rgba(0, 0, 0, 0.3" }}
     >
       <div className="page container">

@@ -1,45 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import useUserInfo from '../customHooks/useUserInfo';
-import useUpdate from '../customHooks/useUpdate';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import '../style/ClientProfile.css';
+import React, { useState, useEffect } from "react";
+import useUserInfo from "../customHooks/useUserInfo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import "../style/ClientProfile.css";
 
-const PasswordField = ({ type, name, value, onChange, toggleVisibility }) => (
-  <div className="password-field">
-    <input
-      type={type ? 'text' : 'password'}
-      name={name}
-      className={`input-${name}`}
-      placeholder={name.replace(/([A-Z])/g, ' $1').trim()}
-      value={value}
-      onChange={onChange}
-    />
-    <FontAwesomeIcon
-      icon={type ? faEyeSlash : faEye}
-      onClick={toggleVisibility}
-      className="password-toggle-icon"
-    />
-  </div>
-);
-
-const MyComponent = () => {
-  const { userInfo, setUserInfo, loading, error } = useUserInfo();  // Now using setUserInfo from the hook
-  const { update, isLoading, isSuccess, error: updateError } = useUpdate();
+export default function ProfilePage() {
+  const { userInfo, loading, error, updateUserInfo } = useUserInfo();
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    phoneNumber: '',
-    currentPassword: '',
-    newPassword: '',
-    newPasswordRepeat: '',
-    showPasswords: {
-      currentPassword: false,
-      newPassword: false,
-      newPasswordRepeat: false,
-    },
+  const [displayUserInfo, setDisplayUserInfo] = useState({
+    email: "",
+    phoneNumber: "",
   });
-  const [responseMessage, setResponseMessage] = useState('');
+  const [passwords, setPasswords] = useState({
+    currentPassword: "",
+    newPassword: "",
+    newPasswordRepeat: "",
+  });
+  const [showPasswords, setShowPasswords] = useState({
+    currentPassword: false,
+    newPassword: false,
+    newPasswordRepeat: false,
+  });
+  const [responseMessage, setResponseMessage] = useState("");
 
   useEffect(() => {
     if (userInfo) {
@@ -66,13 +48,15 @@ const MyComponent = () => {
     const { email, phoneNumber, currentPassword, newPassword, newPasswordRepeat } = formData;
   
     if (!email || !phoneNumber) {
-      setResponseMessage('Please fill in all required fields.');
+      setResponseMessage("Please fill in all required fields.");
       return;
     }
-  
-    if (newPassword && newPassword !== newPasswordRepeat) {
-      setResponseMessage('New passwords do not match.');
-      return;
+
+    if (currentPassword || newPassword || newPasswordRepeat) {
+      if (newPassword !== newPasswordRepeat) {
+        setResponseMessage("New passwords do not match.");
+        return;
+      }
     }
   
     const updateData = {
@@ -84,32 +68,35 @@ const MyComponent = () => {
       newPassword,
       newPasswordRepeat,
     };
-  
-    try {
-      const response = await fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updateData),
+
+    fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setResponseMessage(data.message);
+        if (data.message === "Profile updated successfully") {
+          updateUserInfo({ ...userInfo, ...updateData });
+
+          setTimeout(() => {
+            setIsEditing(false);
+            setPasswords({
+              currentPassword: "",
+              newPassword: "",
+              newPasswordRepeat: "",
+            });
+            setResponseMessage("");
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating user info:", error);
+        setResponseMessage("Failed to communicate with the server.");
       });
-  
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message || 'Failed to update profile');
-      }
-  
-      setUserInfo({ ...userInfo, email, phoneNumber }); // Update only email and phoneNumber in local state
-  
-      setResponseMessage('Profile updated successfully');
-  
-      setTimeout(() => {
-        setResponseMessage('');
-        setIsEditing(false);
-      }, 2000);
-    } catch (error) {
-      setResponseMessage(error.message || 'An error occurred');
-    }
   };
   
 
@@ -117,49 +104,104 @@ const MyComponent = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="user-profile">
-      {!isEditing ? (
-        <div className="user-info">
-          <p className="user-email">User Email: {userInfo.email}</p>
-          <p className="user-name">Full Name: {userInfo.firstName} {userInfo.lastName}</p>
-          <p className="user-phone">Phone Number: {userInfo.phoneNumber}</p>
-          <button className="edit-button" onClick={() => setIsEditing(true)}>Edit Profile</button>
+    <section
+      className="mt-12 border-2 border-white bg-slate-950 bg-opacity-80 p-2"
+      style={{ width: "100%", height: "20%" }}
+    >
+      <div className="container py-1">
+        <div className="mb-2 flex">
+          <ol className="flex items-center space-x-2">
+            <li className="mb-2 ml-[285px] font-mono text-xl text-sky-500">
+              User Profile
+            </li>
+          </ol>
         </div>
-      ) : (
-        <div className="edit-form">
-          <input
-            type="text"
-            name="email"
-            className="input-email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="phoneNumber"
-            className="input-phoneNumber"
-            placeholder="Phone Number"
-            value={formData.phoneNumber}
-            onChange={handleInputChange}
-          />
-          {['currentPassword', 'newPassword', 'newPasswordRepeat'].map((field) => (
-            <PasswordField
-              key={field}
-              type={formData.showPasswords[field]}
-              name={field}
-              value={formData[field]}
-              onChange={handleInputChange}
-              toggleVisibility={() => togglePasswordVisibility(field)}
-            />
-          ))}
-          <button className="save-changes-button" onClick={handleUpdateUserInfo}>Save Changes</button>
-          <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
-          {responseMessage && <p className="response-message">{responseMessage}</p>}
-        </div>
-      )}
-    </div>
-  );
-};
 
-export default MyComponent;
+        <div className="-mx-2 flex flex-wrap border-t-2 border-white">
+          <div className="mb-2 w-full px-2 lg:w-1/3 ">
+            <div className="mb-2 rounded-lg bg-opacity-90 p-8">
+              <img
+                src="../../src/assets/ProfileTest.png"
+                alt="avatar"
+                className="mx-auto mb-8 w-32 rounded-full border border-white"
+              />
+              <p className="mb-1 w-40 text-justify font-mono text-lg text-slate-300">
+                Welcome {userInfo.firstName}
+              </p>
+              <p className="mb-6 w-60 font-mono text-lg text-slate-300">
+                San Francisco, CA
+              </p>
+              <div className="mb-2 flex justify-center rounded-lg border border-white">
+                <button
+                  className="w-40 rounded-lg bg-slate-600 p-1 font-mono text-sky-500 hover:bg-sky-500 hover:text-white"
+                  onClick={() => setIsEditing(true)}
+                >
+                  Edit Profile
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full p-3 px-2 lg:w-2/3">
+            <div className="bg-slate-00 mb-2 rounded-lg p-8 opacity-85">
+              <div className="mb-4 flex">
+                <div className="w-1/3">
+                  <p className="font-mono text-lg text-sky-400">Full Name</p>
+                </div>
+                <div className="w-2/3">
+                  <p className="font-mono text-lg text-slate-300">
+                    {userInfo.firstName} {userInfo.lastName}
+                  </p>
+                </div>
+              </div>
+              <hr className="my-3" />
+              <div className="mb-4 flex">
+                <div className="w-1/3">
+                  <p className="font-mono text-lg text-sky-400">Email</p>
+                </div>
+                <div className="w-2/3">
+                  <p className="font-mono text-lg text-slate-300">
+                    {userInfo.email}
+                  </p>
+                </div>
+              </div>
+              <hr className="my-3" />
+              <div className="mb-4 flex">
+                <div className="w-1/3">
+                  <p className="font-mono text-lg text-sky-400">Phone</p>
+                </div>
+                <div className="w-2/3">
+                  <p className="font-mono text-lg text-slate-300">
+                    {userInfo.phoneNumber}
+                  </p>
+                </div>
+              </div>
+              <hr className="my-3" />
+              <div className="mb-4 flex">
+                <div className="w-1/3">
+                  <p className="font-mono text-lg text-sky-400">Mobile</p>
+                </div>
+                <div className="w-2/3">
+                  <p className="font-mono text-lg text-slate-300">
+                    Mobile Number Placeholder
+                  </p>
+                </div>
+              </div>
+              <hr className="my-3" />
+              <div className="mb-4 flex">
+                <div className="w-1/3">
+                  <p className="font-mono text-lg text-sky-400">Address</p>
+                </div>
+                <div className="w-2/3">
+                  <p className="font-mono text-lg text-slate-300">
+                    Address Placeholder
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

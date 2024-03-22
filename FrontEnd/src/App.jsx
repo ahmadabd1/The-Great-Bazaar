@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -26,6 +27,7 @@ import FilteredItems from "./components/client/FilteredItems"; // Import the Fil
 import Payment from "./components/client/Payment";
 
 export default function App() {
+  const [isBlurred, setIsBlurred] = useState(false);
   const location = useLocation();
   // const showSidebar = location.pathname === "/client/ItemsAll";
 
@@ -46,39 +48,55 @@ export default function App() {
     }
   };
 
+  // Function to determine if the background should be blurred
+  const shouldBlurBackground = () => {
+    // Check if you're in a specific component
+    return location.pathname === "/login"; // Adjust the condition as needed
+  };
+
+  // Update the state based on the condition
+  useEffect(() => {
+    setIsBlurred(shouldBlurBackground());
+  }, [location.pathname]);
+
   return (
     <>
-      {renderNavbar()}
+      <div className="container">
+        <div
+          className={`background-image ${isBlurred ? "blur-background" : ""}`}
+        ></div>
+        {renderNavbar()}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin" element={<AdminMainPage />} />
+          <Route path="/client/item" element={<Item />} />
+          <Route path="/client" element={<ClientMainPage />} />
+          <Route path="/category" element={<CategoryPage />} />
+          <Route path="/admin/items" element={<Items />} />
+          <Route path="/admin/statics" element={<Statics />} />
+          <Route path="/client/Profile" element={<ClientProfile />} />
+          <Route path="/admin/categories" element={<Categories />} />
+          <Route path="/admin/clients" element={<UsersPage />} />
+          <Route path="/item/:id" element={<ItemDetail />} />
+          <Route path="/client/ItemsPage" element={<ItemsPage />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/userCart" element={<UserCart />} />
+          <Route path="/filtereditems/:category" element={<FilteredItems />} />
+          <Route
+            path="/client/ItemsAll"
+            element={
+              <>
+                <ItemsAll />
+              </>
+            }
+          />
+        </Routes>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/admin" element={<AdminMainPage />} />
-        <Route path="/client/item" element={<Item />} />
-        <Route path="/client" element={<ClientMainPage />} />
-        <Route path="/category" element={<CategoryPage />} />
-        <Route path="/admin/items" element={<Items />} />
-        <Route path="/admin/statics" element={<Statics />} />
-        <Route path="/client/Profile" element={<ClientProfile />} />
-        <Route path="/admin/categories" element={<Categories />} />
-        <Route path="/admin/clients" element={<UsersPage />} />
-        <Route path="/item/:id" element={<ItemDetail />} />
-        <Route path="/client/ItemsPage" element={<ItemsPage />} />
-        <Route path="/AboutUs" element={<AboutUs />} />
-         <Route path="/userCart" element={<UserCart />}/>
-         <Route path="/payment" element={<Payment/>} />
-        <Route path="/filtereditems/:category" element={<FilteredItems />} />
-        <Route
-          path="/client/ItemsAll"
-          element={
-            <>
-              <ItemsAll />
-            </>
-          }
-        />
-      </Routes>
-      <Footer />
-      {/* <BottomPage id="contact-us" /> */}
+        <Footer />
+      </div>
+
+      {location.pathname === "/client" && <BottomPage />}
     </>
   );
 }
