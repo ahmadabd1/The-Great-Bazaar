@@ -12,6 +12,8 @@ export default function Items() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [expandedItemId, setExpandedItemId] = useState(null);
+
   const [selectedItem, setSelectedItem] = useState(null);
   const { deleteItem, isLoading: isDeleting, error: deleteError } = useDelete();
   const { postData, loading: posting, error: postError } = usePost();
@@ -82,7 +84,20 @@ const addItem = async (formData) => {
               <tr key={item._id}>
                 <td>{item.image_id ? <img src={item.image_id} alt={item.name} className="item-image" /> : 'No image'}</td>
                 <td>{item.name}</td>
-                <td>{item.description}</td>
+<td className="description-cell">
+  {expandedItemId !== item._id
+    ? <>
+        {item.description.split(" ").slice(0, 5).join(" ")}...
+        <button className="read-more-button" onClick={() => setExpandedItemId(item._id)}>Read More</button>
+      </>
+    : <div className="description-expanded">
+        {item.description}
+        <button className="show-less-button" onClick={() => setExpandedItemId(null)}>Show Less</button>
+      </div>
+  }
+</td>
+
+
                 <td >
                 <div className="buttons">
                   <button onClick={() => handleUpdateItem(item)} className="update-item-button">Update</button>

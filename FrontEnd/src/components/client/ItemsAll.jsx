@@ -94,31 +94,39 @@ const FilteredItems = () => {
       {/* Search input */}
 
       {/* Display filtered items */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="relative mt-12" style={{ marginLeft: "41px" }}>
+      <ul className="rounded- grid justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-5">
         {filteredItems &&
-          filteredItems.map((item) => (
-            <div
+          filteredItems.map((item, idx) => (
+            <li
               key={item._id}
-              className=" rounded-md border p-4 hover:bg-sky-500 hover:bg-opacity-50"
+              className="rounded-xl border-2 border-black bg-sky-950 bg-opacity-30 hover:bg-sky-900 hover:bg-opacity-30"
+               style={{
+                height: "320px",  // Increased height
+                width: "240px",   // Increased width
+              }}
             >
-              <Link to={`/item/${item._id}`} key={item._id}>
-                <h2 className="text-lg font-semibold text-white">
-                  {item.name}
-                </h2>
-                <p className="text-sm  text-white">{item.description}</p>
-                <p className="text-sm  text-white">{item.buyPrice}$</p>
-
-                {item.image_id && (
+              <Link to={`/item/${item._id}`}>
+                <div className="text-center">
                   <img
-                    src={item.image_id}
+                    src={item.image_id || 'path/to/default/image'}
                     alt={item.name}
-                    className="mt-2 h-32 w-full object-cover"
+                    style={{ height: "145px", width: "250px" }}
+                    className="inline-block border-b-2 border-slate-950"
                   />
-                )}
+                </div>
+                <h4 className="text-black-800 border-b-2 border-slate-950 p-2 font-mono text-xl text-slate-100 hover:text-sky-300">
+                  {item.name}
+                </h4>
+
+                <p className="text-black-800 font-mono text-2xl text-slate-300">
+                  {item.buyPrice}$
+                </p>
               </Link>
-            </div>
+            </li>
           ))}
-      </div>
+      </ul>
+    </div>
     </div>
   );
 };

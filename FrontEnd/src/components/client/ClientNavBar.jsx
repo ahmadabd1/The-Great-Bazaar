@@ -1,5 +1,6 @@
 import NavBarLink from "./NavBarLink";
 import { useState } from "react";
+import useUserInfo from "../customHooks/useUserInfo";
 
 // Assuming the logout function is defined here or imported
 const logout = () => {
@@ -9,6 +10,7 @@ const logout = () => {
 
 export default function NavBar() {
   const [state, setState] = useState(false);
+  const { userInfo, loading, error, updateUserInfo } = useUserInfo();
 
   const leftNavigation = [
     {
