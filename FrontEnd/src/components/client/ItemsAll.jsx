@@ -62,13 +62,13 @@ const FilteredItems = () => {
               &lt; Back
             </label>
           </Link>
-          <div className="border-b-2 border-gray-600">
+          <div className="mb-2 border-b-2 border-gray-600">
             <input
               type="text"
               placeholder="Search by name"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="mb-8 mt-10 w-full rounded-md "
+              className="mb-12 ml-5 mt-5 h-10 w-40 rounded-md "
             />
           </div>
           <p className="ml-auto mt-2 w-full  text-center font-mono text-xl text-slate-200">
