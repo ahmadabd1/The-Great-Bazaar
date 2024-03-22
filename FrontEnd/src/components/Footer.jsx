@@ -50,9 +50,9 @@ export default function Footer() {
                   <span>About Us</span>
                 </NavLink>
                 &nbsp;|&nbsp;
-                <NavLink to="/policy" className="text-slate-200">
+           <NavLink to="/AboutUs#legal-section" className="text-slate-200">
                   <span>Legal</span>
-                </NavLink>
+            </NavLink>
                 &nbsp;|&nbsp;
               </div>
             </div>
