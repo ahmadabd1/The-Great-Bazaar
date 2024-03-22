@@ -43,10 +43,11 @@ export default function Home() {
         <section>
           <div className="gap-10 overflow-hidden py-10 md:flex">
             <div className="flex-1 space-y-10">
-              <h1 className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-200 md:text-5xl lg:text-6xl">
-                {userName ? `${userName}'s Great Bazaar` : "The Great Bazaar"}
+              <h1 className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-200 md:text-5xl lg:text-8xl">
+                The Great Bazaar
               </h1>
-              <p className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-400 md:text-5xl lg:text-2xl">
+              <p className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-400 md:text-3xl lg:text-4xl">
+                {" "}
                 Clothes, Food, Electronics and More
               </p>
               <a
