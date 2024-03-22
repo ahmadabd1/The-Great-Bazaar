@@ -58,7 +58,7 @@ const FilteredItems = () => {
         <ul className=" border-gray-600">
           <Link to="/client/ItemsPage">
             <FiArrowLeft />
-            <label className="ml-auto mt-2 w-full border-b border-gray-600 p-6 text-center font-mono text-xl text-slate-200">
+            <label className="ml-auto mt-2 w-full border-b border-gray-600 p-6 text-center font-mono text-xl text-slate-200 hover:text-sky-400">
               &lt; Back
             </label>
           </Link>
