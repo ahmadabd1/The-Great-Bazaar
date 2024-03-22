@@ -48,17 +48,17 @@ const FilteredItems = () => {
 
   return (
     <div
-      className="absloutecontainer ml-56 mt-[13vh]"
+      className="absloute container ml-56 mt-[13vh]"
       style={{ height: "80%", width: "80%" }}
     >
       {/* Client Side Bar */}
       <div
         className={`fixed left-0 top-[78px] h-full w-[13%] overflow-y-scroll border-r border-gray-900 bg-gray-800 bg-opacity-50`}
       >
-        <ul className=" border-gray-600">
+        <ul className="border-b border-gray-600">
           <Link to="/client/ItemsPage">
             <FiArrowLeft />
-            <label className="ml-auto mt-2 w-full border-b border-gray-600 p-6 text-center font-mono text-xl text-slate-200 hover:text-sky-400">
+            <label className="ml-7 mt-2 border-gray-600 p-6 text-center font-mono text-xl text-slate-200">
               &lt; Back
             </label>
           </Link>
@@ -68,15 +68,15 @@ const FilteredItems = () => {
               placeholder="Search by name"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="mb-8 w-full rounded-md border-b-2"
+              className="mb-8 mt-10 w-full rounded-md "
             />
           </div>
-          <label className="ml-auto mt-2 w-full  text-center font-mono text-xl text-slate-200">
+          <p className="ml-auto mt-2 w-full  text-center font-mono text-xl text-slate-200">
             FilterCategory
-          </label>
+          </p>
           <select
             id="categorySelect"
-            className="text-m ml-5  h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
+            className="text-m p-l  m-12 ml-5 mt-10 h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -94,39 +94,39 @@ const FilteredItems = () => {
       {/* Search input */}
 
       {/* Display filtered items */}
-    <div className="relative mt-12" style={{ marginLeft: "41px" }}>
-      <ul className="rounded- grid justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-5">
-        {filteredItems &&
-          filteredItems.map((item, idx) => (
-            <li
-              key={item._id}
-              className="rounded-xl border-2 border-black bg-sky-950 bg-opacity-30 hover:bg-sky-900 hover:bg-opacity-30"
-               style={{
-                height: "320px",  // Increased height
-                width: "240px",   // Increased width
-              }}
-            >
-              <Link to={`/item/${item._id}`}>
-                <div className="text-center">
-                  <img
-                    src={item.image_id || 'path/to/default/image'}
-                    alt={item.name}
-                    style={{ height: "145px", width: "250px" }}
-                    className="inline-block border-b-2 border-slate-950"
-                  />
-                </div>
-                <h4 className="text-black-800 border-b-2 border-slate-950 p-2 font-mono text-xl text-slate-100 hover:text-sky-300">
-                  {item.name}
-                </h4>
+      <div className="relative mt-12" style={{ marginLeft: "41px" }}>
+        <ul className="rounded- grid justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          {filteredItems &&
+            filteredItems.map((item, idx) => (
+              <li
+                key={item._id}
+                className="rounded-xl border-2 border-black bg-sky-950 bg-opacity-30 hover:bg-sky-900 hover:bg-opacity-30"
+                style={{
+                  height: "320px", // Increased height
+                  width: "240px", // Increased width
+                }}
+              >
+                <Link to={`/item/${item._id}`}>
+                  <div className="text-center">
+                    <img
+                      src={item.image_id || "path/to/default/image"}
+                      alt={item.name}
+                      style={{ height: "145px", width: "250px" }}
+                      className="inline-block border-b-2 border-slate-950"
+                    />
+                  </div>
+                  <h4 className="text-black-800 border-b-2 border-slate-950 p-2 font-mono text-xl text-slate-100 hover:text-sky-300">
+                    {item.name}
+                  </h4>
 
-                <p className="text-black-800 font-mono text-2xl text-slate-300">
-                  {item.buyPrice}$
-                </p>
-              </Link>
-            </li>
-          ))}
-      </ul>
-    </div>
+                  <p className="text-black-800 font-mono text-2xl text-slate-300">
+                    {item.buyPrice}$
+                  </p>
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 };
