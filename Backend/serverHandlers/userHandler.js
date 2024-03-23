@@ -63,14 +63,13 @@ const bcrypt = require('bcrypt');
 
 exports.editProfile = async (req, res) => {
   try {
-    // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     const userId = req.params.userId;
-    const { firstName, lastName, email, currentPassword, newPassword, newPasswordRepeat, phoneNumber } = req.body;
+    const { firstName, lastName, email, currentPassword, newPassword, newPasswordRepeat, phoneNumber ,address} = req.body;
     // Fetch the user by ID
     const user = await User.findById(userId);
     if (!user) {
@@ -82,6 +81,7 @@ exports.editProfile = async (req, res) => {
     user.lastName = lastName;
     user.email = email;
     user.phoneNumber = phoneNumber;
+    user.address=address;
 
     // Password update logic
     if (currentPassword && newPassword && newPasswordRepeat) {

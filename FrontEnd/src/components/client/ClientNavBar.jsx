@@ -20,7 +20,7 @@ export default function NavBar() {
     },
     {
       label: "Orders",
-      path: "/userOrders",
+      path: "/orders",
       icon: "fluent:shopping-bag-16-regular",
     },
     { label: "Cart", path: "/userCart", icon: "fluent:cart-16-regular" },
