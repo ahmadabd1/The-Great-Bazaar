@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import useGet from "../customHooks/useGet";
 import useUserInfo from "../customHooks/useUserInfo";
 import { Link } from "react-router-dom";
-import "../style/Payment.css"; // Import the CSS file
 
 export default function Payment() {
   const { userInfo } = useUserInfo();
@@ -19,36 +18,37 @@ export default function Payment() {
     cardholderName: "",
     address: "",
   });
-  const linkRef = useRef(null); // Create a ref for the Link
+  const linkRef = useRef(null);
 
   useEffect(() => {
-    // If redirectToOrders is true, click the link programmatically
     if (redirectToOrders && linkRef.current) {
       linkRef.current.click();
     }
   }, [redirectToOrders]);
 
-  const aggregateItems = (items) => {
-    const itemMap = {};
-
-    items.forEach((item) => {
-      if (itemMap[item._id]) {
-        itemMap[item._id].quantity += 1;
+  const handleBuyClick = async () => {
+    console.log("Processing payment and creating order...");
+    if (userInfo && userInfo._id) {
+      const response = await fetch(
+        `http://localhost:8080/order/payment/${userInfo._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      const result = await response.json();
+      if (response.ok) {
+        console.log("Order created successfully:", result);
+        setRedirectToOrders(true);
       } else {
-        itemMap[item._id] = { ...item, quantity: 1 };
+        console.error("Failed to create order:", result.message);
       }
-    });
-
-    return Object.values(itemMap);
-  };
-
-  const handleBuyClick = () => {
-    console.log("Performing pre-navigation logic...");
-    // Perform actions and then set redirectToOrders to true
-    setRedirectToOrders(true);
-    // Here you can send paymentInfo along with the order
-    // For simplicity, I'll just log it for now
-    console.log("Payment Info:", paymentInfo);
+    } else {
+      console.error("User info is not available.");
+      // Handle the case where user info is missing
+    }
   };
 
   if (loading) return <div className="Loader">Loading...</div>;
@@ -56,108 +56,189 @@ export default function Payment() {
   if (!cart || !cart.itemsCart || cart.itemsCart.length === 0)
     return <div className="EmptyCart">Your cart is empty.</div>;
 
-  const aggregatedItems = aggregateItems(cart.itemsCart);
-
   return (
-    <div className="PaymentContainer">
-      <h2>Payment</h2>
-      <form>
-        <label>
-          Card Number:
-          <input
-            type="text"
-            value={paymentInfo.cardNumber}
-            onChange={(e) =>
-              setPaymentInfo({ ...paymentInfo, cardNumber: e.target.value })
-            }
-            maxLength="16"
-          />
-        </label>
-        <label>
-          Expiry Date:
-          <input
-            type="text"
-            value={paymentInfo.expiryDate}
-            onChange={(e) =>
-              setPaymentInfo({ ...paymentInfo, expiryDate: e.target.value })
-            }
-            placeholder="MM/YYYY"
-            maxLength="7"
-          />
-        </label>
-        <label>
-          CVV:
-          <input
-            type="text"
-            value={paymentInfo.cvv}
-            onChange={(e) =>
-              setPaymentInfo({ ...paymentInfo, cvv: e.target.value })
-            }
-            maxLength="3"
-          />
-        </label>
-        <label>
-          Cardholder Name:
-          <input
-            type="text"
-            value={paymentInfo.cardholderName}
-            onChange={(e) =>
-              setPaymentInfo({ ...paymentInfo, cardholderName: e.target.value })
-            }
-          />
-        </label>
-        <label>
-          Address:
-          <input
-            type="text"
-            value={paymentInfo.address}
-            onChange={(e) =>
-              setPaymentInfo({ ...paymentInfo, address: e.target.value })
-            }
-          />
-        </label>
-      </form>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {aggregatedItems.map((item) => (
-            <tr key={item._id}>
-              <td>{item.name}</td>
-              <td>{item.sellPrice}$</td>
-              <td>{item.quantity}</td>
-              <td>{(item.sellPrice * item.quantity).toFixed(2)}$</td>
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colSpan="3">Total</th>
-            <th>
-              {aggregatedItems
-                .reduce((acc, item) => acc + item.sellPrice * item.quantity, 0)
-                .toFixed(2)}
-              $
-            </th>
-          </tr>
-        </tfoot>
-      </table>
-      {redirectToOrders ? (
-        // Attach the ref to the Link and make it hidden
-        <Link ref={linkRef} to="/orders" style={{ display: "none" }}>
-          Proceed to Orders
-        </Link>
-      ) : (
-        <button className="Buy" onClick={handleBuyClick}>
-          Buy
-        </button>
-      )}
-    </div>
+    <section
+      style={{ width: "950px" }}
+      className="PaymentContainer mb-4 mt-8 border-2 border-white bg-slate-950 bg-opacity-80 p-1"
+    >
+      <div className="container py-1">
+        <h2 className="mb-2 ml-[285px] font-mono text-xl text-sky-500">
+          Payment
+        </h2>
+        <div className="-mx-2 flex flex-wrap border-t-2 border-white">
+          {/* Payment Information Section */}
+          <div className="w-full p-2 lg:w-1/2">
+            <div className="bg-slate-00 rounded-lg p-4 opacity-85">
+              <form className="space-y-3">
+                <div className="flex items-center">
+                  <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
+                    Card Number:
+                  </label>
+                  <input
+                    type="text"
+                    value={paymentInfo.cardNumber}
+                    onChange={(e) =>
+                      setPaymentInfo({
+                        ...paymentInfo,
+                        cardNumber: e.target.value,
+                      })
+                    }
+                    maxLength="16"
+                    className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
+                  />
+                </div>
+
+                <div className="flex items-center">
+                  <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
+                    Expiry Date:
+                  </label>
+                  <input
+                    type="text"
+                    value={paymentInfo.expiryDate}
+                    onChange={(e) =>
+                      setPaymentInfo({
+                        ...paymentInfo,
+                        expiryDate: e.target.value,
+                      })
+                    }
+                    placeholder="MM/YYYY"
+                    maxLength="7"
+                    className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
+                  />
+                </div>
+
+                <div className="flex items-center">
+                  <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
+                    CVV:
+                  </label>
+                  <input
+                    type="text"
+                    value={paymentInfo.cvv}
+                    onChange={(e) =>
+                      setPaymentInfo({ ...paymentInfo, cvv: e.target.value })
+                    }
+                    maxLength="3"
+                    className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
+                  />
+                </div>
+
+                <div className="flex items-center">
+                  <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
+                    Cardholder Name:
+                  </label>
+                  <input
+                    type="text"
+                    value={paymentInfo.cardholderName}
+                    onChange={(e) =>
+                      setPaymentInfo({
+                        ...paymentInfo,
+                        cardholderName: e.target.value,
+                      })
+                    }
+                    className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
+                  />
+                </div>
+
+                <div className="flex items-center">
+                  <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
+                    Address:
+                  </label>
+                  <input
+                    type="text"
+                    value={paymentInfo.address}
+                    onChange={(e) =>
+                      setPaymentInfo({
+                        ...paymentInfo,
+                        address: e.target.value,
+                      })
+                    }
+                    className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+
+          {/* Cart Summary Section */}
+          <div className="w-full p-2 lg:w-1/2">
+            <div className="mb-5 rounded bg-opacity-85 p-4">
+              <h3 className="mb-3 font-mono text-xl text-sky-500">
+                Cart Summary
+              </h3>
+              <table className="mb-3 w-full border-collapse">
+                <thead>
+                  <tr>
+                    <th className="border border-gray-300 bg-gray-200 p-1 text-left font-mono text-sky-500">
+                      Item
+                    </th>
+                    <th className="border border-gray-300 bg-gray-200 p-1 text-left font-mono text-sky-500">
+                      Price
+                    </th>
+                    <th className="border border-gray-300 bg-gray-200 p-1 text-left font-mono text-sky-500">
+                      Quantity
+                    </th>
+                    <th className="border border-gray-300 bg-gray-200 p-1 text-left font-mono text-sky-500">
+                      Total
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cart.itemsCart.map((item) => (
+                    <tr key={item._id}>
+                      <td className="border border-gray-300 p-1  text-left font-mono text-sky-500">
+                        {item.name}
+                      </td>
+                      <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
+                        {item.sellPrice}$
+                      </td>
+                      <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
+                        {item.quantity}
+                      </td>
+                      <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
+                        {(item.sellPrice * item.quantity).toFixed(2)}$
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th
+                      colSpan="3"
+                      className="border border-gray-300 p-2 text-left font-mono text-sky-500"
+                    >
+                      Total
+                    </th>
+                    <th className="border border-gray-300 p-1 text-left font-mono text-sky-500">
+                      {cart.itemsCart
+                        .reduce(
+                          (acc, item) => acc + item.sellPrice * item.quantity,
+                          0,
+                        )
+                        .toFixed(2)}
+                      $
+                    </th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 flex justify-center">
+          {redirectToOrders ? (
+            <Link ref={linkRef} to="/orders" className="hidden">
+              Proceed to Orders
+            </Link>
+          ) : (
+            <button
+              style={{ width: "150px" }}
+              className="rounded-lg bg-sky-500 p-2 font-mono text-white hover:bg-sky-600"
+              onClick={handleBuyClick}
+            >
+              Buy
+            </button>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }

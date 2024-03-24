@@ -83,15 +83,13 @@ export default function NavBar({}) {
       <div>
         <div className="items-center md:flex">
           <a href="/">
-            {" "}
-            <a href="/">
-              <img
-                src="http://localhost:5173/src/assets/BazaarIcon.gif"
-                width={100}
-                height={40}
-              />
-            </a>
+            <img
+              src="http://localhost:5173/src/assets/BazaarIcon.gif"
+              width={100}
+              height={40}
+            />
           </a>
+
           <img
             src={PROFILE_IMAGE}
             className="  h-[8vh] w-[8vh] items-center rounded-3xl border-2 border-sky-900"
