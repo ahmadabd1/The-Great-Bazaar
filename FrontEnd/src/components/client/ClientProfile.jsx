@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import useUserInfo from "../customHooks/useUserInfo";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "../style/ClientProfile.css";
 
-<<<<<<< HEAD
-const PROFILE_IMAGE = "../../src/assets/ProfileTest.png";
-
-=======
->>>>>>> emranoshka
 export default function ProfilePage() {
   const { userInfo, loading, error, updateUserInfo } = useUserInfo();
   const [isEditing, setIsEditing] = useState(false);
@@ -54,23 +50,16 @@ export default function ProfilePage() {
   const handleUpdateUserInfo = () => {
     const { email, phoneNumber, address } = displayUserInfo;
     const { currentPassword, newPassword, newPasswordRepeat } = passwords;
-<<<<<<< HEAD
-
-    if (!email || !phoneNumber) {
-=======
     if (!email || !phoneNumber || !address) {
->>>>>>> emranoshka
       setResponseMessage("Please fill in all required fields.");
       return;
     }
-
     if (currentPassword || newPassword || newPasswordRepeat) {
       if (newPassword !== newPasswordRepeat) {
         setResponseMessage("New passwords do not match.");
         return;
       }
     }
-
     const updateData = {
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
@@ -81,11 +70,7 @@ export default function ProfilePage() {
       newPassword,
       newPasswordRepeat,
     };
-<<<<<<< HEAD
-
-=======
-    console.log(updateData)
->>>>>>> emranoshka
+    console.log(updateData);
     fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
       method: "PUT",
       headers: {
@@ -135,7 +120,7 @@ export default function ProfilePage() {
           <div className="mb-2 w-full px-2 lg:w-1/3 ">
             <div className="mb-2 rounded-lg bg-opacity-90 p-8">
               <img
-                src={PROFILE_IMAGE} // Use profile image URL here
+                src="../../src/assets/ProfileTest.png"
                 alt="avatar"
                 className="mx-auto mb-8 w-32 rounded-full border border-white"
               />
@@ -179,7 +164,7 @@ export default function ProfilePage() {
                       name="email"
                       value={displayUserInfo.email}
                       onChange={handleInputChange}
-                      className="font-mono text-lg text-slate-300 w-full"
+                      className="w-full font-mono text-lg text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -200,7 +185,7 @@ export default function ProfilePage() {
                       name="phoneNumber"
                       value={displayUserInfo.phoneNumber}
                       onChange={handleInputChange}
-                      className="font-mono text-lg text-slate-300 w-full"
+                      className="w-full font-mono text-lg text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -221,7 +206,7 @@ export default function ProfilePage() {
                       name="address"
                       value={displayUserInfo.address}
                       onChange={handleInputChange}
-                      className="font-mono text-lg text-slate-300 w-full"
+                      className="w-full font-mono text-lg text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -239,17 +224,21 @@ export default function ProfilePage() {
                         Current Password
                       </p>
                     </div>
-                    <div className="w-2/3 relative">
+                    <div className="relative w-2/3">
                       <input
-                        type={showPasswords.currentPassword ? "text" : "password"}
+                        type={
+                          showPasswords.currentPassword ? "text" : "password"
+                        }
                         name="currentPassword"
                         value={passwords.currentPassword}
                         onChange={handleInputChange}
-                        className="font-mono text-lg text-slate-300 w-full"
+                        className="w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
-                        icon={showPasswords.currentPassword ? faEyeSlash : faEye}
-                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        icon={
+                          showPasswords.currentPassword ? faEyeSlash : faEye
+                        }
+                        className="absolute right-3 top-3 cursor-pointer text-slate-300"
                         onClick={() =>
                           togglePasswordVisibility("currentPassword")
                         }
@@ -262,17 +251,17 @@ export default function ProfilePage() {
                         New Password
                       </p>
                     </div>
-                    <div className="w-2/3 relative">
+                    <div className="relative w-2/3">
                       <input
                         type={showPasswords.newPassword ? "text" : "password"}
                         name="newPassword"
                         value={passwords.newPassword}
                         onChange={handleInputChange}
-                        className="font-mono text-lg text-slate-300 w-full"
+                        className="w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
                         icon={showPasswords.newPassword ? faEyeSlash : faEye}
-                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        className="absolute right-3 top-3 cursor-pointer text-slate-300"
                         onClick={() => togglePasswordVisibility("newPassword")}
                       />
                     </div>
@@ -283,17 +272,21 @@ export default function ProfilePage() {
                         Repeat New Password
                       </p>
                     </div>
-                    <div className="w-2/3 relative">
+                    <div className="relative w-2/3">
                       <input
-                        type={showPasswords.newPasswordRepeat ? "text" : "password"}
+                        type={
+                          showPasswords.newPasswordRepeat ? "text" : "password"
+                        }
                         name="newPasswordRepeat"
                         value={passwords.newPasswordRepeat}
                         onChange={handleInputChange}
-                        className="font-mono text-lg text-slate-300 w-full"
+                        className="w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
-                        icon={showPasswords.newPasswordRepeat ? faEyeSlash : faEye}
-                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        icon={
+                          showPasswords.newPasswordRepeat ? faEyeSlash : faEye
+                        }
+                        className="absolute right-3 top-3 cursor-pointer text-slate-300"
                         onClick={() =>
                           togglePasswordVisibility("newPasswordRepeat")
                         }
@@ -303,7 +296,9 @@ export default function ProfilePage() {
                 </>
               )}
               <div className="flex justify-end">
-                {responseMessage && <p className="text-red-500">{responseMessage}</p>}
+                {responseMessage && (
+                  <p className="text-red-500">{responseMessage}</p>
+                )}
                 {isEditing ? (
                   <>
                     <button
@@ -328,4 +323,3 @@ export default function ProfilePage() {
     </section>
   );
 }
-
