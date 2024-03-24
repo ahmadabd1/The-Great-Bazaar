@@ -21,7 +21,7 @@ const ItemsPage = () => {
     },
     {
       icon: "../../src/assets/BazaarCategory2.jpg",
-      title: "Books & Paper",
+      title: "Horses",
       desc: " Thank the Chineese for this one!",
     },
     {

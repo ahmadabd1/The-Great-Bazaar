@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useUserInfo from "../customHooks/useUserInfo";
-
 import { useNavigate } from "react-router-dom";
-
 export default function Home() {
   const [features, setFeatures] = useState([]);
   const [userName, setUserName] = useState(""); // State to store the user's full name
   const { userInfo, loading, error } = useUserInfo();
-
   const navigate = useNavigate();
-
   const fetchItems = async () => {
     try {
       const response = await axios.get("http://localhost:8080/item/items");
@@ -26,7 +22,6 @@ export default function Home() {
       console.error("Error fetching items:", error);
     }
   };
-
   const fetchUserDetails = async () => {
     try {
       const userEmail = localStorage.getItem("userEmail");
@@ -34,7 +29,6 @@ export default function Home() {
         console.error("User email not found");
         return;
       }
-
       const response = await axios.post(
         "http://localhost:8080/user/user/details",
         { email: userEmail },
@@ -45,19 +39,19 @@ export default function Home() {
       console.error("Error fetching user details:", error);
     }
   };
-
   useEffect(() => {
     fetchItems();
     fetchUserDetails();
   }, []);
-
   useEffect(() => {
     fetchItems();
     fetchUserDetails();
   }, []);
-
   const handleStartShoppingClick = () => {
     navigate("/client/ItemsPage");
+  };
+  const handleStartTour = () => {
+    navigate("/client/Tour");
   };
   return (
     <>
@@ -66,16 +60,15 @@ export default function Home() {
         style={{ marginTop: "150px" }}
       >
         <section>
-          <div className="gap-10 overflow-hidden py-10 md:flex">
+          <div className="gap-12 overflow-hidden py-12 md:flex">
             <div className="flex-1 space-y-10">
-              <h1 className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-200 md:text-5xl lg:text-8xl">
+              <h1 className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-200 md:text-5xl lg:text-8xl ">
                 The Great Bazaar
               </h1>
               <p className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-400 md:text-3xl lg:text-4xl">
                 {" "}
                 Clothes, Food, Electronics and More
               </p>
-
               <div
                 className="p-full flex-grow: 1; relative w-full items-center justify-center gap-x-3 sm:text-sm"
                 style={{ marginTop: "30px", height: "auto" }}
@@ -83,9 +76,28 @@ export default function Home() {
                 <a
                   onClick={handleStartShoppingClick}
                   href="javascript:void(0)"
-                  className="flex items-center justify-center gap-x-5 rounded-full bg-gray-800 px-4 py-2 text-lg  text-slate-200 duration-150 hover:bg-gray-700 active:bg-gray-900 md:inline-flex"
+                  className="flex items-center justify-center gap-x-5 rounded-full bg-gray-800 p-12 px-4 py-2 text-lg  text-slate-200 duration-150 hover:bg-gray-700 active:bg-gray-900 md:inline-flex"
                 >
                   Start Shopping
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="h-5 w-5 "
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </a>
+                <a
+                  onClick={handleStartTour}
+                  href="javascript:void(0)"
+                  className="flex items-center justify-center gap-y-5 rounded-full bg-gray-500 px-4 py-2 text-lg  text-sky-200 duration-150 hover:bg-sky-500 active:bg-gray-900 md:inline-flex"
+                >
+                  Tour in the Bazaar
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -147,7 +159,6 @@ export default function Home() {
                     <h4 className="text-black-800 border-b-2 border-slate-950 p-2 font-mono text-xl text-slate-100 hover:text-sky-300">
                       {item.title}
                     </h4>
-
                     <p className="text-black-800 font-mono text-2xl text-slate-300">
                       {item.price}$
                     </p>
