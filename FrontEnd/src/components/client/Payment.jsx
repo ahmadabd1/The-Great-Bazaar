@@ -30,12 +30,33 @@ export default function Payment() {
     return Object.values(itemMap);
   };
 
-  const handleBuyClick = () => {
-    console.log('Performing pre-navigation logic...');
-    // Perform actions and then set redirectToOrders to true
-    setRedirectToOrders(true);
+  const handleBuyClick = async () => {
+    console.log('Processing payment and creating order...');
+  
+    if (userInfo && userInfo._id) {
+      const response = await fetch(`http://localhost:8080/order/payment/${userInfo._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add authorization headers if your API requires
+        },
+        // No need to include body since the ID is in the URL
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        console.log('Order created successfully:', result);
+        setRedirectToOrders(true);
+      } else {
+        console.error('Failed to create order:', result.message);
+        // Handle error, maybe set an error state and display it
+      }
+    } else {
+      console.error('User info is not available.');
+      // Handle the case where user info is missing
+    }
   };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!cart || !cart.itemsCart || cart.itemsCart.length === 0) return <div>Your cart is empty.</div>;
