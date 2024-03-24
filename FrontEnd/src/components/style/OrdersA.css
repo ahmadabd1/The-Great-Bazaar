@@ -1,59 +1,97 @@
+/* OrdersA.css */
+
 .orders-container {
-    margin-left: 250px; /* Offset for the sidebar */
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Space between order cards */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.order-card {
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.order-title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #fff; /* White text color */
+}
+
+.order-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.update-button,
+.delete-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.update-button {
+  background-color: #4CAF50; /* Green color */
+  color: #fff;
+}
+
+.delete-button {
+  background-color: #f44336; /* Red color */
+  color: #fff;
+}
+
+.order-details {
+  border-top: 1px solid rgba(255, 255, 255, 0.3); /* Semi-transparent white border */
+  padding-top: 10px;
+}
+
+.order-address {
+  margin-bottom: 10px;
+  color: #fff; /* White text color */
+}
+
+.order-item {
+  margin-bottom: 10px;
+}
+
+.item-name {
+  font-weight: bold;
+  color: #fff; /* White text color */
+}
+
+.item-price {
+  color: #ccc; /* Light gray text color */
+}
+
+.item-quantity {
+  color: #ccc; /* Light gray text color */
+}
+
+.order-status {
+  font-style: italic;
+  color: #ccc; /* Light gray text color */
+}
+
+/* Responsive Design */
+
+@media screen and (max-width: 768px) {
+  .orders-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
-  
+}
+
+@media screen and (max-width: 480px) {
   .order-card {
-    flex-basis: calc(33.333% - 20px); /* Three cards per row, accounting for the gap */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: white;
     padding: 15px;
-    border-radius: 8px;
   }
-  
-  .order-title {
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .order-details {
-    font-size: 14px;
-  }
-  
-  .order-userId, .order-address, .order-status {
-    margin-bottom: 5px;
-  }
-  
-  .order-items {
-    border-top: 1px solid #eee;
-    padding-top: 10px;
-  }
-  
-  .order-item {
-    margin-bottom: 5px;
-  }
-  
-  .item-name, .item-quantity, .item-price {
-    margin: 2px 0;
-  }
-  
-  @media (max-width: 1024px) {
-    .order-card {
-      flex-basis: calc(50% - 20px); /* Two cards per row on medium screens */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .orders-container {
-      margin-left: 0; /* Remove offset for smaller devices */
-      margin-top: 20px;
-    }
-  
-    .order-card {
-      flex-basis: 100%; /* One card per row on small screens */
-    }
-  }
-  
+}
