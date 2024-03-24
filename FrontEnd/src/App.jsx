@@ -25,6 +25,7 @@ import BottomPage from "./components/client/BottomPage";
 import UserCart from "./components/client/userCart";
 import FilteredItems from "./components/client/FilteredItems"; // Import the FilteredItems component
 import Payment from "./components/client/Payment";
+import Tour from "./components/Tour";
 
 export default function App() {
   const [isBlurred, setIsBlurred] = useState(false);
@@ -77,12 +78,13 @@ export default function App() {
           <Route path="/admin/statics" element={<Statics />} />
           <Route path="/client/Profile" element={<ClientProfile />} />
           <Route path="/admin/categories" element={<Categories />} />
+          <Route path="/Tour" element={<Tour />} />
           <Route path="/admin/clients" element={<UsersPage />} />
           <Route path="/item/:id" element={<ItemDetail />} />
           <Route path="/client/ItemsPage" element={<ItemsPage />} />
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/userCart" element={<UserCart />} />
-          <Route path="/payment" element={<Payment/>} />
+          <Route path="/payment" element={<Payment />} />
 
           <Route path="/filtereditems/:category" element={<FilteredItems />} />
           <Route

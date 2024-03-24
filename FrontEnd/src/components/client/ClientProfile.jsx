@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import useUserInfo from "../customHooks/useUserInfo";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 import "../style/ClientProfile.css";
+
+const PROFILE_IMAGE = "../../src/assets/ProfileTest.png";
+
 export default function ProfilePage() {
   const { userInfo, loading, error, updateUserInfo } = useUserInfo();
   const [isEditing, setIsEditing] = useState(false);
@@ -21,6 +23,7 @@ export default function ProfilePage() {
     newPasswordRepeat: false,
   });
   const [responseMessage, setResponseMessage] = useState("");
+
   useEffect(() => {
     if (userInfo) {
       setDisplayUserInfo({
@@ -29,6 +32,7 @@ export default function ProfilePage() {
       });
     }
   }, [userInfo]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (name in passwords) {
@@ -37,22 +41,27 @@ export default function ProfilePage() {
       setDisplayUserInfo({ ...displayUserInfo, [name]: value });
     }
   };
+
   const togglePasswordVisibility = (field) => {
     setShowPasswords({ ...showPasswords, [field]: !showPasswords[field] });
   };
+
   const handleUpdateUserInfo = () => {
     const { email, phoneNumber } = displayUserInfo;
     const { currentPassword, newPassword, newPasswordRepeat } = passwords;
+
     if (!email || !phoneNumber) {
       setResponseMessage("Please fill in all required fields.");
       return;
     }
+
     if (currentPassword || newPassword || newPasswordRepeat) {
       if (newPassword !== newPasswordRepeat) {
         setResponseMessage("New passwords do not match.");
         return;
       }
     }
+
     const updateData = {
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
@@ -62,6 +71,7 @@ export default function ProfilePage() {
       newPassword,
       newPasswordRepeat,
     };
+
     fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
       method: "PUT",
       headers: {
@@ -90,8 +100,10 @@ export default function ProfilePage() {
         setResponseMessage("Failed to communicate with the server.");
       });
   };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
+
   return (
     <section
       className="mt-12 border-2 border-white bg-slate-950 bg-opacity-80 p-2"
@@ -109,7 +121,7 @@ export default function ProfilePage() {
           <div className="mb-2 w-full px-2 lg:w-1/3 ">
             <div className="mb-2 rounded-lg bg-opacity-90 p-8">
               <img
-                src="../../src/assets/ProfileTest.png"
+                src={PROFILE_IMAGE} // Use profile image URL here
                 alt="avatar"
                 className="mx-auto mb-8 w-32 rounded-full border border-white"
               />
