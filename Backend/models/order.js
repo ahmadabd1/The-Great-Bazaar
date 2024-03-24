@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const itemSchema = require('./item'); // Make sure this is correctly imported
 
-const orderSchema = new Schema({
-  userId: String,  
-  items: [String], 
-  address:String,
+const orderSchema = new mongoose.Schema({
+  userId: String,
+  userFirstname: String,
+  userLastName:String,
+  items: [itemSchema.schema],  // Using itemSchema.schema to store full item objects
+  address: String,
   orderStatus: { type: String, enum: ['Processing', 'Shipped', 'Delivered', 'Cancelled'], default: 'Processing' },
   orderDate: { type: Date, default: Date.now },
-  deliveryDate: Date
+  deliveryDate: Date,
 });
 
 module.exports = mongoose.model('Order', orderSchema);

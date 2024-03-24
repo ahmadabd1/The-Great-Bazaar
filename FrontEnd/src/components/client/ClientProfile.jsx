@@ -70,7 +70,7 @@ export default function ProfilePage() {
       newPassword,
       newPasswordRepeat,
     };
-    console.log(updateData)
+    console.log(updateData);
     fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
       method: "PUT",
       headers: {
@@ -128,7 +128,7 @@ export default function ProfilePage() {
                 Welcome {userInfo.firstName}
               </p>
               <p className="mb-6 w-60 font-mono text-lg text-slate-300">
-                San Francisco, CA
+                Address {/* Adress {userInfo.address} */}
               </p>
               <div className="mb-2 flex justify-center rounded-lg border border-white">
                 <button
@@ -164,7 +164,7 @@ export default function ProfilePage() {
                       name="email"
                       value={displayUserInfo.email}
                       onChange={handleInputChange}
-                      className="font-mono text-lg text-slate-300 w-full"
+                      className="w-full font-mono text-lg text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -185,7 +185,7 @@ export default function ProfilePage() {
                       name="phoneNumber"
                       value={displayUserInfo.phoneNumber}
                       onChange={handleInputChange}
-                      className="font-mono text-lg text-slate-300 w-full"
+                      className="w-full font-mono text-lg text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -206,7 +206,7 @@ export default function ProfilePage() {
                       name="address"
                       value={displayUserInfo.address}
                       onChange={handleInputChange}
-                      className="font-mono text-lg text-slate-300 w-full"
+                      className="w-full font-mono text-lg text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -224,17 +224,21 @@ export default function ProfilePage() {
                         Current Password
                       </p>
                     </div>
-                    <div className="w-2/3 relative">
+                    <div className="relative w-2/3">
                       <input
-                        type={showPasswords.currentPassword ? "text" : "password"}
+                        type={
+                          showPasswords.currentPassword ? "text" : "password"
+                        }
                         name="currentPassword"
                         value={passwords.currentPassword}
                         onChange={handleInputChange}
-                        className="font-mono text-lg text-slate-300 w-full"
+                        className="w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
-                        icon={showPasswords.currentPassword ? faEyeSlash : faEye}
-                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        icon={
+                          showPasswords.currentPassword ? faEyeSlash : faEye
+                        }
+                        className="absolute right-3 top-3 cursor-pointer text-slate-300"
                         onClick={() =>
                           togglePasswordVisibility("currentPassword")
                         }
@@ -247,17 +251,17 @@ export default function ProfilePage() {
                         New Password
                       </p>
                     </div>
-                    <div className="w-2/3 relative">
+                    <div className="relative w-2/3">
                       <input
                         type={showPasswords.newPassword ? "text" : "password"}
                         name="newPassword"
                         value={passwords.newPassword}
                         onChange={handleInputChange}
-                        className="font-mono text-lg text-slate-300 w-full"
+                        className="w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
                         icon={showPasswords.newPassword ? faEyeSlash : faEye}
-                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        className="absolute right-3 top-3 cursor-pointer text-slate-300"
                         onClick={() => togglePasswordVisibility("newPassword")}
                       />
                     </div>
@@ -268,17 +272,21 @@ export default function ProfilePage() {
                         Repeat New Password
                       </p>
                     </div>
-                    <div className="w-2/3 relative">
+                    <div className="relative w-2/3">
                       <input
-                        type={showPasswords.newPasswordRepeat ? "text" : "password"}
+                        type={
+                          showPasswords.newPasswordRepeat ? "text" : "password"
+                        }
                         name="newPasswordRepeat"
                         value={passwords.newPasswordRepeat}
                         onChange={handleInputChange}
-                        className="font-mono text-lg text-slate-300 w-full"
+                        className="w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
-                        icon={showPasswords.newPasswordRepeat ? faEyeSlash : faEye}
-                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        icon={
+                          showPasswords.newPasswordRepeat ? faEyeSlash : faEye
+                        }
+                        className="absolute right-3 top-3 cursor-pointer text-slate-300"
                         onClick={() =>
                           togglePasswordVisibility("newPasswordRepeat")
                         }
@@ -288,7 +296,9 @@ export default function ProfilePage() {
                 </>
               )}
               <div className="flex justify-end">
-                {responseMessage && <p className="text-red-500">{responseMessage}</p>}
+                {responseMessage && (
+                  <p className="text-red-500">{responseMessage}</p>
+                )}
                 {isEditing ? (
                   <>
                     <button
@@ -313,4 +323,3 @@ export default function ProfilePage() {
     </section>
   );
 }
-

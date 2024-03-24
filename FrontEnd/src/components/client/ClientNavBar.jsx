@@ -1,6 +1,6 @@
-import NavBarLink from "./NavBarLink";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useUserInfo from "../customHooks/useUserInfo";
+import NavBarLink from "./NavBarLink";
 
 // Assuming the logout function is defined here or imported
 const logout = () => {
@@ -8,16 +8,26 @@ const logout = () => {
   window.location.href = "/";
 };
 
-export default function NavBar() {
+const PROFILE_IMAGE = "../../src/assets/ProfileTest.png";
+
+export default function NavBar({}) {
+  // Receive firstName as a prop
   const [state, setState] = useState(false);
   const { userInfo, loading, error, updateUserInfo } = useUserInfo();
+  const [firstName, setFirstName] = useState("");
+
+  useEffect(() => {
+    if (userInfo && userInfo.firstName) {
+      setFirstName(userInfo.firstName);
+    }
+  }, [userInfo]);
 
   const leftNavigation = [
     {
       label: "Profile",
       path: "/client/Profile",
-      icon: "fluent:book-contacts-32-regular",
     },
+
     {
       label: "Orders",
       path: "/orders",
@@ -28,11 +38,18 @@ export default function NavBar() {
       label: "Logout",
       path: "/loggedout",
       icon: "fluent:arrow-exit-20-regular",
-      onClick: logout, // Added logout function here
+      onClick: logout,
     },
   ];
 
   const rightNavigation = [
+    {
+      label: (
+        <span className="font-mono font-bold text-slate-200">
+          {firstName && `Welcome, ${firstName}`}
+        </span>
+      ),
+    },
     { label: "Home", path: "/client", icon: "fluent:home-12-regular" },
     {
       label: "Contact Us",
@@ -64,20 +81,27 @@ export default function NavBar() {
       style={{ border: "3px solid rgba(0, 0, 0, 0.3)" }}
     >
       <div>
-        <div className="ml-10 items-center md:flex">
+        <div className="items-center md:flex">
           <a href="/">
-            <img
-              src="http://localhost:5173/src/assets/BazaarIcon.gif"
-              width={100}
-              height={40}
-            />
+            {" "}
+            <a href="/">
+              <img
+                src="http://localhost:5173/src/assets/BazaarIcon.gif"
+                width={100}
+                height={40}
+              />
+            </a>
           </a>
-          <div className="mr-4 mt-0 pb-3 md:block md:pb-0">
+          <img
+            src={PROFILE_IMAGE}
+            className="  h-[8vh] w-[8vh] items-center rounded-3xl border-2 border-sky-900"
+          />
+          <div className="absolute ml-[19vh] mt-0  md:block md:pb-0">
             <ul className="flex flex-col justify-end space-y-0 pr-0 md:flex md:flex-row">
               {leftNavigation.map((item, idx) => (
                 <li
                   key={idx}
-                  className="ml-0 md:ml-4"
+                  className="md:ml-4"
                   onClick={() => handleItemClick(item)}
                 >
                   <NavBarLink
@@ -89,42 +113,7 @@ export default function NavBar() {
               ))}
             </ul>
           </div>
-          <div className="md:hidden">
-            <button
-              className="rounded-md p-2 text-gray-700 outline-none focus:border focus:border-gray-400"
-              onClick={() => setState(!state)}
-            >
-              {state ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 8h16M4 16h16"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
+
           <div className="ml-auto mr-12 mt-0 justify-self-center pb-3 md:block md:pb-0">
             <ul className="flex flex-col justify-end space-y-0 pr-0 md:flex md:flex-row">
               {rightNavigation.map((item, idx) => (

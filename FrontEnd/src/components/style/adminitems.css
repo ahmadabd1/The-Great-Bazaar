@@ -16,7 +16,9 @@
 }
 
 .description-expanded {
-  white-space: pre-wrap; /* To keep the formatting of your text */
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  max-width: 400px; /* or any width that fits your design */
 }
 
 .read-more-button,

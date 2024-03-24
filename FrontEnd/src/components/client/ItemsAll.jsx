@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
 const FilteredItems = () => {
+  // tailwind.config.js
+
+
   // Fetch items and categories data
   const {
     data: items,
@@ -47,36 +50,36 @@ const FilteredItems = () => {
     return <div>Error: {itemsError?.message || categoriesError?.message}</div>;
 
   return (
-    <div
-      className="absloutecontainer ml-56 mt-[13vh]"
+<div
+      className="absloute container ml-56 mt-[13vh]"
       style={{ height: "80%", width: "80%" }}
     >
       {/* Client Side Bar */}
       <div
         className={`fixed left-0 top-[78px] h-full w-[13%] overflow-y-scroll border-r border-gray-900 bg-gray-800 bg-opacity-50`}
       >
-        <ul className=" border-gray-600">
+        <ul className="border-b border-gray-600">
           <Link to="/client/ItemsPage">
             <FiArrowLeft />
-            <label className="ml-auto mt-2 w-full border-b border-gray-600 p-6 text-center font-mono text-xl text-slate-200">
+            <label className="ml-7 mt-2 border-gray-600 p-6 text-center font-mono text-xl text-slate-200">
               &lt; Back
             </label>
           </Link>
-          <div className="border-b-2 border-gray-600">
+          <div className="mb-2 border-b-2 border-gray-600">
             <input
               type="text"
               placeholder="Search by name"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="mb-8 w-full rounded-md border-b-2"
+              className="mb-12 ml-5 mt-5 h-10 w-40 rounded-md "
             />
           </div>
-          <label className="ml-auto mt-2 w-full  text-center font-mono text-xl text-slate-200">
+          <p className="ml-auto mt-2 w-full  text-center font-mono text-xl text-slate-200">
             FilterCategory
-          </label>
+          </p>
           <select
             id="categorySelect"
-            className="text-m ml-5  h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
+            className="text-m p-l  m-12 ml-5 mt-10 h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -93,41 +96,40 @@ const FilteredItems = () => {
 
       {/* Search input */}
 
-      {/* Display filtered items */}
-    <div className="relative mt-12" style={{ marginLeft: "41px" }}>
-      <ul className="rounded- grid justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-5">
-        {filteredItems &&
-          filteredItems.map((item, idx) => (
-            <li
-              key={item._id}
-              className="rounded-xl border-2 border-black bg-sky-950 bg-opacity-30 hover:bg-sky-900 hover:bg-opacity-30"
-               style={{
-                height: "320px",  // Increased height
-                width: "240px",   // Increased width
-              }}
-            >
-              <Link to={`/item/${item._id}`}>
-                <div className="text-center">
-                  <img
-                    src={item.image_id || 'path/to/default/image'}
-                    alt={item.name}
-                    style={{ height: "145px", width: "250px" }}
-                    className="inline-block border-b-2 border-slate-950"
-                  />
-                </div>
-                <h4 className="text-black-800 border-b-2 border-slate-950 p-2 font-mono text-xl text-slate-100 hover:text-sky-300">
-                  {item.name}
-                </h4>
+ {/* Display filtered items */}
+<div className="relative mt-12" style={{ marginLeft: "41px" }}>
+  <ul className="grid justify-items-center gap-12 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+    {filteredItems &&
+      filteredItems.map((item, idx) => (
+        <li
+          key={item._id}
+          className="flex flex-col justify-between h-85 w-60 rounded-lg border-2 border-gray-300 shadow-lg hover:shadow-xl border-r border-gray-900 bg-black bg-opacity-50 transition-shadow duration-300 relative overflow-hidden backdrop-blur-md"
+        >
+          <Link to={`/item/${item._id}`} className="text-center w-full flex flex-col justify-between h-full">
+            <div className="w-full">
+              <img
+                src={item.image_id || 'path/to/default/image'}
+                alt={item.name}
+                className="h-40 w-full object-cover"
+              />
+              <div className="px-4 pt-4 pb-2 flex flex-col font-mono">
+                <h4 className="text-lg font-bold text-white" style={{ height: '3rem' }}>{item.name}</h4>
+              </div>
+              <div className="border-b border-gray-500 w-full"></div>
+              <div className="p-4 pt-2 flex-grow flex flex-col justify-between" style={{ height: '4rem' }}>
+                <p className="text-sm text-gray-300 overflow-hidden" style={{ textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '3', WebkitBoxOrient: 'vertical' }}>{item.description}</p>
+              </div>
+            <div className="p-4 text-lg font-medium text-green-600" style={{ height: '2.5rem' }}>{item.buyPrice}$</div>
 
-                <p className="text-black-800 font-mono text-2xl text-slate-300">
-                  {item.buyPrice}$
-                </p>
-              </Link>
-            </li>
-          ))}
-      </ul>
-    </div>
-    </div>
+            </div>
+          </Link>
+        </li>
+      ))}
+  </ul>
+</div>
+
+
+</div>
   );
 };
 

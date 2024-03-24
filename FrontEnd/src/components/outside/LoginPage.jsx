@@ -83,14 +83,14 @@ function LoginPage() {
   };
 
   return (
-    <div className="no-scroll-container mt-[15vh] h-[75vh] w-[150vh] rounded-lg  opacity-85">
+    <div className="no-scroll-container mt-[8vh] h-[75vh] w-[125vh] rounded-lg  opacity-85">
       <div className="overflow-hidden rounded-md  bg-gray-950 text-slate-400 shadow-md md:flex">
         {/* Card Image */}
         <div className="md:w-1/2">
           <img
-            src=".\src\assets\BazaarCategory.jpg"
+            src=".\src\assets\BazaarLive.gif"
             alt="login form"
-            className="h-[80vh] w-[full] rounded-lg object-cover object-center"
+            className="h-[80vh] w-[full] rounded-lg border-2 border-slate-700 object-cover object-center"
           />
         </div>
 
@@ -104,7 +104,7 @@ function LoginPage() {
               alt="Bazaar Icon"
             />
 
-            <span className="whitespace-no-wrap mb-0 mr-2 text-center font-mono text-4xl text-slate-500">
+            <span className="whitespace-no-wrap mb-0 mr-28 text-center font-mono text-4xl text-slate-500">
               The Great Bazaar
             </span>
           </div>
@@ -162,7 +162,6 @@ function LoginPage() {
               />
             </>
           )}
-
           <input
             type="password"
             name="password"
@@ -175,7 +174,7 @@ function LoginPage() {
 
           {/* Login Button */}
           <button
-            className="text-1xl mb-3 ml-[23vh] mt-8 w-[30vh] text-pretty rounded-lg bg-gray-800  text-center text-xl text-slate-500 hover:bg-cyan-600 hover:text-black hover:text-slate-50"
+            className="text-1xl mb-3 ml-[17vh] mt-8 w-[30vh] text-pretty rounded-lg bg-gray-800  text-center text-xl text-slate-500 hover:bg-cyan-600 hover:text-black hover:text-slate-50"
             type="submit"
             onClick={handleSubmit}
           >
@@ -190,12 +189,12 @@ function LoginPage() {
               onClick={toggleForm}
               className=" text-xl font-semibold text-gray-400 hover:text-sky-400"
             >
-              {formType === "login" ? "Register here" : "<- Login"}
+              {formType === "login" ? "Register here" : "Login here"}
             </a>
           </p>
 
           {/* Links */}
-          <div className="ml-[23vh] flex items-center">
+          <div className="ml-[18vh] flex items-center">
             <a href="#!" className="text-m me-2 text-gray-500">
               Terms of use.
             </a>
