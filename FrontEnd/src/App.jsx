@@ -27,6 +27,9 @@ import FilteredItems from "./components/client/FilteredItems"; // Import the Fil
 import Payment from "./components/client/Payment";
 import Tour from "./components/Tour";
 
+import Orders from "./components/client/Orders";
+import OrdersA from "./components/admin/OrdersA";
+
 export default function App() {
   const [isBlurred, setIsBlurred] = useState(false);
   const location = useLocation();
@@ -82,9 +85,11 @@ export default function App() {
           <Route path="/admin/clients" element={<UsersPage />} />
           <Route path="/item/:id" element={<ItemDetail />} />
           <Route path="/client/ItemsPage" element={<ItemsPage />} />
+          <Route path="/admin/orders" element={<OrdersA />} />
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/userCart" element={<UserCart />} />
-          <Route path="/payment" element={<Payment />} />
+          <Route path="/payment" element={<Payment/>} />
+          <Route path="/orders" element={<Orders/>} />
 
           <Route path="/filtereditems/:category" element={<FilteredItems />} />
           <Route
