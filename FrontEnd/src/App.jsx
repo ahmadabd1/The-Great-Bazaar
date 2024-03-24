@@ -25,6 +25,8 @@ import BottomPage from "./components/client/BottomPage";
 import UserCart from "./components/client/userCart";
 import FilteredItems from "./components/client/FilteredItems"; // Import the FilteredItems component
 import Payment from "./components/client/Payment";
+import Tour from "./components/Tour";
+
 import Orders from "./components/client/Orders";
 import OrdersA from "./components/admin/OrdersA";
 
@@ -79,6 +81,7 @@ export default function App() {
           <Route path="/admin/statics" element={<Statics />} />
           <Route path="/client/Profile" element={<ClientProfile />} />
           <Route path="/admin/categories" element={<Categories />} />
+          <Route path="/Tour" element={<Tour />} />
           <Route path="/admin/clients" element={<UsersPage />} />
           <Route path="/item/:id" element={<ItemDetail />} />
           <Route path="/client/ItemsPage" element={<ItemsPage />} />

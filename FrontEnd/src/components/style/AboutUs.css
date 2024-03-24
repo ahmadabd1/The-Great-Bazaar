@@ -1,12 +1,15 @@
 .about-us-container {
-  padding: 3px;
-  margin: 20px auto;
+  padding: 5px;
+  margin: 25px auto;
   max-width: 1000px;
+  height: 550px; /* Example fixed height */
+  overflow-y: scroll; /* Enables vertical scrolling */
   border: 3px solid rgba(0, 0, 0, 0.3);
   -webkit-backdrop-filter: blur(10px); /* For Safari 9+ and iOS Safari 9+ */
   backdrop-filter: blur(10px);
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-top: 70px;
 }
 
 .about-us-content {
@@ -19,7 +22,12 @@
   margin-bottom: 20px;
   font-weight: bold;
 }
-
+.legal-section h3,
+.legal-section h2 {
+  color: #000;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
 .about-us-content p {
   margin-bottom: 15px;
   color: #a6a5a5;
@@ -27,5 +35,9 @@
 
 .contact-info p {
   margin-bottom: 10px;
+  color: #a6a5a5;
+}
+.legal-section p {
+  margin-bottom: 15px;
   color: #a6a5a5;
 }
