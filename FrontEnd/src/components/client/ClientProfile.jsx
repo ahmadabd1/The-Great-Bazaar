@@ -117,7 +117,7 @@ export default function ProfilePage() {
                 Welcome {userInfo.firstName}
               </p>
               <p className="mb-6 w-60 font-mono text-lg text-slate-300">
-                San Francisco, CA
+                Address {/* Adress {userInfo.address} */}
               </p>
               <div className="mb-2 flex justify-center rounded-lg border border-white">
                 <button
@@ -163,17 +163,7 @@ export default function ProfilePage() {
                   </p>
                 </div>
               </div>
-              <hr className="my-3" />
-              <div className="mb-4 flex">
-                <div className="w-1/3">
-                  <p className="font-mono text-lg text-sky-400">Mobile</p>
-                </div>
-                <div className="w-2/3">
-                  <p className="font-mono text-lg text-slate-300">
-                    Mobile Number Placeholder
-                  </p>
-                </div>
-              </div>
+
               <hr className="my-3" />
               <div className="mb-4 flex">
                 <div className="w-1/3">
@@ -181,7 +171,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="w-2/3">
                   <p className="font-mono text-lg text-slate-300">
-                    Address Placeholder
+                    address placeholder{/* {userInfo.address} */}
                   </p>
                 </div>
               </div>

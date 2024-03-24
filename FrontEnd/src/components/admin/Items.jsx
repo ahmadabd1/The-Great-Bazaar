@@ -98,6 +98,7 @@ const addItem = async (formData) => {
 </td>
 
 
+
                 <td >
                 <div className="buttons">
                   <button onClick={() => handleUpdateItem(item)} className="update-item-button">Update</button>
