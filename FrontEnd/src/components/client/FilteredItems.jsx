@@ -54,12 +54,12 @@ export default function FilteredItems() {
 
   return (
     <div className="container mx-auto p-8">
-      <Link
-        to="/client/ItemsPage"
-        className="mb-4 text-blue-500 hover:text-blue-700"
-      >
-        &lt; Back
-      </Link>
+        <Link
+          to="/client/ItemsPage"
+    className="mt-24 text-black-500 hover:text-gray-700 block font-bold text-left ml-8"
+        >
+          &lt; Back
+        </Link>
 
       <input
         type="text"
@@ -72,31 +72,41 @@ export default function FilteredItems() {
       />
 
       {/* Display selected category */}
-      <div className="mb-4 text-lg font-semibold">
+      <div className="mb-4 text-lg font-semibold text-left ml-8">
         Category: {selectedCategory ? categoryInput : "None"}
       </div>
       {/* Display filtered items */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {filteredItems &&
-          filteredItems.map((item) => (
-            <div key={item._id} className="rounded-md border p-4">
-                        <Link to={`/item/${item._id}`} style={{ textDecoration: 'none', color: 'black', display: 'flex', flexDirection: 'column', height: '100%' }}>
+     {/* Display filtered items */}
+ <div className="relative mt-12" style={{ marginLeft: "41px" }}>
+  <ul className="grid justify-items-center gap-12 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+    {filteredItems &&
+      filteredItems.map((item, idx) => (
+        <li
+          key={item._id}
+          className="flex flex-col justify-between h-85 w-60 rounded-lg border-2 border-gray-300 shadow-lg hover:shadow-xl border-r border-gray-900 bg-black bg-opacity-50 transition-shadow duration-300 relative overflow-hidden"
+        >
+          <Link to={`/item/${item._id}`} className="text-center w-full flex flex-col justify-between h-full">
+            <div>
+              <img
+                src={item.image_id || 'path/to/default/image'}
+                alt={item.name}
+                className="h-40 w-full object-cover"
+              />
+              <div className="p-4 h-32 flex flex-col justify-between">
+                <h4 className="text-lg font-bold text-white">{item.name}</h4>
+                <p className="text-sm text-gray-300 overflow-hidden" style={{ textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '3', WebkitBoxOrient: 'vertical' }}>{item.description}</p>
+              </div>
+            </div>
+            <p className="mt-2 text-lg font-medium text-green-600 p-4">{item.buyPrice}$</p>
+          </Link>
+        </li>
+      ))}
+  </ul>
+</div>
 
-              <h2 className="text-lg font-semibold">{item.name}</h2>
-              <p className="text-sm text-gray-600">{item.description}</p>
-              {item.image_id && (
-                <img
-                  src={item.image_id}
-                  alt={item.name}
-                  className="mt-2 h-32 w-full object-cover"
-                />
-              )}
-              </Link>
-               </div>
-
-          ))}
+    
                    
-      </div>
+     
     </div>
   );
 }
