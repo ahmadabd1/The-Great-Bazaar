@@ -45,6 +45,36 @@ exports.processPaymentAndCreateOrder = async (req, res) => {
 };
 
 
+exports.changeOrderStatus = async (req, res) => {
+  try {
+    const orderId = req.body.orderId; // Assuming you pass orderId in the request body
+    const newStatus = req.body.status;
+
+    // Validate the new status
+    const validStatuses = ['Processing', 'Shipped', 'Delivered', 'Cancelled'];
+    if (!validStatuses.includes(newStatus)) {
+      return res.status(400).json({ error: 'Invalid status' });
+    }
+
+    // Find the order in the database
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    // Update the order status
+    order.orderStatus = newStatus;
+    await order.save();
+
+    // Send response
+    res.status(200).json({ message: 'Order status updated successfully' });
+  } catch (error) {
+    console.error('Error changing order status:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 
 
 exports.getOrdersByUserId = async (req, res) => {
