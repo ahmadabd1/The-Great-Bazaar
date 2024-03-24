@@ -45,12 +45,22 @@ body {
   left: 0; /* Position at the left */
   width: 100%; /* Cover the entire viewport width */
   height: 100%; /* Cover the entire viewport height */
-  background-image: url("http://localhost:5173/src/assets/BazaarBG.jpg");
-  background-size: cover; /* Cover the entire element */
+  background-image: url("http://localhost:5173/src/assets/BazaarBG.jpg"); /*
+  /* background-size: cover; Cover the entire element */
   background-repeat: no-repeat; /* Do not repeat the background image */
   background-position: center; /* Center the background image */
   z-index: -1; /* Set a negative z-index to place it behind other content */
 }
 .blur-background {
   filter: blur(8px); /* Adjust the blur radius as needed */
+}
+#bgvid {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1000; /* Ensure it's behind other content */
 }

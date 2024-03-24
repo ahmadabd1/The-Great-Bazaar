@@ -62,6 +62,14 @@ export default function App() {
 
   return (
     <>
+      {/* <div className="app">
+        <video autoPlay muted loop id="bgvid">
+          <source
+            src="http://localhost:5173/src/assets/bgvid3.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support HTML5 video.
+        </video> */}
       <div className="container">
         <div
           className={`background-image ${isBlurred ? "blur-background" : ""}`}
@@ -99,7 +107,7 @@ export default function App() {
 
         <Footer />
       </div>
-
+      {/* </div> */}
       {location.pathname === "/client" && <BottomPage />}
     </>
   );
