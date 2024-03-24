@@ -93,11 +93,11 @@ export default function UserCart() {
                 <p className="text-base font-black leading-none text-gray-800">
                   {item.name}
                 </p>
-                <select className="mr-6 border border-gray-200 px-1 py-2 focus:outline-none">
+                {/* <select className="mr-6 border border-gray-200 px-1 py-2 focus:outline-none">
                   <option>01</option>
                   <option>02</option>
                   <option>03</option>
-                </select>
+                </select> */}
               </div>
               <p className="pt-2 text-xs leading-3 text-gray-600">
                 Height: 10 inches

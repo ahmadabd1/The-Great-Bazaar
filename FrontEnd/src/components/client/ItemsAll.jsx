@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
-import useGet from "../customHooks/useGet";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
+import useGet from "../customHooks/useGet";
+import usePost from "../customHooks/usePost"; // Import usePost
+import useUserInfo from "../customHooks/useUserInfo"; // Import useUserInfo if needed for cart data
 
 const FilteredItems = () => {
-  // tailwind.config.js
-
-
-  // Fetch items and categories data
   const {
     data: items,
     loading: loadingItems,
@@ -20,21 +18,34 @@ const FilteredItems = () => {
     error: categoriesError,
   } = useGet("http://localhost:8080/category/categories/");
 
-  // State for search term and selected category
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  // Handler for search input change
+  const { postData } = usePost(); // Using the postData function from usePost
+  const { userInfo } = useUserInfo(); // Assuming userInfo contains user data
+
+  const addToCart = async (item) => {
+    const cartData = {
+      userId: userInfo._id,
+      item: { ...item },
+    };
+
+    try {
+      await postData("http://localhost:8080/cart/addToCart", cartData);
+      alert("Item added to cart");
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
+  };
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
-  // Handler for category dropdown change
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
 
-  // Filter items based on search term and selected category
   const filteredItems = items?.filter(
     (item) =>
       (item.name.toLowerCase().includes(searchTerm) ||
@@ -42,19 +53,15 @@ const FilteredItems = () => {
       (selectedCategory === "" || item.category_id === selectedCategory),
   );
 
-  // Render loading state while fetching data
   if (loadingItems || loadingCategories) return <div>Loading...</div>;
-
-  // Render error if data fetching fails
   if (itemsError || categoriesError)
     return <div>Error: {itemsError?.message || categoriesError?.message}</div>;
 
   return (
-<div
+    <div
       className="absloute container ml-56 mt-[13vh]"
       style={{ height: "80%", width: "80%" }}
     >
-      {/* Client Side Bar */}
       <div
         className={`fixed left-0 top-[78px] h-full w-[13%] overflow-y-scroll border-r border-gray-900 bg-gray-800 bg-opacity-50`}
       >
@@ -71,7 +78,7 @@ const FilteredItems = () => {
               placeholder="Search by name"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="mb-12 ml-5 mt-5 h-10 w-40 rounded-md "
+              className="mb-12 ml-5 mt-5 h-10 w-40 rounded-md"
             />
           </div>
           <p className="ml-auto mt-2 w-full  text-center font-mono text-xl text-slate-200">
@@ -94,42 +101,68 @@ const FilteredItems = () => {
         </ul>
       </div>
 
-      {/* Search input */}
-
- {/* Display filtered items */}
-<div className="relative mt-12" style={{ marginLeft: "41px" }}>
-  <ul className="grid justify-items-center gap-12 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-    {filteredItems &&
-      filteredItems.map((item, idx) => (
-        <li
-          key={item._id}
-          className="flex flex-col justify-between h-85 w-60 rounded-lg border-2 border-gray-300 shadow-lg hover:shadow-xl border-r border-gray-900 bg-black bg-opacity-50 transition-shadow duration-300 relative overflow-hidden backdrop-blur-md"
-        >
-          <Link to={`/item/${item._id}`} className="text-center w-full flex flex-col justify-between h-full">
-            <div className="w-full">
-              <img
-                src={item.image_id || 'path/to/default/image'}
-                alt={item.name}
-                className="h-40 w-full object-cover"
-              />
-              <div className="px-4 pt-4 pb-2 flex flex-col font-mono">
-                <h4 className="text-lg font-bold text-white" style={{ height: '3rem' }}>{item.name}</h4>
-              </div>
-              <div className="border-b border-gray-500 w-full"></div>
-              <div className="p-4 pt-2 flex-grow flex flex-col justify-between" style={{ height: '4rem' }}>
-                <p className="text-sm text-gray-300 overflow-hidden" style={{ textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '3', WebkitBoxOrient: 'vertical' }}>{item.description}</p>
-              </div>
-            <div className="p-4 text-lg font-medium text-green-600" style={{ height: '2.5rem' }}>{item.buyPrice}$</div>
-
-            </div>
-          </Link>
-        </li>
-      ))}
-  </ul>
-</div>
-
-
-</div>
+      <div className="relative mt-12" style={{ marginLeft: "41px" }}>
+        <ul className="grid justify-items-center gap-12 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+          {filteredItems &&
+            filteredItems.map((item) => (
+              <li
+                key={item._id}
+                className="h-85 relative flex w-60 flex-col justify-between overflow-hidden rounded-lg border-2 border-r border-gray-300 border-gray-900 bg-black bg-opacity-50 shadow-lg backdrop-blur-md transition-shadow duration-300 hover:shadow-xl"
+              >
+                <Link
+                  to={`/item/${item._id}`}
+                  className="flex h-full w-full flex-col justify-between text-center"
+                >
+                  <div className="w-full">
+                    <img
+                      src={item.image_id || "path/to/default/image"}
+                      alt={item.name}
+                      className="h-40 w-full object-cover"
+                    />
+                    <div className="flex flex-col px-4 pb-2 pt-4 font-mono">
+                      <h4
+                        className="text-lg font-bold text-white"
+                        style={{ height: "3rem" }}
+                      >
+                        {item.name}
+                      </h4>
+                    </div>
+                    <div className="w-full border-b border-gray-500"></div>
+                    <div
+                      className="flex flex-grow flex-col justify-between p-4 pt-2"
+                      style={{ height: "4rem" }}
+                    >
+                      <p
+                        className="overflow-hidden text-sm text-gray-300"
+                        style={{
+                          textOverflow: "ellipsis",
+                          display: "-webkit-box",
+                          WebkitLineClamp: "3",
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {item.description}
+                      </p>
+                    </div>
+                    <div
+                      className="p-4 text-lg font-medium text-green-600"
+                      style={{ height: "2.5rem" }}
+                    >
+                      {item.buyPrice}$
+                    </div>
+                  </div>
+                </Link>
+                <button
+                  onClick={() => addToCart(item)}
+                  className="focus:shadow-outline focus:outline-noneborder-gray-300 mt-4 cursor-pointer rounded border-gray-900  bg-opacity-50 px-4 py-2 text-white shadow-lg backdrop-blur-md transition-shadow duration-300 hover:bg-green-600 hover:shadow-xl"
+                >
+                  Add to Cart
+                </button>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </div>
   );
 };
 
