@@ -1,19 +1,30 @@
-import React from 'react';
-import '../style/cart.css';
-import useGet from '../customHooks/useGet';
-import useUserInfo from '../customHooks/useUserInfo';
-import useDeleteIncludeBody from '../customHooks/useDeleteIncludeBody'; // Import the custom hook for deletion
-import { Link } from 'react-router-dom';
+import React from "react";
+import "../style/cart.css";
+import useGet from "../customHooks/useGet";
+import useUserInfo from "../customHooks/useUserInfo";
+import useDeleteIncludeBody from "../customHooks/useDeleteIncludeBody"; // Import the custom hook for deletion
+import { Link } from "react-router-dom";
 
 export default function UserCart() {
   const { userInfo, loading: userLoading, error: userError } = useUserInfo();
-  const cartUrl = userInfo ? `http://localhost:8080/cart/${userInfo._id}` : null;
-  const { data: cart, loading: cartLoading, error: cartError, refetch: refetchCart } = useGet(cartUrl);
-  const { sendDeleteRequest, isLoading: isDeleteLoading, error: deleteError } = useDeleteIncludeBody();
+  const cartUrl = userInfo
+    ? `http://localhost:8080/cart/${userInfo._id}`
+    : null;
+  const {
+    data: cart,
+    loading: cartLoading,
+    error: cartError,
+    refetch: refetchCart,
+  } = useGet(cartUrl);
+  const {
+    sendDeleteRequest,
+    isLoading: isDeleteLoading,
+    error: deleteError,
+  } = useDeleteIncludeBody();
 
   const aggregateItems = (items) => {
     const itemMap = {};
-7
+    7;
     items.forEach((item) => {
       if (itemMap[item._id]) {
         itemMap[item._id].quantity += 1;
@@ -26,7 +37,10 @@ export default function UserCart() {
   };
 
   const calculateTotalPrice = (aggregatedItems) => {
-    return aggregatedItems.reduce((acc, item) => acc + item.sellPrice * item.quantity, 0);
+    return aggregatedItems.reduce(
+      (acc, item) => acc + item.sellPrice * item.quantity,
+      0,
+    );
   };
 
   const handleDeleteCartItem = async (itemId) => {
@@ -35,7 +49,7 @@ export default function UserCart() {
       return;
     }
 
-    await sendDeleteRequest('http://localhost:8080/cart', {
+    await sendDeleteRequest("http://localhost:8080/cart", {
       body: {
         userId: userInfo._id,
         itemId: itemId,
@@ -63,33 +77,73 @@ export default function UserCart() {
   }
 
   return (
-    <div className="cart-container">
-      <h2 className="cart-header">My Cart</h2>
-      <div>Total Items: {totalItems}</div>
-      <table className="cart-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity in Cart</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="mt-10 flex bg-gradient-to-b from-slate-950/70 to-sky-300/50 p-2">
+      <div className="w-full rounded bg-slate-600 shadow-md">
+        <h2 className="mt-2 text-center font-mono text-3xl text-sky-600">
+          My Cart
+        </h2>
+        <div className="mt-3 border-b-2 border-slate-950"></div>
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           {aggregatedItems.map((item) => (
-            <tr key={item._id}>
-              <td>{item.name}</td>
-              <td>{item.sellPrice}$</td>
-              <td>{item.quantity}</td>
-              <td>
-                <button className="cart-button" onClick={() => handleDeleteCartItem(item._id)}>Delete</button>
-              </td>
-            </tr>
+            <div key={item._id} className="w-full md:w-3/4 md:pl-3">
+              <p className="pt-4 text-xs leading-3 text-gray-800 md:pt-0">
+                RF293
+              </p>
+              <div className="flex w-full items-center justify-between pt-1">
+                <p className="text-base font-black leading-none text-gray-800">
+                  {item.name}
+                </p>
+                <select className="mr-6 border border-gray-200 px-1 py-2 focus:outline-none">
+                  <option>01</option>
+                  <option>02</option>
+                  <option>03</option>
+                </select>
+              </div>
+              <p className="pt-2 text-xs leading-3 text-gray-600">
+                Height: 10 inches
+              </p>
+              <p className="py-4 text-xs leading-3 text-gray-600">
+                Color: Black
+              </p>
+              <p className="w-96 text-xs leading-3 text-gray-600">
+                Composition: 100% calf leather
+              </p>
+              <div className="flex items-center justify-between pr-6 pt-5">
+                <div className="flex items-center">
+                  <p className="cursor-pointer text-xs leading-3 text-gray-800 underline">
+                    Add to favorites
+                  </p>
+                  <p
+                    className="cursor-pointer pl-5 text-xs leading-3 text-red-500 underline"
+                    onClick={() => handleDeleteCartItem(item._id)}
+                  >
+                    Remove
+                  </p>
+                </div>
+                <p className="text-base font-black leading-none text-gray-800">
+                  ${item.sellPrice}
+                </p>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
-      <div className="cart-total">Total Price: {totalPrice}$</div>
-      <Link className='cart-button' to="/Payment">Payment</Link>
+        </div>
+      </div>
+      <div className="h-[70vh] w-[55vh] rounded bg-slate-950 shadow-md">
+        <div className="mb-4">Total Price: {totalPrice}$</div>
+        <div className="mb-2">Total Items: {totalItems}</div>
+        <Link
+          to="/Payment"
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        >
+          Payment
+        </Link>
+        <Link
+          to="/Payment"
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        >
+          Payment
+        </Link>
+      </div>
     </div>
   );
 }

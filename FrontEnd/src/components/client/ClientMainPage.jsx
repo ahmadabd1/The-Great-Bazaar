@@ -51,7 +51,7 @@ export default function Home() {
     navigate("/client/ItemsPage");
   };
   const handleStartTour = () => {
-    navigate("/client/Tour");
+    navigate("/Tour");
   };
   return (
     <>

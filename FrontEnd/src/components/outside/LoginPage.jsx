@@ -189,7 +189,7 @@ function LoginPage() {
               onClick={toggleForm}
               className=" text-xl font-semibold text-gray-400 hover:text-sky-400"
             >
-              {formType === "login" ? "Register here" : "<- Login"}
+              {formType === "login" ? "Register here" : "Login here"}
             </a>
           </p>
 
