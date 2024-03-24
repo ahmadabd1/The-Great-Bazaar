@@ -108,7 +108,7 @@ export default function Home() {
                 {features.map((item, idx) => (
                   <li
                     key={idx}
-                    className="rounded-xl border-2 border-black bg-sky-950 bg-opacity-30 hover:bg-sky-900 hover:bg-opacity-30  "
+                    className="rounded-xl border-2 border-black bg-black  bg-opacity-30 hover:bg-sky-900 hover:bg-opacity-30  "
                     style={{
                       height: "270px",
                       width: "200px",

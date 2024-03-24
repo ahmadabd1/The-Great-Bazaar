@@ -128,7 +128,7 @@ export default function ProfilePage() {
                 Welcome {userInfo.firstName}
               </p>
               <p className="mb-6 w-60 font-mono text-lg text-slate-300">
-                San Francisco, CA
+                Address {/* Adress {userInfo.address} */}
               </p>
               <div className="mb-2 flex justify-center rounded-lg border border-white">
                 <button
