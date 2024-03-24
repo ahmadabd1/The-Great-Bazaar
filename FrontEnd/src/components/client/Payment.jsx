@@ -2,11 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import useGet from '../customHooks/useGet';
 import useUserInfo from '../customHooks/useUserInfo';
 import { Link } from 'react-router-dom';
+import '../style/Payment.css'; // Import the CSS file
 
 export default function Payment() {
   const { userInfo } = useUserInfo();
   const { data: cart, loading, error } = useGet(userInfo ? `http://localhost:8080/cart/${userInfo._id}` : null);
   const [redirectToOrders, setRedirectToOrders] = useState(false);
+  const [paymentInfo, setPaymentInfo] = useState({
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+    cardholderName: '',
+    address: '',
+  });
   const linkRef = useRef(null); // Create a ref for the Link
 
   useEffect(() => {
@@ -34,17 +42,66 @@ export default function Payment() {
     console.log('Performing pre-navigation logic...');
     // Perform actions and then set redirectToOrders to true
     setRedirectToOrders(true);
+    // Here you can send paymentInfo along with the order
+    // For simplicity, I'll just log it for now
+    console.log('Payment Info:', paymentInfo);
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  if (!cart || !cart.itemsCart || cart.itemsCart.length === 0) return <div>Your cart is empty.</div>;
+  if (loading) return <div className="Loader">Loading...</div>;
+  if (error) return <div className="Error">Error: {error.message}</div>;
+  if (!cart || !cart.itemsCart || cart.itemsCart.length === 0) return <div className="EmptyCart">Your cart is empty.</div>;
 
   const aggregatedItems = aggregateItems(cart.itemsCart);
 
   return (
-    <div>
+    <div className="PaymentContainer">
       <h2>Payment</h2>
+      <form>
+        <label>
+          Card Number:
+          <input
+            type="text"
+            value={paymentInfo.cardNumber}
+            onChange={(e) => setPaymentInfo({ ...paymentInfo, cardNumber: e.target.value })}
+            maxLength="16"
+          />
+        </label>
+        <label>
+          Expiry Date:
+          <input
+            type="text"
+            value={paymentInfo.expiryDate}
+            onChange={(e) => setPaymentInfo({ ...paymentInfo, expiryDate: e.target.value })}
+            placeholder="MM/YYYY"
+            maxLength="7"
+          />
+        </label>
+        <label>
+          CVV:
+          <input
+            type="text"
+            value={paymentInfo.cvv}
+            onChange={(e) => setPaymentInfo({ ...paymentInfo, cvv: e.target.value })}
+            maxLength="3"
+          />
+        </label>
+        <label>
+          Cardholder Name:
+          <input
+            type="text"
+            value={paymentInfo.cardholderName}
+            onChange={(e) => setPaymentInfo({ ...paymentInfo, cardholderName: e.target.value })}
+          />
+        </label>
+        <label>
+          Address:
+          <input
+            type="text"
+            value={paymentInfo.address}
+            onChange={(e) => setPaymentInfo({ ...paymentInfo, address: e.target.value })}
+          />
+        </label>
+      </form>
       <table>
         <thead>
           <tr>
