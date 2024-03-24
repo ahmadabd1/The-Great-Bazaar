@@ -33,20 +33,31 @@ const ItemDetail = () => {
   if (!item) return <div>Item not found</div>;
 
   return (
-    <div style={{ height: '350px', width: '250px', backdropFilter: 'blur(10px)', padding: "20px", borderRadius: "5px", display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '300px', margin: 'auto' }}>
-      {item.image_id && (
-        <img 
-          src={item.image_id} 
-          alt={item.name} 
-          style={{ height: '130px', width: '130px' }}
-        />
-      )}
-      <h1 style={{ fontSize: '24px', margin: '10px 0' }}>{item.name}</h1>
-      <p style={{ fontSize: '16px', textAlign: 'center', margin: '5px 0' }}>{item.description}</p>
-      <p style={{ fontSize: '16px', margin: '5px 0' }}>Buy Price: {item.buyPrice}$</p>
-      <p style={{ fontSize: '16px', margin: '5px 0' }}>Sell Price: {item.sellPrice}$</p>
-      <button onClick={() => addToCart(item)} style={{ padding: '8px 16px', fontSize: '14px', cursor: 'pointer', marginTop: '10px' }}>Add to Cart</button>
-    </div>
+  <div className="max-w-sm mx-auto bg-black bg-opacity-50 border-2  border-black rounded-lg shadow-lg overflow-hidden flex flex-col justify-between h-96 p-5 backdrop-blur-md">
+    {item.image_id && (
+      <img 
+        src={item.image_id} 
+        alt={item.name} 
+        className="h-32 w-32 object-cover rounded-md self-center"
+      />
+    )}
+    <h1 className="text-xl text-white font-mono self-center mt-4">{item.name}</h1>
+    <p className="text-base text-gray-300 font-mono text-center mt-2">{item.description}</p>
+<p className="text-base text-white font-mono mt-2">
+  Buy Price: <span className="text-green-600">{item.buyPrice}$</span>
+</p>
+<p className="text-base text-white font-mono mt-2">
+  Sell Price: <span className="text-green-600">{item.sellPrice}$</span>
+</p>
+
+    <button 
+      onClick={() => addToCart(item)}
+      className="mt-4 py-2 px-4 bg-green-500 text-white rounded focus:outline-none focus:shadow-outline hover:bg-green-600 cursor-pointer"
+    >
+      Add to Cart
+    </button>
+</div>
+
   );
 };
 
