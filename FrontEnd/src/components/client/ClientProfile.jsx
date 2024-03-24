@@ -3,14 +3,18 @@ import useUserInfo from "../customHooks/useUserInfo";
 
 import "../style/ClientProfile.css";
 
+<<<<<<< HEAD
 const PROFILE_IMAGE = "../../src/assets/ProfileTest.png";
 
+=======
+>>>>>>> emranoshka
 export default function ProfilePage() {
   const { userInfo, loading, error, updateUserInfo } = useUserInfo();
   const [isEditing, setIsEditing] = useState(false);
   const [displayUserInfo, setDisplayUserInfo] = useState({
     email: "",
     phoneNumber: "",
+    address: "",
   });
   const [passwords, setPasswords] = useState({
     currentPassword: "",
@@ -29,6 +33,7 @@ export default function ProfilePage() {
       setDisplayUserInfo({
         email: userInfo.email,
         phoneNumber: userInfo.phoneNumber,
+        address: userInfo.address || "", // Assuming address is nullable
       });
     }
   }, [userInfo]);
@@ -47,10 +52,14 @@ export default function ProfilePage() {
   };
 
   const handleUpdateUserInfo = () => {
-    const { email, phoneNumber } = displayUserInfo;
+    const { email, phoneNumber, address } = displayUserInfo;
     const { currentPassword, newPassword, newPasswordRepeat } = passwords;
+<<<<<<< HEAD
 
     if (!email || !phoneNumber) {
+=======
+    if (!email || !phoneNumber || !address) {
+>>>>>>> emranoshka
       setResponseMessage("Please fill in all required fields.");
       return;
     }
@@ -67,11 +76,16 @@ export default function ProfilePage() {
       lastName: userInfo.lastName,
       email,
       phoneNumber,
+      address,
       currentPassword,
       newPassword,
       newPasswordRepeat,
     };
+<<<<<<< HEAD
 
+=======
+    console.log(updateData)
+>>>>>>> emranoshka
     fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
       method: "PUT",
       headers: {
@@ -159,9 +173,19 @@ export default function ProfilePage() {
                   <p className="font-mono text-lg text-sky-400">Email</p>
                 </div>
                 <div className="w-2/3">
-                  <p className="font-mono text-lg text-slate-300">
-                    {userInfo.email}
-                  </p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="email"
+                      value={displayUserInfo.email}
+                      onChange={handleInputChange}
+                      className="font-mono text-lg text-slate-300 w-full"
+                    />
+                  ) : (
+                    <p className="font-mono text-lg text-slate-300">
+                      {userInfo.email}
+                    </p>
+                  )}
                 </div>
               </div>
               <hr className="my-3" />
@@ -170,22 +194,132 @@ export default function ProfilePage() {
                   <p className="font-mono text-lg text-sky-400">Phone</p>
                 </div>
                 <div className="w-2/3">
-                  <p className="font-mono text-lg text-slate-300">
-                    {userInfo.phoneNumber}
-                  </p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="phoneNumber"
+                      value={displayUserInfo.phoneNumber}
+                      onChange={handleInputChange}
+                      className="font-mono text-lg text-slate-300 w-full"
+                    />
+                  ) : (
+                    <p className="font-mono text-lg text-slate-300">
+                      {userInfo.phoneNumber}
+                    </p>
+                  )}
                 </div>
               </div>
-
               <hr className="my-3" />
               <div className="mb-4 flex">
                 <div className="w-1/3">
                   <p className="font-mono text-lg text-sky-400">Address</p>
                 </div>
                 <div className="w-2/3">
-                  <p className="font-mono text-lg text-slate-300">
-                    address placeholder{/* {userInfo.address} */}
-                  </p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="address"
+                      value={displayUserInfo.address}
+                      onChange={handleInputChange}
+                      className="font-mono text-lg text-slate-300 w-full"
+                    />
+                  ) : (
+                    <p className="font-mono text-lg text-slate-300">
+                      {userInfo.address || "Address Placeholder"}
+                    </p>
+                  )}
                 </div>
+              </div>
+              {isEditing && (
+                <>
+                  <hr className="my-3" />
+                  <div className="mb-4 flex">
+                    <div className="w-1/3">
+                      <p className="font-mono text-lg text-sky-400">
+                        Current Password
+                      </p>
+                    </div>
+                    <div className="w-2/3 relative">
+                      <input
+                        type={showPasswords.currentPassword ? "text" : "password"}
+                        name="currentPassword"
+                        value={passwords.currentPassword}
+                        onChange={handleInputChange}
+                        className="font-mono text-lg text-slate-300 w-full"
+                      />
+                      <FontAwesomeIcon
+                        icon={showPasswords.currentPassword ? faEyeSlash : faEye}
+                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        onClick={() =>
+                          togglePasswordVisibility("currentPassword")
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-4 flex">
+                    <div className="w-1/3">
+                      <p className="font-mono text-lg text-sky-400">
+                        New Password
+                      </p>
+                    </div>
+                    <div className="w-2/3 relative">
+                      <input
+                        type={showPasswords.newPassword ? "text" : "password"}
+                        name="newPassword"
+                        value={passwords.newPassword}
+                        onChange={handleInputChange}
+                        className="font-mono text-lg text-slate-300 w-full"
+                      />
+                      <FontAwesomeIcon
+                        icon={showPasswords.newPassword ? faEyeSlash : faEye}
+                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        onClick={() => togglePasswordVisibility("newPassword")}
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-4 flex">
+                    <div className="w-1/3">
+                      <p className="font-mono text-lg text-sky-400">
+                        Repeat New Password
+                      </p>
+                    </div>
+                    <div className="w-2/3 relative">
+                      <input
+                        type={showPasswords.newPasswordRepeat ? "text" : "password"}
+                        name="newPasswordRepeat"
+                        value={passwords.newPasswordRepeat}
+                        onChange={handleInputChange}
+                        className="font-mono text-lg text-slate-300 w-full"
+                      />
+                      <FontAwesomeIcon
+                        icon={showPasswords.newPasswordRepeat ? faEyeSlash : faEye}
+                        className="absolute top-3 right-3 cursor-pointer text-slate-300"
+                        onClick={() =>
+                          togglePasswordVisibility("newPasswordRepeat")
+                        }
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+              <div className="flex justify-end">
+                {responseMessage && <p className="text-red-500">{responseMessage}</p>}
+                {isEditing ? (
+                  <>
+                    <button
+                      className="mr-4 rounded-lg bg-red-500 p-1 font-mono text-white hover:bg-red-600"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="rounded-lg bg-green-500 p-1 font-mono text-white hover:bg-green-600"
+                      onClick={handleUpdateUserInfo}
+                    >
+                      Save
+                    </button>
+                  </>
+                ) : null}
               </div>
             </div>
           </div>
@@ -194,3 +328,4 @@ export default function ProfilePage() {
     </section>
   );
 }
+

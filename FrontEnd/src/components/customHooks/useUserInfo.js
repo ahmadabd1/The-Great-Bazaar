@@ -5,6 +5,10 @@ const useUserInfo = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const updateUserInfo = (newUserInfo) => {
+    setUserInfo(newUserInfo);
+  };
+
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -32,7 +36,7 @@ const useUserInfo = () => {
     fetchUserInfo();
   }, []); 
 
-  return { userInfo, setUserInfo, loading, error }; // Expose setUserInfo for external updates
+  return { userInfo, updateUserInfo, loading, error }; // Include updateUserInfo
 };
 
 export default useUserInfo;

@@ -31,10 +31,13 @@ const authRoutes = require('./routes/authRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
 const itemsRoutes = require('./routes/itemsRoutes');
 const cartsRoutes = require('./routes/cartRoutes');
+const ordersRoutes = require('./routes/ordersRoutes');
+
 app.use('/user', authRoutes);
 app.use('/category', categoriesRoutes);
 app.use('/item', itemsRoutes);
 app.use('/cart', cartsRoutes);
+app.use('/order', ordersRoutes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
