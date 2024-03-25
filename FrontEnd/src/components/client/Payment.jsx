@@ -18,6 +18,7 @@ export default function Payment() {
     cardholderName: "",
     address: "",
   });
+  const [paymentError, setPaymentError] = useState(""); // State to store payment error message
   const linkRef = useRef(null);
 
   useEffect(() => {
@@ -27,27 +28,29 @@ export default function Payment() {
   }, [redirectToOrders]);
 
   const handleBuyClick = async () => {
-    console.log("Processing payment and creating order...");
     if (userInfo && userInfo._id) {
-      const response = await fetch(
-        `http://localhost:8080/order/payment/${userInfo._id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+      try {
+        const response = await fetch(
+          `http://localhost:8080/order/payment/${userInfo._id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(paymentInfo),
           },
-        },
-      );
-      const result = await response.json();
-      if (response.ok) {
-        console.log("Order created successfully:", result);
-        setRedirectToOrders(true);
-      } else {
-        console.error("Failed to create order:", result.message);
+        );
+        const result = await response.json();
+        if (response.ok) {
+          setRedirectToOrders(true);
+        } else {
+          setPaymentError(result.message || "Failed to create order.");
+        }
+      } catch (e) {
+        setPaymentError(e.message || "An error occurred during the payment process.");
       }
     } else {
-      console.error("User info is not available.");
-      // Handle the case where user info is missing
+      setPaymentError("User info is not available.");
     }
   };
 
@@ -65,11 +68,16 @@ export default function Payment() {
         <h2 className="mb-2 ml-[285px] font-mono text-xl text-sky-500">
           Payment
         </h2>
+        {paymentError && (
+          <div className="text-red-500">{paymentError}</div>
+        )}
         <div className="-mx-2 flex flex-wrap border-t-2 border-white">
           {/* Payment Information Section */}
           <div className="w-full p-2 lg:w-1/2">
             <div className="bg-slate-00 rounded-lg p-4 opacity-85">
               <form className="space-y-3">
+                {/* Payment Information Fields */}
+                {/* Card Number */}
                 <div className="flex items-center">
                   <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
                     Card Number:
@@ -87,7 +95,7 @@ export default function Payment() {
                     className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
                   />
                 </div>
-
+                {/* Expiry Date */}
                 <div className="flex items-center">
                   <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
                     Expiry Date:
@@ -106,13 +114,14 @@ export default function Payment() {
                     className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
                   />
                 </div>
-
+                {/* CVV */}
                 <div className="flex items-center">
                   <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
                     CVV:
                   </label>
                   <input
                     type="text"
+                   
                     value={paymentInfo.cvv}
                     onChange={(e) =>
                       setPaymentInfo({ ...paymentInfo, cvv: e.target.value })
@@ -121,7 +130,7 @@ export default function Payment() {
                     className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
                   />
                 </div>
-
+                {/* Cardholder Name */}
                 <div className="flex items-center">
                   <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
                     Cardholder Name:
@@ -138,7 +147,7 @@ export default function Payment() {
                     className="w-2/3 rounded border px-2 py-1 font-mono text-sm text-slate-300"
                   />
                 </div>
-
+                {/* Address */}
                 <div className="flex items-center">
                   <label className="block w-1/3 font-mono text-lg capitalize text-sky-400">
                     Address:
@@ -168,6 +177,7 @@ export default function Payment() {
               <table className="mb-3 w-full border-collapse">
                 <thead>
                   <tr>
+                    {/* Table headers */}
                     <th className="border border-gray-300 bg-gray-200 p-1 text-left font-mono text-sky-500">
                       Item
                     </th>
@@ -183,9 +193,10 @@ export default function Payment() {
                   </tr>
                 </thead>
                 <tbody>
+                  {/* Mapping through cart items */}
                   {cart.itemsCart.map((item) => (
                     <tr key={item._id}>
-                      <td className="border border-gray-300 p-1  text-left font-mono text-sky-500">
+                      <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
                         {item.name}
                       </td>
                       <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
@@ -202,6 +213,7 @@ export default function Payment() {
                 </tbody>
                 <tfoot>
                   <tr>
+                    {/* Table footer */}
                     <th
                       colSpan="3"
                       className="border border-gray-300 p-2 text-left font-mono text-sky-500"
@@ -224,6 +236,7 @@ export default function Payment() {
           </div>
         </div>
         <div className="mt-4 flex justify-center">
+          {/* Button to trigger payment */}
           {redirectToOrders ? (
             <Link ref={linkRef} to="/orders" className="hidden">
               Proceed to Orders
@@ -234,11 +247,18 @@ export default function Payment() {
               className="rounded-lg bg-sky-500 p-2 font-mono text-white hover:bg-sky-600"
               onClick={handleBuyClick}
             >
-              Buy
+                            Buy
             </button>
           )}
         </div>
+        {/* Error message display */}
+        {paymentError && (
+          <div className="text-center text-red-500">
+            {paymentError}
+          </div>
+        )}
       </div>
     </section>
   );
 }
+
