@@ -15,7 +15,7 @@ export default function Home() {
         icon: item.image_id,
         title: item.name,
         desc: item.description,
-        price: item.buyPrice,
+        price: item.sellPrice,
       }));
       setFeatures(itemsToDisplay);
     } catch (error) {

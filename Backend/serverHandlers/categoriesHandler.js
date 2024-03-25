@@ -29,7 +29,6 @@ exports.create_category = async (req, res) => {
     description: req.body.description,
     parent_id: req.body.parent_id,
   };
-  console.log(newCategoryData);
   if (req.file) {
     try {
       const result = await cloudinary.uploader.upload(req.file.path);
