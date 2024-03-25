@@ -57,7 +57,7 @@ export default function Orders() {
 
   // Function to calculate total price of an order
   const calculateTotalPrice = order => {
-    return order.items.reduce((total, item) => total + item.buyPrice, 0);
+    return order.items.reduce((total, item) => total + item.sellPrice, 0);
   };
 
   if (userLoading) {
@@ -89,7 +89,7 @@ export default function Orders() {
                       <img src={item.image_id} alt={item.name} className="item-image" />
                       <div className="item-name">Name: {item.name}</div>
                       <div className="item-description">Description: {item.description}</div>
-                      <div className="item-buyPrice"> Price: {item.buyPrice}</div>
+                      <div className="item-buyPrice"> Price: {item.sellPrice}</div>
                       <div className="item-quantity">Quantity: {item.quantity}</div>
                     </div>
                   ))}

@@ -55,11 +55,9 @@ const ItemDetail = () => {
       <p className="mt-2 text-center font-mono text-base text-gray-300">
         {item.description}
       </p>
+
       <p className="mt-2 font-mono text-base text-white">
-        Buy Price: <span className="text-green-600">{item.buyPrice}$</span>
-      </p>
-      <p className="mt-2 font-mono text-base text-white">
-        Sell Price: <span className="text-green-600">{item.sellPrice}$</span>
+         Price: <span className="text-green-600">{item.sellPrice}$</span>
       </p>
 
       <button
