@@ -24,6 +24,7 @@ exports.processPaymentAndCreateOrder = async (req, res) => {
       address: user.address,
       userFirstname : user.firstName,
       userLastName : user.lastName,
+      userPhoneNumber : user.phoneNumber,
     });
 
     await order.save();
