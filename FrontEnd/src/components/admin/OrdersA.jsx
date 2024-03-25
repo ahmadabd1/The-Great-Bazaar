@@ -48,19 +48,36 @@ export default function OrdersA() {
     }
   };
 
+  const handleDeleteOrder = async (orderId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/order/${orderId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const updatedOrders = orders.filter(order => order._id !== orderId);
+      setOrders(updatedOrders);
+    } catch (error) {
+      console.error('Error deleting order:', error);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="orders-container">
       {orders.map((order) => (
-        <OrderCard key={order._id} order={order} handleStatusChange={handleStatusChange} />
+        <OrderCard key={order._id} order={order} handleStatusChange={handleStatusChange} handleDeleteOrder={handleDeleteOrder} />
       ))}
     </div>
   );
 }
 
-function OrderCard({ order, handleStatusChange }) {
+function OrderCard({ order, handleStatusChange, handleDeleteOrder }) {
   const consolidateItems = (items) => {
     const consolidatedItems = {};
     items.forEach(item => {
@@ -89,7 +106,7 @@ function OrderCard({ order, handleStatusChange }) {
   return (
     <div className="order-card">
       <div className="order-header">
-        <h3 className="order-title">Order Owner : {order.userFirstname} {order.userLastName}</h3>
+        <h3 className="order-title">Order Owner: {order.userFirstname} {order.userLastName}</h3>
         <div className="order-buttons">
           <select
             value={order.orderStatus}
@@ -121,3 +138,4 @@ function OrderCard({ order, handleStatusChange }) {
     </div>
   );
 }
+
