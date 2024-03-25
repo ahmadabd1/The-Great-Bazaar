@@ -5,6 +5,7 @@ const orderSchema = new mongoose.Schema({
   userId: String,
   userFirstname: String,
   userLastName:String,
+  userPhoneNumber:String,
   items: [itemSchema.schema],  // Using itemSchema.schema to store full item objects
   address: String,
   orderStatus: { type: String, enum: ['Processing', 'Shipped', 'Delivered', 'Cancelled'], default: 'Processing' },
