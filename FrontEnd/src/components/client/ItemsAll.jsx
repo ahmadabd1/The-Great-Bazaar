@@ -148,7 +148,7 @@ const FilteredItems = () => {
                       className="p-4 text-lg font-medium text-green-600"
                       style={{ height: "2.5rem" }}
                     >
-                      {item.buyPrice}$
+                      {item.sellPrice}$
                     </div>
                   </div>
                 </Link>

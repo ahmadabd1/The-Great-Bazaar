@@ -2,6 +2,7 @@ const Cart = require('../models/Cart');
 const Order = require('../models/order');
 const Item = require('../models/item');
 const User = require('../models/user'); 
+const Category = require('../models/category')
 const config = require('../config'); 
 
 
@@ -38,21 +39,30 @@ exports.processPaymentAndCreateOrder = async (req, res) => {
 
     const order = new Order({
       userId: userId,
-      items: userCart.itemsCart, 
+      items: userCart.itemsCart,
       address: user.address,
-      userFirstname : user.firstName,
-      userLastName : user.lastName,
-      userPhoneNumber : user.phoneNumber,
+      userFirstname: user.firstName,
+      userLastName: user.lastName,
+      userPhoneNumber: user.phoneNumber,
     });
 
     await order.save();
     for (const cartItem of userCart.itemsCart) {
       const item = await Item.findById(cartItem._id);
       if (item) {
+        // Update item details
         item.quantity -= 1;
         item.soldQuantity += 1;
         item.income += item.sellPrice;
         await item.save();
+
+        // Find and update the corresponding category
+        const category = await Category.findById(item.category_id);
+        if (category) {
+          category.soldQuantity += 1;
+          category.income += item.sellPrice;
+          await category.save();
+        }
       }
     }
     userCart.itemsCart = [];
@@ -62,6 +72,7 @@ exports.processPaymentAndCreateOrder = async (req, res) => {
     res.status(500).send({ message: config.errorMessages.internalServerError, error: error.toString() });
   }
 };
+
 
 
 exports.changeOrderStatus = async (req, res) => {
