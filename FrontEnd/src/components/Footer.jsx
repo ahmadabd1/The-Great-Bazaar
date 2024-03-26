@@ -47,13 +47,9 @@ export default function Footer() {
               </div>
               <div>
                 <NavLink to="/AboutUs" className="text-slate-200">
-                  <span>About Us</span>
+                  <span>About Us & Legal</span>
                 </NavLink>
-                &nbsp;|&nbsp;
-           <NavLink to="/AboutUs#legal-section" className="text-slate-200">
-                  <span>Legal</span>
-            </NavLink>
-                &nbsp;|&nbsp;
+                &nbsp;|&nbsp; &nbsp;|&nbsp;
               </div>
             </div>
           </div>

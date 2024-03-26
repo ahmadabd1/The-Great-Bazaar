@@ -33,7 +33,6 @@ import OrdersA from "./components/admin/OrdersA";
 export default function App() {
   const [isBlurred, setIsBlurred] = useState(false);
   const location = useLocation();
-  // const showSidebar = location.pathname === "/client/ItemsAll";
 
   const renderNavbar = () => {
     switch (localStorage.getItem("userType")) {
@@ -43,7 +42,6 @@ export default function App() {
         return (
           <>
             <ClientNavbar />
-            {/* <ClientSideBar /> */}
             {location.pathname.includes("/client/item") && <ClientSideBar />}
           </>
         );
@@ -52,57 +50,64 @@ export default function App() {
     }
   };
 
-  // Function to determine if the background should be blurred
   const shouldBlurBackground = () => {
-    // Check if you're in a specific component
-    return location.pathname === "/login"; // Adjust the condition as needed
+    return location.pathname === "/login" || location.pathname === "/AboutUs";
   };
 
-  // Update the state based on the condition
   useEffect(() => {
     setIsBlurred(shouldBlurBackground());
   }, [location.pathname]);
 
+  const isVideoEnabled =
+    location.pathname === "/client" || location.pathname === "/";
+
   return (
     <>
-      <div className="container">
-        <div
-          className={`background-image ${isBlurred ? "blur-background" : ""}`}
-        ></div>
-        {renderNavbar()}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/admin" element={<AdminMainPage />} />
-          <Route path="/client/item" element={<Item />} />
-          <Route path="/client" element={<ClientMainPage />} />
-          <Route path="/category" element={<CategoryPage />} />
-          <Route path="/admin/items" element={<Items />} />
-          <Route path="/admin/statics" element={<Statics />} />
-          <Route path="/client/Profile" element={<ClientProfile />} />
-          <Route path="/admin/categories" element={<Categories />} />
-          <Route path="/Tour" element={<Tour />} />
-          <Route path="/admin/clients" element={<UsersPage />} />
-          <Route path="/item/:id" element={<ItemDetail />} />
-          <Route path="/client/ItemsPage" element={<ItemsPage />} />
-          <Route path="/admin/orders" element={<OrdersA />} />
-          <Route path="/AboutUs" element={<AboutUs />} />
-          <Route path="/userCart" element={<UserCart />} />
-          <Route path="/payment" element={<Payment/>} />
-          <Route path="/orders" element={<Orders/>} />
+      <div className="app">
+        {isVideoEnabled && (
+          <video autoPlay muted loop id="bgvid">
+            <source
+              src="http://localhost:5173/src/assets/BazaarBGMarket.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support HTML5 video.
+          </video>
+        )}
+        <div className="container">
+          <div
+            className={`background-image ${isBlurred ? "blur-background" : ""}`}
+          ></div>
+          {renderNavbar()}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/admin" element={<AdminMainPage />} />
+            <Route path="/client/item" element={<Item />} />
+            <Route path="/client" element={<ClientMainPage />} />
+            <Route path="/category" element={<CategoryPage />} />
+            <Route path="/admin/items" element={<Items />} />
+            <Route path="/admin/statics" element={<Statics />} />
+            <Route path="/client/Profile" element={<ClientProfile />} />
+            <Route path="/admin/categories" element={<Categories />} />
+            <Route path="/Tour" element={<Tour />} />
+            <Route path="/admin/clients" element={<UsersPage />} />
+            <Route path="/item/:id" element={<ItemDetail />} />
+            <Route path="/client/ItemsPage" element={<ItemsPage />} />
+            <Route path="/admin/orders" element={<OrdersA />} />
+            <Route path="/AboutUs" element={<AboutUs />} />
+            <Route path="/userCart" element={<UserCart />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/orders" element={<Orders />} />
 
-          <Route path="/filtereditems/:category" element={<FilteredItems />} />
-          <Route
-            path="/client/ItemsAll"
-            element={
-              <>
-                <ItemsAll />
-              </>
-            }
-          />
-        </Routes>
+            <Route
+              path="/filtereditems/:category"
+              element={<FilteredItems />}
+            />
+            <Route path="/client/ItemsAll" element={<ItemsAll />} />
+          </Routes>
 
-        <Footer />
+          <Footer />
+        </div>
       </div>
 
       {location.pathname === "/client" && <BottomPage />}
