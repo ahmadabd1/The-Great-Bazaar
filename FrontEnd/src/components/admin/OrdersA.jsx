@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import '../style/OrdersA.css';
-
+import React, { useState, useEffect } from "react";
+import "../style/OrdersA.css";
+import DeleteIcon from "@mui/icons-material/Delete";
 export default function OrdersA() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +9,7 @@ export default function OrdersA() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:8080/order/');
+        const response = await fetch("http://localhost:8080/order/");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -28,40 +28,40 @@ export default function OrdersA() {
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       const response = await fetch(`http://localhost:8080/order`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ orderId, status: newStatus }),
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
-      const updatedOrders = orders.map(order => 
-        order._id === orderId ? { ...order, orderStatus: newStatus } : order
+
+      const updatedOrders = orders.map((order) =>
+        order._id === orderId ? { ...order, orderStatus: newStatus } : order,
       );
       setOrders(updatedOrders);
     } catch (error) {
-      console.error('Error changing status:', error);
+      console.error("Error changing status:", error);
     }
   };
 
   const handleDeleteOrder = async (orderId) => {
     try {
       const response = await fetch(`http://localhost:8080/order/${orderId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const updatedOrders = orders.filter(order => order._id !== orderId);
+      const updatedOrders = orders.filter((order) => order._id !== orderId);
       setOrders(updatedOrders);
     } catch (error) {
-      console.error('Error deleting order:', error);
+      console.error("Error deleting order:", error);
     }
   };
 
@@ -71,7 +71,12 @@ export default function OrdersA() {
   return (
     <div className="orders-container">
       {orders.map((order) => (
-        <OrderCard key={order._id} order={order} handleStatusChange={handleStatusChange} handleDeleteOrder={handleDeleteOrder} />
+        <OrderCard
+          key={order._id}
+          order={order}
+          handleStatusChange={handleStatusChange}
+          handleDeleteOrder={handleDeleteOrder}
+        />
       ))}
     </div>
   );
@@ -80,12 +85,12 @@ export default function OrdersA() {
 function OrderCard({ order, handleStatusChange, handleDeleteOrder }) {
   const consolidateItems = (items) => {
     const consolidatedItems = {};
-    items.forEach(item => {
+    items.forEach((item) => {
       const { _id, name } = item;
       consolidatedItems[_id] = {
         ...item,
         quantity: (consolidatedItems[_id]?.quantity || 0) + 1,
-        name
+        name,
       };
     });
     return Object.values(consolidatedItems);
@@ -106,7 +111,9 @@ function OrderCard({ order, handleStatusChange, handleDeleteOrder }) {
   return (
     <div className="order-card">
       <div className="order-header">
-        <h3 className="order-title">Order Owner: {order.userFirstname} {order.userLastName}</h3>
+        <h3 className="order-title">
+          Order Owner: {order.userFirstname} {order.userLastName}
+        </h3>
         <div className="order-buttons">
           <select
             value={order.orderStatus}
@@ -117,25 +124,41 @@ function OrderCard({ order, handleStatusChange, handleDeleteOrder }) {
             <option value="Delivered">Delivered</option>
             <option value="Cancelled">Cancelled</option>
           </select>
-          <button className="delete-button" onClick={() => handleDeleteOrder(order._id)}>Delete</button>
+          <button
+            className="delete-button"
+            onClick={() => handleDeleteOrder(order._id)}
+          >
+            <DeleteIcon />
+          </button>
         </div>
       </div>
       <div className="order-details">
         <p className="order-address">Address: {order.address}</p>
-        <p className="order-address">Owner Phone Number: {order.userPhoneNumber}</p>
+        <p className="order-address">
+          Owner Phone Number: {order.userPhoneNumber}
+        </p>
         <div className="order-items">
           {consolidateItems(order.items).map((item) => (
             <div key={item._id} className="order-item">
-              <img src={item.image_id} alt={`Item ${item._id}`} className="item-image" />
+              <img
+                src={item.image_id}
+                alt={`Item ${item._id}`}
+                className="item-image"
+              />
               <p className="item-name">Item: {item.name}</p>
-              <p className="item-price">Price: ${calculateItemTotalPrice(item._id, order.items)}</p>
-              {item.quantity > 1 && <p className="item-quantity">Quantity: {item.quantity}</p>}
+              <p className="item-price">
+                Price: ${calculateItemTotalPrice(item._id, order.items)}
+              </p>
+              {item.quantity > 1 && (
+                <p className="item-quantity">Quantity: {item.quantity}</p>
+              )}
             </div>
           ))}
         </div>
-        <p className="order-total-price">Total Price: ${calculateTotalPrice(order)}</p>
+        <p className="order-total-price">
+          Total Price: ${calculateTotalPrice(order)}
+        </p>
       </div>
     </div>
   );
 }
-

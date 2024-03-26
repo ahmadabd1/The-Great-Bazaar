@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useUserInfo from "../customHooks/useUserInfo";
 import useGet from "../customHooks/useGet";
 import usePost from "../customHooks/usePost"; // Import your custom usePost hook
+import { Link } from "react-router-dom";
 
 const ItemDetail = () => {
   const { id } = useParams();
@@ -42,6 +43,11 @@ const ItemDetail = () => {
 
   return (
     <div className="mx-auto flex h-96 max-w-sm flex-col  justify-between overflow-hidden rounded-lg border-2 border-black bg-black bg-opacity-50 p-5 shadow-lg backdrop-blur-md">
+      <Link to="/client/">
+        <label className=" border-gray-600 p-6 text-center font-mono text-xl text-slate-200">
+          &lt; Back
+        </label>
+      </Link>
       {item.image_id && (
         <img
           src={item.image_id}
@@ -57,7 +63,7 @@ const ItemDetail = () => {
       </p>
 
       <p className="mt-2 font-mono text-base text-white">
-         Price: <span className="text-green-600">{item.sellPrice}$</span>
+        Price: <span className="text-green-600">{item.sellPrice}$</span>
       </p>
 
       <button

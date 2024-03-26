@@ -130,14 +130,16 @@ export default function ProfilePage() {
               <p className="mb-6 w-60 font-mono text-lg text-slate-300">
                 Address {/* Adress {userInfo.address} */}
               </p>
-              <div className="mb-2 flex justify-center rounded-lg border border-white">
-                <button
-                  className="w-40 rounded-lg bg-slate-600 p-1 font-mono text-sky-500 hover:bg-sky-500 hover:text-white"
-                  onClick={() => setIsEditing(true)}
-                >
-                  Edit Profile
-                </button>
-              </div>
+              {!isEditing && (
+                <div className="mb-2 flex justify-center rounded-lg border border-white">
+                  <button
+                    className="w-40 rounded-lg bg-slate-600 p-1 font-mono text-sky-500 hover:bg-sky-500 hover:text-white"
+                    onClick={() => setIsEditing(true)}
+                  >
+                    Edit Profile
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="w-full p-3 px-2 lg:w-2/3">
