@@ -28,7 +28,7 @@ export default function AddCategoryModal({ categories, onSave, onCancel }) {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <select
+      {/* <select
         value={parentId}
         onChange={(e) => setParentId(e.target.value)}
       >
@@ -38,7 +38,7 @@ export default function AddCategoryModal({ categories, onSave, onCancel }) {
             {category.name}
           </option>
         ))}
-      </select>
+      </select> */}
       <input
         type="file"
         onChange={(e) => setImage(e.target.files[0])}
