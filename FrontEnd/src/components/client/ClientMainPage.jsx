@@ -138,28 +138,32 @@ export default function Home() {
               <div className="absolute inset-0 mx-auto h-44 max-w-xs"></div>
             </div>
             <div className="relative mt-12" style={{ marginLeft: "41px" }}>
-              <ul className="rounded- grid justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="grid justify-items-center gap-5 sm:grid-cols-1 xl:grid-cols-5">
                 {features.map((item, idx) => (
                   <li
                     key={idx}
-                    className="rounded-xl border-2 border-black bg-sky-950 bg-opacity-30 hover:bg-sky-900 hover:bg-opacity-30  "
+                    className="h-85 relative flex w-60 flex-col justify-between overflow-hidden rounded-lg border-2 border-r border-gray-300 border-gray-900 bg-black bg-opacity-50 shadow-lg backdrop-blur-md transition-shadow duration-300 hover:shadow-xl"
                     style={{
                       height: "270px",
                       width: "200px",
                     }}
                   >
-                    <div className="text-center">
+                    <div className="w-full">
                       <img
                         src={item.icon}
                         alt={item.title}
                         style={{ height: "125px", width: "200px" }}
-                        className=" inline-block border-b-2 border-slate-950"
                       />
                     </div>
-                    <h4 className="text-black-800 border-b-2 border-slate-950 p-2 font-mono text-xl text-slate-100 hover:text-sky-300">
-                      {item.title}
-                    </h4>
-                    <p className="text-black-800 font-mono text-2xl text-slate-300">
+                    <div className="flex flex-col px-4 pb-2 pt-4 font-mono">
+                      <h4 className=" p-2 font-mono text-xl text-slate-100 hover:text-sky-300">
+                        {item.title}
+                      </h4>
+                    </div>
+                    <div className="w-full border-b border-gray-500"></div>
+
+                    <p className="overflow-hidden text-sm text-gray-300">
+                      {" "}
                       {item.price}$
                     </p>
                   </li>
