@@ -1,0 +1,29 @@
+.statics-container {
+    font-family: 'Arial', sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .statics-title {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .item-pie-chart {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+  }
+  

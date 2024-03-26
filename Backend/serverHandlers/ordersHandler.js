@@ -53,14 +53,14 @@ exports.processPaymentAndCreateOrder = async (req, res) => {
         // Update item details
         item.quantity -= 1;
         item.soldQuantity += 1;
-        item.income += item.sellPrice;
+        item.income += (item.sellPrice-item.buyPrice)
         await item.save();
 
         // Find and update the corresponding category
         const category = await Category.findById(item.category_id);
         if (category) {
           category.soldQuantity += 1;
-          category.income += item.sellPrice;
+          category.income += (item.sellPrice-item.buyPrice);
           await category.save();
         }
       }
