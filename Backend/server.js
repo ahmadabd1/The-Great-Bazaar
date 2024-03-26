@@ -32,12 +32,15 @@ const categoriesRoutes = require('./routes/categoriesRoutes');
 const itemsRoutes = require('./routes/itemsRoutes');
 const cartsRoutes = require('./routes/cartRoutes');
 const ordersRoutes = require('./routes/ordersRoutes');
+const staticsRoutes = require('./routes/staticsRoutes')
 
 app.use('/user', authRoutes);
 app.use('/category', categoriesRoutes);
 app.use('/item', itemsRoutes);
 app.use('/cart', cartsRoutes);
 app.use('/order', ordersRoutes);
+app.use('/statics', staticsRoutes);
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
