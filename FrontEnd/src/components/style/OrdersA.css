@@ -1,59 +1,131 @@
+/* OrdersA.css */
+
 .orders-container {
-    margin-left: 250px; /* Offset for the sidebar */
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Space between order cards */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7%;
+  margin-left: 20%;
+  padding: 20px;
+}
+
+.order-card {
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #e6e6e6
+  ); /* Subtle gradient for the card */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  height: 100%;
+  width: 115%;
+  padding: 25px;
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.order-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.order-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333; /* Darker color for better readability */
+}
+
+.order-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.update-button {
+  background-color: #4caf50; /* Green color */
+  color: #fff;
+}
+
+.update-button:hover {
+  background-color: #369c42; /* Darker on hover */
+}
+
+.delete-button {
+  background-color: #f44336; /* Red color */
+  color: #fff;
+}
+
+.delete-button:hover {
+  background-color: #d7382b; /* Darker on hover */
+}
+
+.order-details {
+  border-top: 1px solid #ddd; /* Lighter border for a softer look */
+  padding-top: 10px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.item-details {
+  flex-grow: 1;
+}
+
+.item-name {
+  margin: 0;
+  font-weight: bold;
+  color: #333;
+}
+
+.item-price,
+.item-quantity {
+  margin: 5px 0;
+  color: #666;
+}
+
+.order-total-price {
+  font-weight: bold;
+  color: #333;
+  text-align: right;
+}
+
+/* Responsive tweaks for smaller screens */
+@media screen and (max-width: 768px) {
+  .orders-container {
+    grid-template-columns: 1fr; /* Stack cards on smaller screens */
   }
-  
+}
+
+@media screen and (max-width: 480px) {
   .order-card {
-    flex-basis: calc(33.333% - 20px); /* Three cards per row, accounting for the gap */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: white;
     padding: 15px;
-    border-radius: 8px;
   }
-  
-  .order-title {
-    color: #333;
-    margin-bottom: 10px;
+
+  .item-image {
+    width: 40px;
+    height: 40px;
   }
-  
-  .order-details {
-    font-size: 14px;
-  }
-  
-  .order-userId, .order-address, .order-status {
-    margin-bottom: 5px;
-  }
-  
-  .order-items {
-    border-top: 1px solid #eee;
-    padding-top: 10px;
-  }
-  
-  .order-item {
-    margin-bottom: 5px;
-  }
-  
-  .item-name, .item-quantity, .item-price {
-    margin: 2px 0;
-  }
-  
-  @media (max-width: 1024px) {
-    .order-card {
-      flex-basis: calc(50% - 20px); /* Two cards per row on medium screens */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .orders-container {
-      margin-left: 0; /* Remove offset for smaller devices */
-      margin-top: 20px;
-    }
-  
-    .order-card {
-      flex-basis: 100%; /* One card per row on small screens */
-    }
-  }
-  
+}

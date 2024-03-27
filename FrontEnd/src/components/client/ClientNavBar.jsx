@@ -77,21 +77,22 @@ export default function NavBar({}) {
 
   return (
     <nav
-      className="border-width: 1px; fixed left-0 right-0  top-0 z-auto  bg-slate-950 bg-opacity-30 shadow-lg backdrop-blur-md"
-      style={{ border: "3px solid rgba(0, 0, 0, 0.3)" }}
+      className="fixed left-0 right-0 top-0 bg-slate-950 bg-opacity-30 shadow-lg backdrop-blur-md"
+      style={{
+        zIndex: 1000, // This sets the z-index property correctly
+        border: "3px solid rgba(0, 0, 0, 0.3)",
+      }}
     >
       <div>
         <div className="items-center md:flex">
           <a href="/">
-            {" "}
-            <a href="/">
-              <img
-                src="http://localhost:5173/src/assets/BazaarIcon.gif"
-                width={100}
-                height={40}
-              />
-            </a>
+            <img
+              src="http://localhost:5173/src/assets/BazaarIcon.gif"
+              width={100}
+              height={40}
+            />
           </a>
+
           <img
             src={PROFILE_IMAGE}
             className="  h-[8vh] w-[8vh] items-center rounded-3xl border-2 border-sky-900"

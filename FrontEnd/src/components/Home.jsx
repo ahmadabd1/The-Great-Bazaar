@@ -26,7 +26,7 @@ export default function Home() {
         icon: item.image_id, // Assuming `image_id` is the image URL or identifier
         title: item.name,
         desc: item.description,
-        price: item.buyPrice,
+        price: item.sellPrice,
       }));
       setFeatures(itemsToDisplay);
     } catch (error) {

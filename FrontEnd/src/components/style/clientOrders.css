@@ -1,0 +1,84 @@
+.orders-container {
+    margin: 20px;
+  }
+  
+  .loading,
+  .error,
+  .no-orders {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .orders-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .order-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-date,
+  .order-status,
+  .order-address {
+    margin-bottom: 10px;
+  }
+  
+  .order-item-details {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .item-image {
+    width: 100px; /* Adjust the width to your preference */
+    height: 100px; /* Adjust the height to your preference */
+    margin-right: 10px;
+    border-radius: 5px;
+  }
+  
+  .item-name,
+  .item-description,
+  .item-buyPrice {
+    margin-bottom: 5px;
+  }
+  
+  .item-buyPrice {
+    font-weight: bold;
+  }
+  
+  /* Hover effect */
+  .order-item:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Unique styles for status */
+  .order-status {
+    color: #ff7f50; /* Coral color */
+  }
+  
+  /* Unique styles for items */
+  .item-name {
+    color: #4682b4; /* Steel Blue color */
+  }
+  
+  .item-description {
+    font-style: italic;
+    margin: 10px;
+    white-space: pre-line;
+
+
+  }
+  
+  .item-buyPrice {
+    color: #20b2aa; /* Light Sea Green color */
+  }
+  
