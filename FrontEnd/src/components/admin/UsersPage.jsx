@@ -8,7 +8,6 @@ const UsersPage = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:8080/user/users');
-        console.log(response.data[0]);
         const filteredUsers = response.data.filter(user => user.email !== 'admin');
         setUsers(filteredUsers);
       } catch (error) {
