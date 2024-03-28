@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const { errorMessages } = require("../config");
-//const bcrypt = require('bcrypt');
+const cloudinary = require('cloudinary').v2;
+const { validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
+const fs = require('fs');
 
 exports.signup = async (req, res) => {
   try {
@@ -57,9 +60,6 @@ exports.login = async (req, res) => {
   }
 };
 
-const { validationResult } = require('express-validator');
-const bcrypt = require('bcrypt');
-
 
 exports.editProfile = async (req, res) => {
   try {
@@ -69,49 +69,53 @@ exports.editProfile = async (req, res) => {
     }
 
     const userId = req.params.userId;
-    const { firstName, lastName, email, currentPassword, newPassword, newPasswordRepeat, phoneNumber ,address} = req.body;
-    // Fetch the user by ID
-    const user = await User.findById(userId);
+    const { firstName, lastName, email, phoneNumber, address, currentPassword, newPassword, newPasswordRepeat } = req.body;
+
+    let user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Update non-password user data
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.email = email;
-    user.phoneNumber = phoneNumber;
-    user.address=address;
+    user.firstName = firstName ?? user.firstName;
+    user.lastName = lastName ?? user.lastName;
+    user.email = email ?? user.email;
+    user.phoneNumber = phoneNumber ?? user.phoneNumber;
+    user.address = address ?? user.address;
 
-    // Password update logic
     if (currentPassword && newPassword && newPasswordRepeat) {
-      // Check if the current password is correct
       if (!await bcrypt.compare(currentPassword, user.password)) {
         return res.status(401).json({ message: "Current password is incorrect" });
       }
 
-      // Check if the new passwords match
       if (newPassword !== newPasswordRepeat) {
         return res.status(400).json({ message: "New passwords do not match" });
       }
 
-      // Check for password strength or requirements
-      if (!newPassword.match(/.*[!@#$%^&*()_+-=\[\]{};':"\\|,.<>\/?].*/)) {
-        return res.status(400).json({ message: "New password must contain at least one special character" });
-      }
-
-      // Update the password
       user.password = await bcrypt.hash(newPassword, 10);
     }
 
-    // Save the updated user data
+    if (req.file) {
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        user.profilePicture = result.secure_url;
+        // Delete the file after upload
+        fs.unlinkSync(req.file.path);
+      } catch (error) {
+        console.error('Error uploading file to Cloudinary', error);
+        return res.status(500).json({ message: "Error uploading image" });
+      }
+    }
+
     await user.save();
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     console.error("Error updating profile:", error);
-    res.status(500).json({ message: "Internal server error" });
+    if (!res.headersSent) {
+      res.status(500).json({ message: "Internal server error" });
+    }
   }
 };
+
 
 exports.get_all_users = async (req, res) => {
   try {
