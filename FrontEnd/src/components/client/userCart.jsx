@@ -127,19 +127,21 @@ export default function UserCart() {
             <p className="mb-4">Items </p>
             <p className="mb-2">Subtotal </p>
             <p className="mb-4">Shipping </p>
-            <p className="mt-20">Total</p>
+
+            <p className="mt-[18vh] w-[27vh] border-t ">Total</p>
           </div>
           <div className="mb-5 mr-8 text-right text-slate-100">
             <p className="mb-2">{totalItems}</p>
             <p className="mb-4">{totalPrice}$</p>
             <p className="mb-4">20$</p>
-            <p className="mt-20">{totalPrice + 20}$</p>
+
+            <p className="mt-[18vh] border-t ">{totalPrice + 20}$</p>
           </div>
         </div>
         <div className="ml-2">
           <Link
             to="/client/ItemsAll"
-            className="mt-10 flex w-[37vh] items-center justify-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            className=" flex w-[37vh] items-center justify-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
           >
             <FaArrowLeft className="mr-2" />{" "}
             {/* Replacing the cart icon with the back arrow icon */}
