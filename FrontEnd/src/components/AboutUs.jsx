@@ -92,9 +92,12 @@ const AboutUs = () => {
         <h3>Intellectual Property Rights</h3>
         <p>
           All content on The Great Bazaar, including text, graphics, logos, and
-          software, is the property of The Great Bazaar or its content suppliers
-          and protected by intellectual property laws. Unauthorized use or
-          reproduction of any content is strictly prohibited.
+          software, is the property of The Great Bazaar or its content
+          suppliers, except for assets sourced from the Assassin's Creed Mirage
+          game, which are the property of their respective owners. All content
+          is protected by intellectual property laws. Unauthorized use or
+          reproduction of any content, including assets from the Assassin's
+          Creed Mirage game, is strictly prohibited."
         </p>
         <div className="contact-info">
           <h3>Contact Information</h3>

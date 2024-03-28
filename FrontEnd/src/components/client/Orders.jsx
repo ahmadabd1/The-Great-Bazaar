@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import useUserInfo from '../customHooks/useUserInfo'; // Adjust the path as needed
-import '../style/clientOrders.css'
+import React, { useState, useEffect } from "react";
+import useUserInfo from "../customHooks/useUserInfo";
+import { FiArrowLeft } from "react-icons/fi";
+import { Link } from "react-router-dom";
+
 export default function Orders() {
   const { userInfo, loading: userLoading, error: userError } = useUserInfo();
   const [orders, setOrders] = useState([]);
@@ -11,9 +13,11 @@ export default function Orders() {
     const fetchOrders = async () => {
       if (userInfo) {
         try {
-          const response = await fetch(`http://localhost:8080/order/${userInfo._id}`);
+          const response = await fetch(
+            `http://localhost:8080/order/${userInfo._id}`,
+          );
           if (!response.ok) {
-            throw new Error('Failed to fetch orders');
+            throw new Error("Failed to fetch orders");
           }
 
           const ordersData = await response.json();
@@ -31,21 +35,14 @@ export default function Orders() {
     }
   }, [userInfo]);
 
-  // Function to format date string
-  const formatDate = dateString => {
+  const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    return `${day}/${month}/${year} - ${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`;
   };
 
-  // Function to aggregate items by their _id and count quantity
-  const aggregateItems = order => {
+  const aggregateItems = (order) => {
     const aggregatedItems = {};
-    order.items.forEach(item => {
+    order.items.forEach((item) => {
       if (aggregatedItems[item._id]) {
         aggregatedItems[item._id].quantity++;
       } else {
@@ -55,55 +52,71 @@ export default function Orders() {
     return Object.values(aggregatedItems);
   };
 
-  // Function to calculate total price of an order
-  const calculateTotalPrice = order => {
+  const calculateTotalPrice = (order) => {
     return order.items.reduce((total, item) => total + item.sellPrice, 0);
   };
 
   if (userLoading) {
-    return <div className="loading">Loading user info...</div>;
+    return <div className="py-4 text-center">Loading user info...</div>;
   }
 
   if (userError) {
-    return <div className="error">Error: {userError}</div>;
+    return (
+      <div className="py-4 text-center text-red-500">Error: {userError}</div>
+    );
   }
 
   return (
-    <div className="orders-container">
-      {loading ? (
-        <div className="loading">Loading orders...</div>
-      ) : error ? (
-        <div className="error">Error: {error}</div>
-      ) : (
-        <div className="orders-list">
-          {orders.length > 0 ? (
-            orders.map(order => (
-              <div key={order._id} className="order-item">
-                <div className="order-date">Date: {formatDate(order.orderDate)}</div>
-                <div className="order-status">Status: {order.orderStatus}</div>
-                <div className="order-address">Address: {order.address}</div>
-                <div className="order-items">
-                  Items:
-                  {aggregateItems(order).map(item => (
-                    <div key={item._id} className="order-item-details">
-                      <img src={item.image_id} alt={item.name} className="item-image" />
-                      <div className="item-name">Name: {item.name}</div>
-                      <div className="item-description">Description: {item.description}</div>
-                      <div className="item-buyPrice"> Price: {item.sellPrice}</div>
-                      <div className="item-quantity">Quantity: {item.quantity}</div>
+    <div
+      className="container mx-auto mt-8 font-mono text-gray-200 "
+      style={{ paddingTop: "60px" }}
+    >
+      <Link to="/client/">
+        <label className="ml-7 mt-2 border-gray-600 p-6 text-center font-mono text-xl text-slate-200">
+          &lt; Back
+        </label>
+      </Link>
+      <div className="grid grid-cols-1 gap-4 text-2xl sm:grid-cols-2 lg:grid-cols-3">
+        {loading ? (
+          <div className="py-2 text-center">Loading orders...</div>
+        ) : error ? (
+          <div className="py-2 text-center text-red-500">Error: {error}</div>
+        ) : orders.length > 0 ? (
+          orders.map((order) => (
+            <div
+              key={order._id}
+              className="rounded-lg border-gray-300 border-gray-900 bg-black bg-opacity-50 p-4 shadow-lg  shadow-md backdrop-blur-md transition duration-300 hover:shadow-lg"
+            >
+              <div className="text-xl">Date: {formatDate(order.orderDate)}</div>
+              <div className="text-xs italic">Status: {order.orderStatus}</div>
+              <div className="text-sm">Address: {order.address}</div>
+              <div className="text-sm">
+                Items:
+                {aggregateItems(order).map((item) => (
+                  <div key={item._id} className="flex items-center py-1">
+                    <img
+                      src={item.image_id}
+                      alt={item.name}
+                      className="mr-2 h-12 w-12 flex-none rounded object-cover"
+                    />
+                    <div className="text-m">
+                      <div className="font-bold">{item.name}</div>
+                      <div>Description: {item.description}</div>
+                      <div>Price: ${item.sellPrice.toFixed(2)}</div>
+                      <div>Quantity: {item.quantity}</div>
                     </div>
-                  ))}
-                </div>
-                <div className="order-total-price">
-                  Total Price: {calculateTotalPrice(order)}
-                </div>
+                  </div>
+                ))}
               </div>
-            ))
-          ) : (
-            <div className="no-orders">No orders found</div>
-          )}
-        </div>
-      )}
+              <div className="text-sm font-bold">
+                Total Price: ${calculateTotalPrice(order).toFixed(2)}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="py-2 text-center">No orders found</div>
+        )}
+      </div>
     </div>
   );
 }

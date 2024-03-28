@@ -122,22 +122,22 @@ export default function ProfilePage() {
               <img
                 src="../../src/assets/ProfileTest.png"
                 alt="avatar"
-                className="mx-auto mb-8 w-32 rounded-full border border-white"
+                className="mx-auto mb-3 w-32 rounded-full border border-white"
               />
-              <p className="mb-1 w-40 text-justify font-mono text-lg text-slate-300">
-                Welcome {userInfo.firstName}
-              </p>
-              <p className="mb-6 w-60 font-mono text-lg text-slate-300">
-                Address {/* Adress {userInfo.address} */}
-              </p>
-              <div className="mb-2 flex justify-center rounded-lg border border-white">
-                <button
-                  className="w-40 rounded-lg bg-slate-600 p-1 font-mono text-sky-500 hover:bg-sky-500 hover:text-white"
-                  onClick={() => setIsEditing(true)}
-                >
-                  Edit Profile
-                </button>
+              <div className="mb-1 w-40 text-justify font-mono text-lg text-slate-300">
+                <p>Welcome {userInfo.firstName}</p>
               </div>
+
+              {!isEditing && (
+                <div className="mb-2 mt-4 flex justify-center rounded-lg border border-white">
+                  <button
+                    className="w-40 rounded-lg bg-slate-600 p-1 font-mono text-sky-500 hover:bg-sky-500 hover:text-white"
+                    onClick={() => setIsEditing(true)}
+                  >
+                    Edit Profile
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="w-full p-3 px-2 lg:w-2/3">
@@ -247,7 +247,7 @@ export default function ProfilePage() {
                   </div>
                   <div className="mb-4 flex">
                     <div className="w-1/3">
-                      <p className="font-mono text-lg text-sky-400">
+                      <p className="h-10text-lg font-mono text-sky-400">
                         New Password
                       </p>
                     </div>
@@ -257,7 +257,7 @@ export default function ProfilePage() {
                         name="newPassword"
                         value={passwords.newPassword}
                         onChange={handleInputChange}
-                        className="w-full font-mono text-lg text-slate-300"
+                        className=" w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
                         icon={showPasswords.newPassword ? faEyeSlash : faEye}

@@ -47,7 +47,9 @@ export default function Payment() {
           setPaymentError(result.message || "Failed to create order.");
         }
       } catch (e) {
-        setPaymentError(e.message || "An error occurred during the payment process.");
+        setPaymentError(
+          e.message || "An error occurred during the payment process.",
+        );
       }
     } else {
       setPaymentError("User info is not available.");
@@ -65,15 +67,14 @@ export default function Payment() {
       className="PaymentContainer mb-4 mt-8 border-2 border-white bg-slate-950 bg-opacity-80 p-1"
     >
       <div className="container py-1">
-        <h2 className="mb-2 ml-[285px] font-mono text-xl text-sky-500">
-          Payment
+        <h2 className="mb-2  text-center font-mono text-xl text-sky-500">
+          Checkout
         </h2>
-        {paymentError && (
-          <div className="text-red-500">{paymentError}</div>
-        )}
+
         <div className="-mx-2 flex flex-wrap border-t-2 border-white">
           {/* Payment Information Section */}
           <div className="w-full p-2 lg:w-1/2">
+            <p className="mt-5 font-mono text-xl text-sky-500">Card Details</p>
             <div className="bg-slate-00 rounded-lg p-4 opacity-85">
               <form className="space-y-3">
                 {/* Payment Information Fields */}
@@ -121,7 +122,6 @@ export default function Payment() {
                   </label>
                   <input
                     type="text"
-                   
                     value={paymentInfo.cvv}
                     onChange={(e) =>
                       setPaymentInfo({ ...paymentInfo, cvv: e.target.value })
@@ -184,9 +184,7 @@ export default function Payment() {
                     <th className="border border-gray-300 bg-gray-200 p-1 text-left font-mono text-sky-500">
                       Price
                     </th>
-                    <th className="border border-gray-300 bg-gray-200 p-1 text-left font-mono text-sky-500">
-                      Quantity
-                    </th>
+
                     <th className="border border-gray-300 bg-gray-200 p-1 text-left font-mono text-sky-500">
                       Total
                     </th>
@@ -202,11 +200,9 @@ export default function Payment() {
                       <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
                         {item.sellPrice}$
                       </td>
+
                       <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
-                        {item.quantity}
-                      </td>
-                      <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
-                        {(item.sellPrice * item.quantity).toFixed(2)}$
+                        {item.sellPrice.toFixed(2)}$
                       </td>
                     </tr>
                   ))}
@@ -215,20 +211,17 @@ export default function Payment() {
                   <tr>
                     {/* Table footer */}
                     <th
-                      colSpan="3"
-                      className="border border-gray-300 p-2 text-left font-mono text-sky-500"
+                      colSpan="2"
+                      className="border border-gray-300 p-1 text-left font-mono text-sky-500"
                     >
                       Total
                     </th>
-                    <th className="border border-gray-300 p-1 text-left font-mono text-sky-500">
+                    <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
                       {cart.itemsCart
-                        .reduce(
-                          (acc, item) => acc + item.sellPrice * item.quantity,
-                          0,
-                        )
+                        .reduce((acc, item) => acc + item.sellPrice, 0)
                         .toFixed(2)}
                       $
-                    </th>
+                    </td>
                   </tr>
                 </tfoot>
               </table>
@@ -247,18 +240,15 @@ export default function Payment() {
               className="rounded-lg bg-sky-500 p-2 font-mono text-white hover:bg-sky-600"
               onClick={handleBuyClick}
             >
-                            Buy
+              Buy
             </button>
           )}
         </div>
         {/* Error message display */}
         {paymentError && (
-          <div className="text-center text-red-500">
-            {paymentError}
-          </div>
+          <div className="text-center text-red-500">{paymentError}</div>
         )}
       </div>
     </section>
   );
 }
-
