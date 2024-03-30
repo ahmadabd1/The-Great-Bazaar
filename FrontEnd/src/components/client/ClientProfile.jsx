@@ -7,6 +7,8 @@ import "../style/ClientProfile.css";
 export default function ProfilePage() {
   const { userInfo, loading, error, updateUserInfo } = useUserInfo();
   const [isEditing, setIsEditing] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
+
   const [displayUserInfo, setDisplayUserInfo] = useState({
     email: "",
     phoneNumber: "",
@@ -48,57 +50,60 @@ export default function ProfilePage() {
   };
 
   const handleUpdateUserInfo = () => {
-    const { email, phoneNumber, address } = displayUserInfo;
-    const { currentPassword, newPassword, newPasswordRepeat } = passwords;
-    if (!email || !phoneNumber || !address) {
+    const formData = new FormData();
+    formData.append('firstName', userInfo.firstName);
+    formData.append('lastName', userInfo.lastName);
+    formData.append('email', displayUserInfo.email);
+    formData.append('phoneNumber', displayUserInfo.phoneNumber);
+    formData.append('address', displayUserInfo.address);
+    formData.append('currentPassword', passwords.currentPassword);
+    formData.append('newPassword', passwords.newPassword);
+    formData.append('newPasswordRepeat', passwords.newPasswordRepeat);
+  
+    if (profilePicture) {
+      formData.append('profilePicture', profilePicture);
+    }
+  
+    if (!displayUserInfo.email || !displayUserInfo.phoneNumber || !displayUserInfo.address) {
       setResponseMessage("Please fill in all required fields.");
       return;
     }
-    if (currentPassword || newPassword || newPasswordRepeat) {
-      if (newPassword !== newPasswordRepeat) {
+    if (passwords.currentPassword || passwords.newPassword || passwords.newPasswordRepeat) {
+      if (passwords.newPassword !== passwords.newPasswordRepeat) {
         setResponseMessage("New passwords do not match.");
         return;
       }
     }
-    const updateData = {
-      firstName: userInfo.firstName,
-      lastName: userInfo.lastName,
-      email,
-      phoneNumber,
-      address,
-      currentPassword,
-      newPassword,
-      newPasswordRepeat,
-    };
-    console.log(updateData);
+  
     fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateData),
+      method: 'PUT',
+      body: formData,
+      // Notice that 'Content-Type' is not set; it's automatically determined by the browser when using FormData
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setResponseMessage(data.message);
-        if (data.message === "Profile updated successfully") {
-          updateUserInfo({ ...userInfo, ...updateData });
-          setTimeout(() => {
-            setIsEditing(false);
-            setPasswords({
-              currentPassword: "",
-              newPassword: "",
-              newPasswordRepeat: "",
-            });
-            setResponseMessage("");
-          }, 2000);
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating user info:", error);
-        setResponseMessage("Failed to communicate with the server.");
-      });
+    .then(response => response.json())
+    .then(data => {
+      setResponseMessage(data.message);
+      if (data.message === "Profile updated successfully") {
+        updateUserInfo({ ...userInfo, ...displayUserInfo, newPassword: '', newPasswordRepeat: '' });
+        // Reset the form and state after successful update
+        setTimeout(() => {
+          setIsEditing(false);
+          setPasswords({
+            currentPassword: "",
+            newPassword: "",
+            newPasswordRepeat: "",
+          });
+          setProfilePicture(null);
+          setResponseMessage("");
+        }, 2000);
+      }
+    })
+    .catch(error => {
+      console.error("Error updating user info:", error);
+      setResponseMessage("Failed to communicate with the server.");
+    });
   };
+  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -119,19 +124,17 @@ export default function ProfilePage() {
         <div className="-mx-2 flex flex-wrap border-t-2 border-white">
           <div className="mb-2 w-full px-2 lg:w-1/3 ">
             <div className="mb-2 rounded-lg bg-opacity-90 p-8">
-              <img
-                src="../../src/assets/ProfileTest.png"
-                alt="avatar"
-                className="mx-auto mb-8 w-32 rounded-full border border-white"
-              />
-              <p className="mb-1 w-40 text-justify font-mono text-lg text-slate-300">
-                Welcome {userInfo.firstName}
-              </p>
-              <p className="mb-6 w-60 font-mono text-lg text-slate-300">
-                Address {/* Adress {userInfo.address} */}
-              </p>
+                    <img
+          src={userInfo.profilePicture ? userInfo.profilePicture : "../../src/assets/ProfileTest.png"}
+          alt="avatar"
+          className="mx-auto mb-3 w-32 rounded-full border border-white"
+        />
+              <div className="mb-1 w-40 text-justify font-mono text-lg text-slate-300">
+                <p>Welcome {userInfo.firstName}</p>
+              </div>
+
               {!isEditing && (
-                <div className="mb-2 flex justify-center rounded-lg border border-white">
+                <div className="mb-2 mt-4 flex justify-center rounded-lg border border-white">
                   <button
                     className="w-40 rounded-lg bg-slate-600 p-1 font-mono text-sky-500 hover:bg-sky-500 hover:text-white"
                     onClick={() => setIsEditing(true)}
@@ -249,7 +252,7 @@ export default function ProfilePage() {
                   </div>
                   <div className="mb-4 flex">
                     <div className="w-1/3">
-                      <p className="font-mono text-lg text-sky-400">
+                      <p className="h-10text-lg font-mono text-sky-400">
                         New Password
                       </p>
                     </div>
@@ -259,7 +262,7 @@ export default function ProfilePage() {
                         name="newPassword"
                         value={passwords.newPassword}
                         onChange={handleInputChange}
-                        className="w-full font-mono text-lg text-slate-300"
+                        className=" w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
                         icon={showPasswords.newPassword ? faEyeSlash : faEye}
@@ -297,6 +300,17 @@ export default function ProfilePage() {
                   </div>
                 </>
               )}
+                              {isEditing && (
+                  <div className="mb-4">
+                    <label className="font-mono text-lg text-sky-400">Profile Picture</label>
+                    <input
+                      type="file"
+                      onChange={(e) => setProfilePicture(e.target.files[0])}
+                      className="w-full font-mono text-lg text-slate-300"
+                    />
+                  </div>
+                )}
+
               <div className="flex justify-end">
                 {responseMessage && (
                   <p className="text-red-500">{responseMessage}</p>

@@ -92,10 +92,10 @@ export default function NavBar({}) {
               height={40}
             />
           </a>
-
-          <img
-            src={PROFILE_IMAGE}
-            className="  h-[8vh] w-[8vh] items-center rounded-3xl border-2 border-sky-900"
+                    <img
+            src={userInfo && userInfo.profilePicture ? userInfo.profilePicture : PROFILE_IMAGE}
+            alt="Profile"
+            className="h-[8vh] w-[8vh] items-center rounded-3xl border-2 border-sky-900"
           />
           <div className="absolute ml-[19vh] mt-0  md:block md:pb-0">
             <ul className="flex flex-col justify-end space-y-0 pr-0 md:flex md:flex-row">

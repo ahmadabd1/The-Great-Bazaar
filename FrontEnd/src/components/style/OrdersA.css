@@ -3,7 +3,7 @@
 .orders-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 7%;
+  gap: 10%;
   margin-left: 20%;
   padding: 20px;
 }
@@ -17,7 +17,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
   height: 100%;
-  width: 115%;
+  width: 125%;
   padding: 25px;
   transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }

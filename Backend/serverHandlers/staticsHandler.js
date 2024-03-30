@@ -59,3 +59,54 @@ exports.getItemsData = async (req, res) => {
 };
 
 
+exports.getCategoriesData = async (req, res) => {
+    try {
+        // Fetch all categories from the database
+        const categories = await Category.find({});
+
+        // Map the categories to extract the necessary information
+        const categoryData = categories.map(category => ({
+            name: category.name,
+            total_sold: category.soldQuantity,
+            total_income: category.income
+        }));
+
+        // Send the result back to the client
+        res.json(categoryData);
+    } catch (error) {
+        console.error('Error fetching category data:', error);
+        res.status(500).send('An error occurred while fetching category data');
+    }
+};
+
+
+exports.getMonthlyStatics = async (req, res) => {
+    try {
+      const incomeData = await Item.aggregate([
+        {
+          $group: {
+            _id: {
+              month: { $month: "$created_at" },
+              year: { $year: "$created_at" },
+            },
+            totalIncome: { $sum: "$income" },
+          },
+        },
+        {
+          $sort: { "_id.year": 1, "_id.month": 1 },
+        },
+      ]);
+  
+      res.json({
+        success: true,
+        data: incomeData,
+      });
+    } catch (error) {
+      console.error('Error fetching monthly income:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Server error while retrieving monthly income data',
+      });
+    }
+  };
+  

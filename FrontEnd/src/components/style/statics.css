@@ -1,29 +1,48 @@
 .statics-container {
-    font-family: 'Arial', sans-serif;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: #fff;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10%;
+  margin-left: 20%;
+  padding: 20px;
+  align-items: center;
+}
+
+.chart-container {
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #e6e6e6
+  ); /* Consistent gradient for the card */
+  border-radius: 10px;
+  width: 100%;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+  padding: 25px;
+  transition: transform 0.3s ease; /* Consistent hover effect */
+}
+
+.chart-container:hover {
+  transform: translateY(-5px); /* Consistent lift effect on hover */
+}
+
+.statics-title {
+  margin: 0;
+  font-size: 1.5rem; /* Adjust based on your preference */
+  font-weight: bold;
+  color: #333; /* Consistent color for readability */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Responsive design tweaks */
+@media screen and (max-width: 768px) {
+  .statics-container {
+    grid-template-columns: 1fr; /* Stack charts on smaller screens */
   }
-  
-  .statics-title {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
+}
+
+@media screen and (max-width: 480px) {
   .chart-container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
+    padding: 15px;
   }
-  
-  .item-pie-chart {
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-  }
-  
+}

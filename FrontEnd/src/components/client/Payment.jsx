@@ -67,13 +67,14 @@ export default function Payment() {
       className="PaymentContainer mb-4 mt-8 border-2 border-white bg-slate-950 bg-opacity-80 p-1"
     >
       <div className="container py-1">
-        <h2 className="mb-2 ml-[285px] font-mono text-xl text-sky-500">
-          Payment
+        <h2 className="mb-2  text-center font-mono text-xl text-sky-500">
+          Checkout
         </h2>
-        {paymentError && <div className="text-red-500">{paymentError}</div>}
+
         <div className="-mx-2 flex flex-wrap border-t-2 border-white">
           {/* Payment Information Section */}
           <div className="w-full p-2 lg:w-1/2">
+            <p className="mt-5 font-mono text-xl text-sky-500">Card Details</p>
             <div className="bg-slate-00 rounded-lg p-4 opacity-85">
               <form className="space-y-3">
                 {/* Payment Information Fields */}

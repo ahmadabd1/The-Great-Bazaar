@@ -62,9 +62,10 @@ export default function Home() {
         <section>
           <div className="gap-12 overflow-hidden py-12 md:flex">
             <div className="flex-1 space-y-10">
-              <h1 className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-200 md:text-5xl lg:text-8xl ">
+              <h1 className=" mb-4 font-mono text-4xl leading-none tracking-tight text-white drop-shadow-[0_12px_1.2px_rgba(1.2,0,0.8)] md:text-5xl lg:text-8xl ">
                 The Great Bazaar
               </h1>
+
               <p className="mb-4 font-mono text-4xl leading-none tracking-tight text-slate-400 md:text-3xl lg:text-4xl">
                 {" "}
                 Clothes, Food, Electronics and More
@@ -120,7 +121,7 @@ export default function Home() {
           style={{ marginTop: "150px" }}
         >
           <section
-            className="p-25 py-50"
+            className="p-25 py-50 bg-amber-950/20"
             style={{
               marginTop: "70px",
               border: "3px solid rgba(0, 0, 0, 0.3)",

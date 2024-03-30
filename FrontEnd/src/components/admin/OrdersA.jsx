@@ -145,7 +145,7 @@ function OrderCard({ order, handleStatusChange, handleDeleteOrder }) {
                 alt={`Item ${item._id}`}
                 className="item-image"
               />
-              <p className="item-name">Item: {item.name}</p>
+              <p className="item-name"> {item.name}</p>
               <p className="item-price">
                 Price: ${calculateItemTotalPrice(item._id, order.items)}
               </p>

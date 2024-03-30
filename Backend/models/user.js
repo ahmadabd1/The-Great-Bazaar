@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
   address: {
     type: String,
   },
+  profilePicture: {
+    type: String,
+  },
+  
 });
 
 const User = mongoose.model("User", userSchema);
