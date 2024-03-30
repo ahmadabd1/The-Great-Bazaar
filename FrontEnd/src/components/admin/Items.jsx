@@ -3,8 +3,8 @@ import useGet from "../customHooks/useGet";
 import useDelete from "../customHooks/useDelete";
 import usePost from "../customHooks/usePost2";
 import "../style/adminitems.css";
-import AddItemModal from "./AddItemModal";
-import UpdateItemModal from "./UpdateItemModal";
+import AddItemModal from "./modals/AddItemModal";
+import UpdateItemModal from "./modals/UpdateItemModal";
 export default function Items() {
   const { data: items, loading: loadingItems, error: itemsError, refetch } = useGet("http://localhost:8080/item/items");
   const { data: categories, loading: loadingCategories, error: categoriesError } = useGet("http://localhost:8080/category/categories/");

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../style/UpdateCategoryModal.css';
-import usePut from '../customHooks/usePut';
+import '../../style/UpdateCategoryModal.css';
+import usePut from '../../customHooks/usePut';
 
 export default function UpdateCategoryModal({ category, onSave, onCancel }) {
   const [name, setName] = useState(category.name);

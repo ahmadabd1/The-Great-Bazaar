@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import useGet from '../customHooks/useGet';
 import useDelete from '../customHooks/useDelete';
 import usePost from '../customHooks/usePost2';
-import AddCategoryModal from './AddCategoryModal';
-import UpdateCategoryModal from './UpdateCategoryModal';
+import AddCategoryModal from './modals/AddCategoryModal';
+import UpdateCategoryModal from './modals/UpdateCategoryModal';
 import '../style/admin_Categories.css';
 export default function Categories() {
   const { data: categories, loading: loadingCategories, error: errorLoading, refetch } = useGet('http://localhost:8080/category/categories/');
