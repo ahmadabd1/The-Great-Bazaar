@@ -6,7 +6,7 @@ const { errorMessages } = require("../config");
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-
+const smtpTransport = require('nodemailer-smtp-transport');
 
 exports.signup = async (req, res) => {
   try {
