@@ -122,7 +122,7 @@ export default function ProfilePage() {
 
   return (
     <section
-      className="mt-12 border-2 border-white bg-slate-950 bg-opacity-80 p-2"
+      className="mt-20 max-h-[88vh] border-2 border-white bg-slate-950 bg-opacity-80 p-2"
       style={{ width: "100%", height: "20%" }}
     >
       <div className="container py-1">
@@ -145,8 +145,26 @@ export default function ProfilePage() {
                 alt="avatar"
                 className="mx-auto mb-3 w-32 rounded-full border border-white"
               />
-              <div className="mb-1 w-40 text-justify font-mono text-lg text-slate-300">
+              <div className="ml-4 mt-4 w-40 text-justify font-mono text-lg text-slate-300">
                 <p>Welcome {userInfo.firstName}</p>
+                {isEditing ? (
+                  <>
+                    <div className="ml-4 mt-10">
+                      <button
+                        className="mr-4 rounded-lg bg-red-500 p-1 font-mono text-white hover:bg-red-600"
+                        onClick={() => setIsEditing(false)}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="rounded-lg bg-green-500 p-1 font-mono text-white hover:bg-green-600"
+                        onClick={handleUpdateUserInfo}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </>
+                ) : null}
               </div>
 
               {!isEditing && (
@@ -185,7 +203,7 @@ export default function ProfilePage() {
                       name="email"
                       value={displayUserInfo.email}
                       onChange={handleInputChange}
-                      className="w-full font-mono text-lg text-slate-300"
+                      className="h-9 w-full font-mono text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -197,7 +215,7 @@ export default function ProfilePage() {
               <hr className="my-3" />
               <div className="mb-4 flex">
                 <div className="w-1/3">
-                  <p className="font-mono text-lg text-sky-400">Phone</p>
+                  <p className="font-mono  text-sky-400">Phone</p>
                 </div>
                 <div className="w-2/3">
                   {isEditing ? (
@@ -206,7 +224,7 @@ export default function ProfilePage() {
                       name="phoneNumber"
                       value={displayUserInfo.phoneNumber}
                       onChange={handleInputChange}
-                      className="w-full font-mono text-lg text-slate-300"
+                      className="h-9 w-full font-mono text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -227,7 +245,7 @@ export default function ProfilePage() {
                       name="address"
                       value={displayUserInfo.address}
                       onChange={handleInputChange}
-                      className="w-full font-mono text-lg text-slate-300"
+                      className="h-9 w-full font-mono text-slate-300"
                     />
                   ) : (
                     <p className="font-mono text-lg text-slate-300">
@@ -241,7 +259,7 @@ export default function ProfilePage() {
                   <hr className="my-3" />
                   <div className="mb-4 flex">
                     <div className="w-1/3">
-                      <p className="font-mono text-lg text-sky-400">
+                      <p className="font-mono  text-sky-400">
                         Current Password
                       </p>
                     </div>
@@ -253,7 +271,7 @@ export default function ProfilePage() {
                         name="currentPassword"
                         value={passwords.currentPassword}
                         onChange={handleInputChange}
-                        className="w-full font-mono text-lg text-slate-300"
+                        className="h-9 w-full font-mono  text-slate-300"
                       />
                       <FontAwesomeIcon
                         icon={
@@ -268,7 +286,7 @@ export default function ProfilePage() {
                   </div>
                   <div className="mb-4 flex">
                     <div className="w-1/3">
-                      <p className="h-10text-lg font-mono text-sky-400">
+                      <p className=" h-10 font-mono text-sky-400">
                         New Password
                       </p>
                     </div>
@@ -278,7 +296,7 @@ export default function ProfilePage() {
                         name="newPassword"
                         value={passwords.newPassword}
                         onChange={handleInputChange}
-                        className=" w-full font-mono text-lg text-slate-300"
+                        className="h-9 w-full font-mono text-lg text-slate-300"
                       />
                       <FontAwesomeIcon
                         icon={showPasswords.newPassword ? faEyeSlash : faEye}
@@ -289,7 +307,7 @@ export default function ProfilePage() {
                   </div>
                   <div className="mb-4 flex">
                     <div className="w-1/3">
-                      <p className="font-mono text-lg text-sky-400">
+                      <p className="font-mono  text-sky-400">
                         Repeat New Password
                       </p>
                     </div>
@@ -301,7 +319,7 @@ export default function ProfilePage() {
                         name="newPasswordRepeat"
                         value={passwords.newPasswordRepeat}
                         onChange={handleInputChange}
-                        className="w-full font-mono text-lg text-slate-300"
+                        className="h-9 w-full  font-mono  text-slate-300"
                       />
                       <FontAwesomeIcon
                         icon={
@@ -317,38 +335,22 @@ export default function ProfilePage() {
                 </>
               )}
               {isEditing && (
-                <div className="mb-4">
-                  <label className="font-mono text-lg text-sky-400">
+                <div className="mb-4 flex h-10 items-center">
+                  <label className=" flex w-40 font-mono text-sky-400">
                     Profile Picture
                   </label>
                   <input
+                    className="ml-5"
                     type="file"
                     onChange={(e) => setProfilePicture(e.target.files[0])}
-                    className="w-full font-mono text-lg text-slate-300"
                   />
                 </div>
               )}
 
-              <div className="flex justify-end">
+              <div className=" flex justify-end">
                 {responseMessage && (
                   <p className="text-red-500">{responseMessage}</p>
                 )}
-                {isEditing ? (
-                  <>
-                    <button
-                      className="mr-4 rounded-lg bg-red-500 p-1 font-mono text-white hover:bg-red-600"
-                      onClick={() => setIsEditing(false)}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="rounded-lg bg-green-500 p-1 font-mono text-white hover:bg-green-600"
-                      onClick={handleUpdateUserInfo}
-                    >
-                      Save
-                    </button>
-                  </>
-                ) : null}
               </div>
             </div>
           </div>
