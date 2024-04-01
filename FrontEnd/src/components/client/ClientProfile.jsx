@@ -51,59 +51,71 @@ export default function ProfilePage() {
 
   const handleUpdateUserInfo = () => {
     const formData = new FormData();
-    formData.append('firstName', userInfo.firstName);
-    formData.append('lastName', userInfo.lastName);
-    formData.append('email', displayUserInfo.email);
-    formData.append('phoneNumber', displayUserInfo.phoneNumber);
-    formData.append('address', displayUserInfo.address);
-    formData.append('currentPassword', passwords.currentPassword);
-    formData.append('newPassword', passwords.newPassword);
-    formData.append('newPasswordRepeat', passwords.newPasswordRepeat);
-  
+    formData.append("firstName", userInfo.firstName);
+    formData.append("lastName", userInfo.lastName);
+    formData.append("email", displayUserInfo.email);
+    formData.append("phoneNumber", displayUserInfo.phoneNumber);
+    formData.append("address", displayUserInfo.address);
+    formData.append("currentPassword", passwords.currentPassword);
+    formData.append("newPassword", passwords.newPassword);
+    formData.append("newPasswordRepeat", passwords.newPasswordRepeat);
+
     if (profilePicture) {
-      formData.append('profilePicture', profilePicture);
+      formData.append("profilePicture", profilePicture);
     }
-  
-    if (!displayUserInfo.email || !displayUserInfo.phoneNumber || !displayUserInfo.address) {
+
+    if (
+      !displayUserInfo.email ||
+      !displayUserInfo.phoneNumber ||
+      !displayUserInfo.address
+    ) {
       setResponseMessage("Please fill in all required fields.");
       return;
     }
-    if (passwords.currentPassword || passwords.newPassword || passwords.newPasswordRepeat) {
+    if (
+      passwords.currentPassword ||
+      passwords.newPassword ||
+      passwords.newPasswordRepeat
+    ) {
       if (passwords.newPassword !== passwords.newPasswordRepeat) {
         setResponseMessage("New passwords do not match.");
         return;
       }
     }
-  
+
     fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: formData,
       // Notice that 'Content-Type' is not set; it's automatically determined by the browser when using FormData
     })
-    .then(response => response.json())
-    .then(data => {
-      setResponseMessage(data.message);
-      if (data.message === "Profile updated successfully") {
-        updateUserInfo({ ...userInfo, ...displayUserInfo, newPassword: '', newPasswordRepeat: '' });
-        // Reset the form and state after successful update
-        setTimeout(() => {
-          setIsEditing(false);
-          setPasswords({
-            currentPassword: "",
+      .then((response) => response.json())
+      .then((data) => {
+        setResponseMessage(data.message);
+        if (data.message === "Profile updated successfully") {
+          updateUserInfo({
+            ...userInfo,
+            ...displayUserInfo,
             newPassword: "",
             newPasswordRepeat: "",
           });
-          setProfilePicture(null);
-          setResponseMessage("");
-        }, 2000);
-      }
-    })
-    .catch(error => {
-      console.error("Error updating user info:", error);
-      setResponseMessage("Failed to communicate with the server.");
-    });
+          // Reset the form and state after successful update
+          setTimeout(() => {
+            setIsEditing(false);
+            setPasswords({
+              currentPassword: "",
+              newPassword: "",
+              newPasswordRepeat: "",
+            });
+            setProfilePicture(null);
+            setResponseMessage("");
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating user info:", error);
+        setResponseMessage("Failed to communicate with the server.");
+      });
   };
-  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -124,11 +136,15 @@ export default function ProfilePage() {
         <div className="-mx-2 flex flex-wrap border-t-2 border-white">
           <div className="mb-2 w-full px-2 lg:w-1/3 ">
             <div className="mb-2 rounded-lg bg-opacity-90 p-8">
-                    <img
-          src={userInfo.profilePicture ? userInfo.profilePicture : "../../src/assets/ProfileTest.png"}
-          alt="avatar"
-          className="mx-auto mb-3 w-32 rounded-full border border-white"
-        />
+              <img
+                src={
+                  userInfo.profilePicture
+                    ? userInfo.profilePicture
+                    : "../../src/assets/ProfileTest.png"
+                }
+                alt="avatar"
+                className="mx-auto mb-3 w-32 rounded-full border border-white"
+              />
               <div className="mb-1 w-40 text-justify font-mono text-lg text-slate-300">
                 <p>Welcome {userInfo.firstName}</p>
               </div>
@@ -300,16 +316,18 @@ export default function ProfilePage() {
                   </div>
                 </>
               )}
-                              {isEditing && (
-                  <div className="mb-4">
-                    <label className="font-mono text-lg text-sky-400">Profile Picture</label>
-                    <input
-                      type="file"
-                      onChange={(e) => setProfilePicture(e.target.files[0])}
-                      className="w-full font-mono text-lg text-slate-300"
-                    />
-                  </div>
-                )}
+              {isEditing && (
+                <div className="mb-4">
+                  <label className="font-mono text-lg text-sky-400">
+                    Profile Picture
+                  </label>
+                  <input
+                    type="file"
+                    onChange={(e) => setProfilePicture(e.target.files[0])}
+                    className="w-full font-mono text-lg text-slate-300"
+                  />
+                </div>
+              )}
 
               <div className="flex justify-end">
                 {responseMessage && (
