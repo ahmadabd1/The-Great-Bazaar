@@ -10,11 +10,12 @@ const logout = () => {
 
 const PROFILE_IMAGE = "../../src/assets/ProfileTest.png";
 
-export default function NavBar({}) {
+export default function NavBar({ totalItems }) {
   // Receive firstName as a prop
   const [state, setState] = useState(false);
   const { userInfo, loading, error, updateUserInfo } = useUserInfo();
   const [firstName, setFirstName] = useState("");
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
     if (userInfo && userInfo.firstName) {
@@ -27,13 +28,25 @@ export default function NavBar({}) {
       label: "Profile",
       path: "/client/Profile",
     },
-
     {
       label: "Orders",
       path: "/orders",
       icon: "fluent:shopping-bag-16-regular",
     },
-    { label: "Cart", path: "/userCart", icon: "fluent:cart-16-regular" },
+    {
+      label: (
+        <>
+          <span>Cart</span>
+          <span className="absolute mb-8 mr-10 flex h-4 w-4 items-center justify-center rounded-full bg-sky-500 text-xs text-white">
+            {totalItems}
+          </span>
+        </>
+      ),
+      path: "/userCart",
+      icon: "fluent:cart-16-regular",
+      customLabel: <span className="text-slate-100">{totalItems}</span>,
+    },
+
     {
       label: "Logout",
       path: "/loggedout",
@@ -92,8 +105,12 @@ export default function NavBar({}) {
               height={40}
             />
           </a>
-                    <img
-            src={userInfo && userInfo.profilePicture ? userInfo.profilePicture : PROFILE_IMAGE}
+          <img
+            src={
+              userInfo && userInfo.profilePicture
+                ? userInfo.profilePicture
+                : PROFILE_IMAGE
+            }
             alt="Profile"
             className="h-[8vh] w-[8vh] items-center rounded-3xl border-2 border-sky-900"
           />

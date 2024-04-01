@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../style/AddCategoryModal.css';
+import '../../style/AddCategoryModal.css';
 export default function AddCategoryModal({ categories, onSave, onCancel }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');

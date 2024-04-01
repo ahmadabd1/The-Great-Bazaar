@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import '../style/ModalAddItem.css';
+import '../../style/ModalAddItem.css';
 Modal.setAppElement('#root');
 function AddItemModal({ isOpen, closeModal, addItem }) {
   const [categories, setCategories] = useState([]);

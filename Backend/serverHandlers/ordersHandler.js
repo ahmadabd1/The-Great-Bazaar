@@ -4,7 +4,8 @@ const Item = require('../models/item');
 const User = require('../models/user'); 
 const Category = require('../models/category')
 const config = require('../config'); 
-
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 
 exports.processPaymentAndCreateOrder = async (req, res) => {
   try {
@@ -67,6 +68,49 @@ exports.processPaymentAndCreateOrder = async (req, res) => {
     }
     userCart.itemsCart = [];
     await userCart.save();
+    const transporter = nodemailer.createTransport(smtpTransport({
+      service:"gmail",
+        auth: {
+          user: 'bazaargreat@gmail.com',
+          pass: 'aded lbph hkco felo'
+        }
+      }));
+      
+      const mailOptions = {
+        from: 'The GreratBazaar <bazaargreat@gmail.com>',
+        to: user.email,
+        subject: ' Thank You for Your Order!',
+       
+        text: `Dear ${user.firstName},
+
+        We wanted to take a moment to express our heartfelt gratitude for choosing The GreatBazaar for your recent purchase. Your order ${userId} has been received, and we're thrilled to be able to assist you.
+        
+        At The GreatBazaar, our mission is to provide top-notch products and excellent service to our valued customers like you. We're committed to ensuring your satisfaction every step of the way.
+        
+        Here are the details of your order:
+        
+        Order Number: ${userId}
+        Order Date: ${order.orderDate}
+        
+        Rest assured, our team is working diligently to process and fulfill your order as quickly as possible. You can expect regular updates regarding the status of your order, including tracking information once it's shipped.
+        
+        If you have any questions or need further assistance, please don't hesitate to reach out to our customer support team at [Customer Support Email] or by phone at [Customer Support Phone Number]. We're here to help you and ensure that your shopping experience with us is nothing short of exceptional.
+        
+        Once again, thank you for choosing [Your Company Name]. We truly appreciate your business and look forward to serving you again in the future!
+        
+        Best regards,
+        
+       The GreatBazaar
+        `
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
     res.status(200).send({ message: 'Order processed and cart cleared.', orderId: order._id });
   } catch (error) {
     res.status(500).send({ message: config.errorMessages.internalServerError, error: error.toString() });

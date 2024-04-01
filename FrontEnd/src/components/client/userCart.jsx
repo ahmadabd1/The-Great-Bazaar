@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../style/cart.css";
 import useGet from "../customHooks/useGet";
 import useUserInfo from "../customHooks/useUserInfo";
@@ -6,8 +6,10 @@ import useDeleteIncludeBody from "../customHooks/useDeleteIncludeBody";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
-export default function UserCart() {
+
+export default function UserCart({ updateTotalItems }) {
   const { userInfo, loading: userLoading, error: userError } = useUserInfo();
+
   const cartUrl = userInfo
     ? `http://localhost:8080/cart/${userInfo._id}`
     : null;
@@ -22,6 +24,18 @@ export default function UserCart() {
     isLoading: isDeleteLoading,
     error: deleteError,
   } = useDeleteIncludeBody();
+
+  useEffect(() => {
+    if (!cartLoading && !cartError && cart && cart.itemsCart) {
+      updateTotalItems(cart.itemsCart.length);
+    }
+  }, [cartLoading, cartError, cart, updateTotalItems]);
+
+  useEffect(() => {
+    // Fetch data or perform any necessary operations
+    const newTotalItems = 5; // Example value, replace with your logic
+    updateTotalItems(newTotalItems); // Update totalItems in App.jsx
+  }, []);
 
   const aggregateItems = (items) => {
     const itemMap = {};

@@ -1,9 +1,11 @@
+const express = require("express");
+const router = express.Router();
 const User = require("../models/user");
 const { errorMessages } = require("../config");
-const cloudinary = require('cloudinary').v2;
-const { validationResult } = require('express-validator');
-const bcrypt = require('bcrypt');
-const fs = require('fs');
+const { validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
+const smtpTransport = require("nodemailer-smtp-transport");
 
 exports.signup = async (req, res) => {
   try {
@@ -29,6 +31,48 @@ exports.signup = async (req, res) => {
       phoneNumber,
     });
     await newUser.save();
+
+    const transporter = nodemailer.createTransport(
+      smtpTransport({
+        service: "gmail",
+        auth: {
+          user: "bazaargreat@gmail.com",
+          pass: "aded lbph hkco felo",
+        },
+      })
+    );
+
+    const mailOptions = {
+      from: "The GreratBazaar <bazaargreat@gmail.com>",
+      to: email,
+      subject: "Registration Confirmation",
+      text: `Dear ${firstName},
+
+      Welcome to The Great Bazaar! We are thrilled to have you join our community. Your registration is now complete, and you're all set to explore everything our platform has to offer.
+      
+      Here are a few things you can do now that you've signed up:
+      
+      1. Complete your profile: Add a profile picture, update your personal information, and tell us a bit more about yourself.
+      2. Explore our features: Take a tour of our website/app to discover all the exciting features and functionalities available to you.
+      3. Connect with others: Engage with other members of our community, join discussions, and make new connections.
+      
+      If you have any questions or need assistance, don't hesitate to reach out to our support team at [support@example.com]. We're here to help you every step of the way.
+      
+      Thank you once again for choosing [Your Website Name]. We're looking forward to seeing you around!
+      
+      Best regards,
+      Great Bazaar
+      `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.error("Error creating user:", error);
@@ -50,16 +94,13 @@ exports.login = async (req, res) => {
 
     if (user.password !== password) {
       return res.send({ message: errorMessages.wrongPassword });
-      return res.send({ message: errorMessages.wrongPassword });
     }
 
     return res.send({ message: "Login successful as client" });
   } catch (error) {
     res.send({ message: errorMessages.internalServerError });
-    res.send({ message: errorMessages.internalServerError });
   }
 };
-
 
 exports.editProfile = async (req, res) => {
   try {
@@ -69,7 +110,16 @@ exports.editProfile = async (req, res) => {
     }
 
     const userId = req.params.userId;
-    const { firstName, lastName, email, phoneNumber, address, currentPassword, newPassword, newPasswordRepeat } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      address,
+      currentPassword,
+      newPassword,
+      newPasswordRepeat,
+    } = req.body;
 
     let user = await User.findById(userId);
     if (!user) {
@@ -83,8 +133,10 @@ exports.editProfile = async (req, res) => {
     user.address = address ?? user.address;
 
     if (currentPassword && newPassword && newPasswordRepeat) {
-      if (!await bcrypt.compare(currentPassword, user.password)) {
-        return res.status(401).json({ message: "Current password is incorrect" });
+      if (!(await bcrypt.compare(currentPassword, user.password))) {
+        return res
+          .status(401)
+          .json({ message: "Current password is incorrect" });
       }
 
       if (newPassword !== newPasswordRepeat) {
@@ -101,7 +153,7 @@ exports.editProfile = async (req, res) => {
         // Delete the file after upload
         fs.unlinkSync(req.file.path);
       } catch (error) {
-        console.error('Error uploading file to Cloudinary', error);
+        console.error("Error uploading file to Cloudinary", error);
         return res.status(500).json({ message: "Error uploading image" });
       }
     }
@@ -116,7 +168,6 @@ exports.editProfile = async (req, res) => {
   }
 };
 
-
 exports.get_all_users = async (req, res) => {
   try {
     const users = await User.find(
@@ -127,6 +178,7 @@ exports.get_all_users = async (req, res) => {
       fullName: user.firstName + " " + user.lastName,
       email: user.email,
       phoneNumber: user.phoneNumber,
+      address: user.address,
     }));
     res.status(200).json(usersWithFullName);
   } catch (error) {
@@ -151,4 +203,3 @@ exports.UserDetails = async (req, res) => {
     res.status(500).json({ message: "Internal server error" }); // Return a generic error response if something goes wrong
   }
 };
-

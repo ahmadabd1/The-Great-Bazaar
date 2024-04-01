@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import useUpdate from '../customHooks/useUpdate';
-import '../style/UpdateItemModal.css';
+import useUpdate from '../../customHooks/useUpdate';
+import '../../style/UpdateItemModal.css';
 
 export default function UpdateItemModal({ isOpen, closeModal, item, onUpdateSuccess }) {
   const [updatedItem, setUpdatedItem] = useState(item || {});

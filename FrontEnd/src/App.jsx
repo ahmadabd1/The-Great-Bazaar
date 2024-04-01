@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -31,8 +31,42 @@ import Orders from "./components/client/Orders";
 import OrdersA from "./components/admin/OrdersA";
 
 export default function App() {
+  const [totalItems, setTotalItems] = useState(0); // Step 1: Create state for totalItems
   const [isBlurred, setIsBlurred] = useState(false);
   const location = useLocation();
+  // const isVideoEnabledForDisplay = true; // Controls whether the video should be displayed
+  const isVideoEnabledForVolume = true; // Controls whether the video volume should be reduced
+
+  const handleAddToCart = () => {
+    // Logic to add item to cart
+    // Update totalItems state
+    setTotalItems((prevTotalItems) => prevTotalItems + 1);
+  };
+
+  const handleRemoveFromCart = () => {
+    // Logic to remove item from cart
+    // Update totalItems state
+    setTotalItems((prevTotalItems) => prevTotalItems - 1);
+  };
+
+  const fetchTotalItems = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/totalItems");
+      if (!response.ok) {
+        throw new Error(
+          "Failed to fetch total items data: " + response.statusText,
+        );
+      }
+      const data = await response.json();
+      setTotalItems(data.totalItems);
+    } catch (error) {
+      console.error("Error fetching total items data:", error.message);
+    }
+  };
+
+  const updateTotalItems = (newTotalItems) => {
+    setTotalItems(newTotalItems);
+  };
 
   const renderNavbar = () => {
     switch (localStorage.getItem("userType")) {
@@ -41,7 +75,7 @@ export default function App() {
       case "client":
         return (
           <>
-            <ClientNavbar />
+            <ClientNavbar totalItems={totalItems} />
             {location.pathname.includes("/client/item") && <ClientSideBar />}
           </>
         );
@@ -56,23 +90,44 @@ export default function App() {
 
   useEffect(() => {
     setIsBlurred(shouldBlurBackground());
+    fetchTotalItems();
   }, [location.pathname]);
+
+  useEffect(() => {
+    const video = document.getElementById("bgvid");
+    if (video) {
+      video.play().catch((error) => {
+        // Autoplay was prevented, possibly due to browser restrictions
+        // You can handle this scenario here, such as showing a play button to allow manual playback
+        console.error("Autoplay was prevented:", error);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isVideoEnabledForVolume) {
+      const video = document.getElementById("bgvid");
+      if (video) {
+        video.volume = 0.4; // Adjust the volume between 0 and 1 (0 being muted, 1 being full volume)
+      }
+    }
+  }, [isVideoEnabledForVolume]);
 
   const isVideoEnabled =
     location.pathname === "/client" || location.pathname === "/";
+
+  console.log("Total items in App.jsx:", totalItems);
 
   return (
     <>
       <div className="app">
         {isVideoEnabled && (
-          <video autoPlay muted loop id="bgvid">
-            <source
-              src="http://localhost:5173/src/assets/BazaarBGMarket.mp4"
-              type="video/mp4"
-            />
+          <video autoPlay loop id="bgvid">
+            <source src="https://firebasestorage.googleapis.com/v0/b/bazaar-3fb26.appspot.com/o/BazaarBGMarket.mp4?alt=media&token=33ccf538-ab5e-4ea9-8a98-be7ff4fb46c0" />
             Your browser does not support HTML5 video.
           </video>
         )}
+
         <div className="container">
           <div
             className={`background-image ${isBlurred ? "blur-background" : ""}`}
@@ -95,7 +150,15 @@ export default function App() {
             <Route path="/client/ItemsPage" element={<ItemsPage />} />
             <Route path="/admin/orders" element={<OrdersA />} />
             <Route path="/AboutUs" element={<AboutUs />} />
-            <Route path="/userCart" element={<UserCart />} />
+            <Route
+              path="/userCart"
+              element={
+                <UserCart
+                  updateTotalItems={updateTotalItems}
+                  onRemoveFromCart={handleRemoveFromCart}
+                />
+              } // Pass totalItems as a prop
+            />
             <Route path="/payment" element={<Payment />} />
             <Route path="/orders" element={<Orders />} />
 
@@ -103,7 +166,10 @@ export default function App() {
               path="/filtereditems/:category"
               element={<FilteredItems />}
             />
-            <Route path="/client/ItemsAll" element={<ItemsAll />} />
+            <Route
+              path="/client/ItemsAll"
+              element={<ItemsAll onAddToCart={handleAddToCart} />}
+            />
           </Routes>
 
           <Footer />

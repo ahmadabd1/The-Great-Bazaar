@@ -1,16 +1,16 @@
 .Modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 700px;
-  height: 607px;
-  align-items: center;
-  /* max-height: 90vh; */
-  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  width: 80%; /* Increased width */
+  max-width: 800px; /* Set a maximum width */
+  padding: 1rem; /* Reduced padding */
+  overflow-y: auto; /* Keeps the length dynamic */
+  z-index: 1050;
 }
 
 .Overlay {
@@ -19,100 +19,102 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  background-color: rgba(49, 49, 49, 0.8);
+  z-index: 1040;
 }
 
 .modal-content {
-  padding: 1px;
+  padding: 1rem;
 }
 
 .modal-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 16px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .modal-form {
+  /* Limit the form's max-height if necessary */
+  max-height: 700px; /* Adjust based on content */
+  overflow-y: auto;
+}
+
+.form-group {
   display: flex;
   flex-direction: column;
+  margin-bottom: 0.8rem; /* Reduce the spacing between form groups if necessary */
 }
 
 .label {
-  font-size: 14px;
-  flex: 0 0 auto; /* The label doesn't grow but keeps the width it needs */
-  margin-right: 10px; /* Maintains space between label and input */
-  text-align: left; /* Aligns the text to the left */
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+  color: #333;
 }
-.label,
-.input,
-.select,
-.fileInput,
-.checkbox {
-  margin: 0;
-  padding: 8px;
-  display: block; /* Makes sure the input takes the full width of its flex item */
-}
+
 .input,
 .select,
 .fileInput {
-  flex-grow: 1; /* Allows input fields to grow and fill the remaining space */
-  border: 1px solid #ccc !important;
+  padding: 0.8rem; /* Adjust the padding inside the inputs if necessary */
+
+  padding: 15px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  height: 40px;
-  background-color: white !important; /* Sets the height of the input fields */
-}
-.form-group label {
-  display: block;
-  /* margin-bottom: 5px; */
-}
-.form-group {
-  display: flex;
-  align-items: center; /* Keeps items aligned vertically in the center */
-  justify-content: flex-start; /* Aligns items to the start (left) */
-  margin-bottom: 10px; /* Maintains spacing between each form group */
+  margin-bottom: 0.5rem;
+  font-size: 16px;
 }
 
-.checkbox {
-  /* For checkboxes, we don't need them to grow too much */
-  flex: 0 0 auto; /* Don't grow, don't shrink, based on content */
+.input:focus,
+.select:focus,
+.fileInput:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 3px rgba(128, 189, 255, 0.5);
 }
 
 .form-actions {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
+  justify-content: space-between;
+  margin-top: 1rem;
 }
+
 .addButton,
 .cancelButton {
-  font-weight: bold;
-  padding: 8px 16px;
+  font-size: 16px;
+  padding: 10px 20px;
   border-radius: 4px;
+  border: none;
   cursor: pointer;
-
-  margin-left: 8px;
-  border: none; /* Add this line if you want to remove the default border */
-  outline: none; /* Add this line to remove the outline */
 }
 
 .addButton {
-  background-color: #4caf50 !important; /* Standard green button */
-  color: black;
+  background-color: #4caf50 !important;
+  color: white;
 }
+.checkbox {
+  margin-right: 410px;
+  transform: scale(1.5);
 
-.addButton:hover {
-  background-color: #45a049; /* Darker green on hover */
+  vertical-align: middle;
+}
+.addButton:hover,
+.addButton:focus {
+  background-color: #43a047 !important;
 }
 
 .cancelButton {
-  background-color: #f44336 !important; /* Standard red button */
-  color: black;
+  background-color: #d32f2f !important;
+  color: white;
 }
 
-.cancelButton:hover {
-  background-color: #d32f2f; /* Darker red on hover */
+.cancelButton:hover,
+.cancelButton:focus {
+  background-color: #d32f2f !important;
 }
 
-button:focus {
-  outline: none; /* Removes the focus outline to match modern style */
+@media (max-width: 768px) {
+  .Modal {
+    width: 95%;
+    max-width: 95%;
+  }
 }
