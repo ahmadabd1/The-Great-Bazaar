@@ -20,6 +20,8 @@ const FilteredItems = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [activeItemId, setActiveItemId] = useState(null);
+  const [cartMessages, setCartMessages] = useState({}); // Stores messages for each item
 
   const { postData } = usePost(); // Using the postData function from usePost
   const { userInfo } = useUserInfo(); // Assuming userInfo contains user data
@@ -32,9 +34,25 @@ const FilteredItems = () => {
 
     try {
       await postData("http://localhost:8080/cart/addToCart", cartData);
-      alert("Item added to cart");
+      // Update the message for this specific item
+      setCartMessages((prevMessages) => ({
+        ...prevMessages,
+        [item._id]: "Item added to cart",
+      }));
+      // Clear the message for this specific item after 3 seconds
+      setTimeout(() => {
+        setCartMessages((prevMessages) => ({
+          ...prevMessages,
+          [item._id]: "",
+        }));
+      }, 3000);
     } catch (error) {
       console.error("Error adding item to cart:", error);
+      // Update the message for this specific item in case of error
+      setCartMessages((prevMessages) => ({
+        ...prevMessages,
+        [item._id]: "Error adding item to cart",
+      }));
     }
   };
 
@@ -62,9 +80,8 @@ const FilteredItems = () => {
       className="absloute container ml-56 mt-[13vh]"
       style={{ height: "80%", width: "80%" }}
     >
-      <div
-        className={`fixed left-0 top-[78px] h-full w-[13%] overflow-y-scroll border-r border-gray-900 bg-gray-800 bg-opacity-50`}
-      >
+      {/* Sidebar with search and category filter */}
+      <div className="fixed left-0 top-[78px] h-full w-[13%] overflow-y-scroll border-r border-gray-900 bg-gray-800 bg-opacity-50">
         <ul className="border-b border-gray-600">
           <Link to="/client/ItemsPage">
             <FiArrowLeft />
@@ -81,12 +98,12 @@ const FilteredItems = () => {
               className="mb-12 ml-5 mt-5 h-10 w-40 rounded-md"
             />
           </div>
-          <p className="ml-auto mt-2 w-full  text-center font-mono text-xl text-slate-200">
+          <p className="ml-auto mt-2 w-full text-center font-mono text-xl text-slate-200">
             FilterCategory
           </p>
           <select
             id="categorySelect"
-            className="text-m p-l  m-12 ml-5 mt-10 h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
+            className="text-m p-l m-12 ml-5 mt-10 h-10 w-40 rounded bg-gray-700 text-center text-slate-400"
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -101,6 +118,7 @@ const FilteredItems = () => {
         </ul>
       </div>
 
+      {/* Main content area */}
       <div className="relative mt-12" style={{ marginLeft: "41px" }}>
         <ul className="grid justify-items-center gap-12 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           {filteredItems &&
@@ -113,48 +131,52 @@ const FilteredItems = () => {
                   to={`/item/${item._id}`}
                   className="flex h-full w-full flex-col justify-between text-center"
                 >
-                  <div className="w-full">
-                    <img
-                      src={item.image_id || "path/to/default/image"}
-                      alt={item.name}
-                      className="h-40 w-full object-cover"
-                    />
-                    <div className="flex flex-col px-4 pb-2 pt-4 font-mono">
-                      <h4
-                        className="text-lg font-bold text-white"
-                        style={{ height: "3rem" }}
-                      >
-                        {item.name}
-                      </h4>
-                    </div>
-                    <div className="w-full border-b border-gray-500"></div>
-                    <div
-                      className="flex flex-grow flex-col justify-between p-4 pt-2"
-                      style={{ height: "4rem" }}
+                  <img
+                    src={item.image_id || "path/to/default/image"}
+                    alt={item.name}
+                    className="h-40 w-full object-cover"
+                  />
+                  <div className="flex flex-col px-4 pb-2 pt-4 font-mono">
+                    <h4
+                      className="text-lg font-bold text-white"
+                      style={{ height: "3rem" }}
                     >
-                      <p
-                        className="overflow-hidden text-sm text-gray-300"
-                        style={{
-                          textOverflow: "ellipsis",
-                          display: "-webkit-box",
-                          WebkitLineClamp: "3",
-                          WebkitBoxOrient: "vertical",
-                        }}
-                      >
-                        {item.description}
-                      </p>
-                    </div>
-                    <div
-                      className="p-4 text-lg font-medium text-green-600"
-                      style={{ height: "2.5rem" }}
+                      {item.name}
+                    </h4>
+                  </div>
+                  <div className="w-full border-b border-gray-500"></div>
+                  <div
+                    className="flex flex-grow flex-col justify-between p-4 pt-2"
+                    style={{ height: "4rem" }}
+                  >
+                    <p
+                      className="overflow-hidden text-sm text-gray-300"
+                      style={{
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitLineClamp: "3",
+                        WebkitBoxOrient: "vertical",
+                      }}
                     >
-                      {item.sellPrice}$
-                    </div>
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <div
+                    className="p-4 text-lg font-medium text-green-600"
+                    style={{ height: "2.5rem" }}
+                  >
+                    {item.sellPrice}$
                   </div>
                 </Link>
+                {cartMessages[item._id] && (
+                  <div className="text-center text-sm text-white">
+                    {cartMessages[item._id]}
+                  </div>
+                )}
                 <button
                   onClick={() => addToCart(item)}
-                  className="focus:shadow-outline focus:outline-noneborder-gray-300 mt-4 cursor-pointer rounded border-gray-900  bg-opacity-50 px-4 py-2 text-white shadow-lg backdrop-blur-md transition-shadow duration-300 hover:bg-green-600 hover:shadow-xl"
+                  className="focus:shadow-outline mt-4 cursor-pointer rounded border-gray-300 border-gray-900 bg-opacity-50 px-4 py-2 text-white shadow-lg backdrop-blur-md transition-shadow duration-300 hover:bg-green-600 hover:shadow-xl focus:outline-none"
                 >
                   Add to Cart
                 </button>
