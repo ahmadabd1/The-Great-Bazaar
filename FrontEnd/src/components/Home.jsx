@@ -33,9 +33,11 @@ export default function Home() {
       console.error("Error fetching items:", error);
     }
   };
-  const handleStartStartShoppingClick = () => {
+  const handleStartStartShoppingClick = (event) => {
+    event.preventDefault();
     navigate("/login");
   };
+
   return (
     <>
       <div
@@ -59,7 +61,6 @@ export default function Home() {
               >
                 <a
                   onClick={handleStartStartShoppingClick}
-                  href="javascript:void(0)"
                   className="flex items-center justify-center gap-x-5 rounded-full bg-gray-800 px-4 py-2 text-lg  text-slate-200 duration-150 hover:bg-gray-700 active:bg-gray-900 md:inline-flex"
                 >
                   Start Shopping
