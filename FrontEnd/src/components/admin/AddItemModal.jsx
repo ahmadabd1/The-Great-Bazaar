@@ -35,20 +35,27 @@ function AddItemModal({ isOpen, closeModal, addItem }) {
       console.error('Error fetching categories:', error);
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.image) {
-      alert("Please upload an image before adding an item.");
-      return;
+
+    // Check if sellPrice is greater than buyPrice
+    if (parseFloat(formData.sellPrice) <= parseFloat(formData.buyPrice)) {
+        alert('The sellPrice must be bigger than the buyPrice.');
+        return;
     }
+
+    if (!formData.image) {
+        alert("Please upload an image before adding an item.");
+        return;
+    }
+
     const data = new FormData();
     for (let key in formData) {
-      data.append(key, formData[key]);
+        data.append(key, formData[key]);
     }
     addItem(data);
     closeModal();
-  };
+};
   const handleChange = (e) => {
     const { name, value, files ,type, checked} = e.target;
  if (type === 'checkbox') {

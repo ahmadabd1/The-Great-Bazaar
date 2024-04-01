@@ -78,23 +78,26 @@ export default function ProfilePage() {
     fetch(`http://localhost:8080/user/profile/${userInfo._id}`, {
       method: 'PUT',
       body: formData,
-      // Notice that 'Content-Type' is not set; it's automatically determined by the browser when using FormData
     })
     .then(response => response.json())
     .then(data => {
       setResponseMessage(data.message);
       if (data.message === "Profile updated successfully") {
         updateUserInfo({ ...userInfo, ...displayUserInfo, newPassword: '', newPasswordRepeat: '' });
-        // Reset the form and state after successful update
+  
+        // Reset the form and state after successful update, then refresh
+        setIsEditing(false);
+        setPasswords({
+          currentPassword: "",
+          newPassword: "",
+          newPasswordRepeat: "",
+        });
+        setProfilePicture(null);
+        setResponseMessage("");
+        
+        // Refresh the page after a delay
         setTimeout(() => {
-          setIsEditing(false);
-          setPasswords({
-            currentPassword: "",
-            newPassword: "",
-            newPasswordRepeat: "",
-          });
-          setProfilePicture(null);
-          setResponseMessage("");
+          window.location.reload();
         }, 2000);
       }
     })
@@ -103,7 +106,6 @@ export default function ProfilePage() {
       setResponseMessage("Failed to communicate with the server.");
     });
   };
-  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -149,11 +151,11 @@ export default function ProfilePage() {
             <div className="bg-slate-00 mb-2 rounded-lg p-8 opacity-85">
               <div className="mb-4 flex">
                 <div className="w-1/3">
-                  <p className="font-mono text-lg text-sky-400">Full Name</p>
+                  <p className="font-mono text-lg text-sky-400">Full Name     </p>
                 </div>
                 <div className="w-2/3">
                   <p className="font-mono text-lg text-slate-300">
-                    {userInfo.firstName} {userInfo.lastName}
+                       { userInfo.firstName}   {userInfo.lastName}
                   </p>
                 </div>
               </div>
