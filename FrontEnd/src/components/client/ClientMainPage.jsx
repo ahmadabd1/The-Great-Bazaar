@@ -29,16 +29,14 @@ export default function Home() {
         console.error("User email not found");
         return;
       }
-      const response = await axios.post(
-        "http://localhost:8080/user/user/details",
-        { email: userEmail },
-      );
+      const response = await axios.post({ email: userEmail });
       const { firstName, lastName } = response.data;
       setUserName(`${firstName} ${lastName}`);
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
   };
+
   useEffect(() => {
     fetchItems();
     fetchUserDetails();
@@ -75,9 +73,11 @@ export default function Home() {
                 style={{ marginTop: "30px", height: "auto" }}
               >
                 <a
-                  onClick={handleStartShoppingClick}
-                  href="javascript:void(0)"
-                  className="flex items-center justify-center gap-x-5 rounded-full bg-gray-800 p-12 px-4 py-2 text-lg  text-slate-200 duration-150 hover:bg-gray-700 active:bg-gray-900 md:inline-flex"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleStartShoppingClick();
+                  }}
+                  className="flex items-center justify-center gap-x-5 rounded-full bg-gray-800 p-12 px-4 py-2 text-lg text-slate-200 duration-150 hover:bg-gray-700 active:bg-gray-900 md:inline-flex"
                 >
                   Start Shopping
                   <svg
@@ -93,10 +93,13 @@ export default function Home() {
                     />
                   </svg>
                 </a>
+
                 <a
-                  onClick={handleStartTour}
-                  href="javascript:void(0)"
-                  className="flex items-center justify-center gap-y-5 rounded-full bg-gray-500 px-4 py-2 text-lg  text-sky-200 duration-150 hover:bg-sky-500 active:bg-gray-900 md:inline-flex"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleStartTour();
+                  }}
+                  className="flex items-center justify-center gap-y-5 rounded-full bg-gray-500 px-4 py-2 text-lg text-sky-200 duration-150 hover:bg-sky-500 active:bg-gray-900 md:inline-flex"
                 >
                   Tour in the Bazaar
                   <svg

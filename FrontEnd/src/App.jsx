@@ -97,9 +97,8 @@ export default function App() {
     const video = document.getElementById("bgvid");
     if (video) {
       video.play().catch((error) => {
-        // Autoplay was prevented, possibly due to browser restrictions
-        // You can handle this scenario here, such as showing a play button to allow manual playback
         console.error("Autoplay was prevented:", error);
+        // Update state to show a play button, for example
       });
     }
   }, []);
@@ -122,7 +121,7 @@ export default function App() {
     <>
       <div className="app">
         {isVideoEnabled && (
-          <video autoPlay loop id="bgvid">
+          <video autoPlay loop id="bgvid" muted>
             <source src="https://firebasestorage.googleapis.com/v0/b/bazaar-3fb26.appspot.com/o/BazaarBGMarket.mp4?alt=media&token=33ccf538-ab5e-4ea9-8a98-be7ff4fb46c0" />
             Your browser does not support HTML5 video.
           </video>
