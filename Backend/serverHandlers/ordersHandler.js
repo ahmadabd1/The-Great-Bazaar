@@ -75,7 +75,15 @@ exports.processPaymentAndCreateOrder = async (req, res) => {
           pass: 'aded lbph hkco felo'
         }
       }));
-      
+      const concat= function(){
+        let s = ""
+        for( let i in order.items){
+          s+="Name : " +order.items[i].name +"\n" +"Amount : "+order.items[i].quantity+"\n"+"Price : "+order.items[i].sellPrice+"\n\n"
+        }
+        return s
+      }
+
+      console.log(order.items)
       const mailOptions = {
         from: 'The GreratBazaar <bazaargreat@gmail.com>',
         to: user.email,
@@ -91,6 +99,9 @@ exports.processPaymentAndCreateOrder = async (req, res) => {
         
         Order Number: ${userId}
         Order Date: ${order.orderDate}
+
+    ${concat()}
+      
         
         Rest assured, our team is working diligently to process and fulfill your order as quickly as possible. You can expect regular updates regarding the status of your order, including tracking information once it's shipped.
         
