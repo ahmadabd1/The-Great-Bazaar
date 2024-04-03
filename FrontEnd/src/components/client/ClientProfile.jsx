@@ -122,7 +122,7 @@ export default function ProfilePage() {
 
   return (
     <section
-      className="mt-20 max-h-[88vh] border-2 border-white bg-slate-950 bg-opacity-80 p-2"
+      className="mt-20 max-h-[90vh] border-2 border-white bg-slate-950 bg-opacity-80 p-2"
       style={{ width: "100%", height: "20%" }}
     >
       <div className="container py-1">
@@ -145,7 +145,7 @@ export default function ProfilePage() {
                 alt="avatar"
                 className="mx-auto mb-3 w-32 rounded-full border border-white"
               />
-              <div className="ml-4 mt-4 w-40 text-justify font-mono text-lg text-slate-300">
+              <div className=" mt-4 w-40 text-justify font-mono text-lg text-slate-300">
                 <p>Welcome {userInfo.firstName}</p>
                 {isEditing ? (
                   <>

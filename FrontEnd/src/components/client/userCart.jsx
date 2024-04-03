@@ -87,7 +87,11 @@ export default function UserCart({ updateTotalItems }) {
   const totalItems = itemsCart.length;
 
   if (totalItems === 0) {
-    return <div className="cart-container">Your cart is empty.</div>;
+    return (
+      <div className="cart-container text-2xl text-white">
+        Your cart is empty, just like the developer, on the inside.
+      </div>
+    );
   }
 
   return (
