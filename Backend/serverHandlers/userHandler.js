@@ -6,7 +6,8 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
-
+const cloudinary = require("../cloudinaryConfig");
+const fs = require("fs");
 exports.signup = async (req, res) => {
   try {
     const { firstName, lastName, email, password, phoneNumber } = req.body;
