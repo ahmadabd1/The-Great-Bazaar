@@ -34,12 +34,10 @@ const FilteredItems = () => {
 
     try {
       await postData("http://localhost:8080/cart/addToCart", cartData);
-      // Update the message for this specific item
       setCartMessages((prevMessages) => ({
         ...prevMessages,
         [item._id]: "Item added to cart",
       }));
-      // Clear the message for this specific item after 3 seconds
       setTimeout(() => {
         setCartMessages((prevMessages) => ({
           ...prevMessages,
@@ -48,7 +46,6 @@ const FilteredItems = () => {
       }, 3000);
     } catch (error) {
       console.error("Error adding item to cart:", error);
-      // Update the message for this specific item in case of error
       setCartMessages((prevMessages) => ({
         ...prevMessages,
         [item._id]: "Error adding item to cart",

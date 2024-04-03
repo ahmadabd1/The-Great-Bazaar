@@ -49,20 +49,20 @@ export default function App() {
     setTotalItems((prevTotalItems) => prevTotalItems - 1);
   };
 
-  const fetchTotalItems = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/totalItems");
-      if (!response.ok) {
-        throw new Error(
-          "Failed to fetch total items data: " + response.statusText,
-        );
-      }
-      const data = await response.json();
-      setTotalItems(data.totalItems);
-    } catch (error) {
-      console.error("Error fetching total items data:", error.message);
-    }
-  };
+  // const fetchTotalItems = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:8080/totalItems");
+  //     if (!response.ok) {
+  //       throw new Error(
+  //         "Failed to fetch total items data: " + response.statusText,
+  //       );
+  //     }
+  //     const data = await response.json();
+  //     setTotalItems(data.totalItems);
+  //   } catch (error) {
+  //     console.error("Error fetching total items data:", error.message);
+  //   }
+  // };
 
   const updateTotalItems = (newTotalItems) => {
     setTotalItems(newTotalItems);
@@ -90,7 +90,7 @@ export default function App() {
 
   useEffect(() => {
     setIsBlurred(shouldBlurBackground());
-    fetchTotalItems();
+    //  fetchTotalItems();
   }, [location.pathname]);
 
   useEffect(() => {

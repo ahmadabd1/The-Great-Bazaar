@@ -22,28 +22,31 @@ export default function Home() {
       console.error("Error fetching items:", error);
     }
   };
-  const fetchUserDetails = async () => {
-    try {
-      const userEmail = localStorage.getItem("userEmail");
-      if (!userEmail) {
-        console.error("User email not found");
-        return;
-      }
-      const response = await axios.post({ email: userEmail });
-      const { firstName, lastName } = response.data;
-      setUserName(`${firstName} ${lastName}`);
-    } catch (error) {
-      console.error("Error fetching user details:", error);
-    }
-  };
+  // const fetchUserDetails = async () => {
+  //   try {
+  //     const userEmail = localStorage.getItem("userEmail");
+  //     if (!userEmail) {
+  //       console.error("User email not found");
+  //       return;
+  //     }
+  //     // Specify the endpoint URL and pass the data as the second parameter
+  //     const response = await axios.post("http://localhost:8080/user/details", {
+  //       email: userEmail,
+  //     });
+  //     const { firstName, lastName } = response.data;
+  //     setUserName(`${firstName} ${lastName}`);
+  //   } catch (error) {
+  //     console.error("Error fetching user details:", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchItems();
-    fetchUserDetails();
+    // fetchUserDetails();
   }, []);
   useEffect(() => {
     fetchItems();
-    fetchUserDetails();
+    // fetchUserDetails();
   }, []);
   const handleStartShoppingClick = () => {
     navigate("/client/ItemsPage");

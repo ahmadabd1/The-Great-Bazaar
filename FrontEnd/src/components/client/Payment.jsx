@@ -26,7 +26,16 @@ export default function Payment() {
       linkRef.current.click();
     }
   }, [redirectToOrders]);
-
+  // useEffect(() => {
+  //   if (cart && cart.itemsCart) {
+  //     const ids = cart.itemsCart.map((item) => item._id);
+  //     console.log(ids);
+  //     const hasDuplicates = new Set(ids).size !== ids.length;
+  //     if (hasDuplicates) {
+  //       console.log("Duplicate IDs found in cart.itemsCart");
+  //     }
+  //   }
+  // }, [cart.itemsCart]);
   const handleBuyClick = async () => {
     if (userInfo && userInfo._id) {
       try {
@@ -192,8 +201,8 @@ export default function Payment() {
                 </thead>
                 <tbody>
                   {/* Mapping through cart items */}
-                  {cart.itemsCart.map((item) => (
-                    <tr key={item._id}>
+                  {cart.itemsCart.map((item, index) => (
+                    <tr key={`${item._id}-${index}`}>
                       <td className="border border-gray-300 p-1 text-left font-mono text-sky-500">
                         {item.name}
                       </td>
