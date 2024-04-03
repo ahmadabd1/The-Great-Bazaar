@@ -28,17 +28,7 @@ export default function AddCategoryModal({ categories, onSave, onCancel }) {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      {/* <select
-        value={parentId}
-        onChange={(e) => setParentId(e.target.value)}
-      >
-        <option value="">Select Parent Category</option>
-        {categories.map(category => (
-          <option key={category._id} value={category._id}>
-            {category.name}
-          </option>
-        ))}
-      </select> */}
+  
       <input type="file" onChange={(e) => setImage(e.target.files[0])} />
       <button onClick={handleSave}>Create</button>
       <button onClick={onCancel}>Cancel</button>
