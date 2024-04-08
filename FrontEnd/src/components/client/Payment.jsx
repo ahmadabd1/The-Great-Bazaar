@@ -34,6 +34,9 @@ export default function Payment() {
   //     if (hasDuplicates) {
   //       console.log("Duplicate IDs found in cart.itemsCart");
   //     }
+
+  //
+  //
   //   }
   // }, [cart.itemsCart]);
   const handleBuyClick = async () => {
