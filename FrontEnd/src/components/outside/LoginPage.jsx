@@ -62,6 +62,7 @@ function LoginPage() {
         if (message.includes("Login successful")) {
           const userType = message.includes("client") ? "client" : "admin";
           setMessage(userType);
+          localStorage.setItem('accessToken', responseData.accessToken);
           localStorage.setItem("userType", userType);
           localStorage.setItem("userEmail", formData.email);
           navigate(`/${userType}`);

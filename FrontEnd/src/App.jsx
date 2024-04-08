@@ -29,7 +29,7 @@ import Tour from "./components/Tour";
 
 import Orders from "./components/client/Orders";
 import OrdersA from "./components/admin/OrdersA";
-
+import ProtectedRoute from './ProtectedRoute';
 export default function App() {
   const [totalItems, setTotalItems] = useState(0); // Step 1: Create state for totalItems
   const [isBlurred, setIsBlurred] = useState(false);
@@ -136,17 +136,17 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin" element={<AdminMainPage />} />
-            <Route path="/client/item" element={<Item />} />
-            <Route path="/client" element={<ClientMainPage />} />
-            <Route path="/category" element={<CategoryPage />} />
+            <Route path="/client/item" element={<ProtectedRoute><Item /></ProtectedRoute>} />
+            <Route path="/client" element={<ProtectedRoute><ClientMainPage /></ProtectedRoute>} />
+            <Route path="/category" element={<ProtectedRoute><CategoryPage /></ProtectedRoute>} />
             <Route path="/admin/items" element={<Items />} />
             <Route path="/admin/statics" element={<Statics />} />
-            <Route path="/client/Profile" element={<ClientProfile />} />
+            <Route path="/client/Profile" element={<ProtectedRoute><ClientProfile /></ProtectedRoute>} />
             <Route path="/admin/categories" element={<Categories />} />
             <Route path="/Tour" element={<Tour />} />
             <Route path="/admin/clients" element={<UsersPage />} />
             <Route path="/item/:id" element={<ItemDetail />} />
-            <Route path="/client/ItemsPage" element={<ItemsPage />} />
+            <Route path="/client/ItemsPage" element={<ProtectedRoute><ItemsPage /></ProtectedRoute>} />
             <Route path="/admin/orders" element={<OrdersA />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route

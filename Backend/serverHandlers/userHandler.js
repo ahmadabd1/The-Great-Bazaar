@@ -8,9 +8,13 @@ const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
 const cloudinary = require("../cloudinaryConfig");
 const fs = require("fs");
+const jwt = require('jsonwebtoken');
+
+const generateAccessToken = userId => jwt.sign({ id: userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '40s' });
+const generateRefreshToken = userId => jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 exports.signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, phoneNumber } = req.body;
+    const { firstName, lastName, email, password, phoneNumber, role } = req.body;
     // Check if email format is valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email) && email !== "admin") {
@@ -30,9 +34,15 @@ exports.signup = async (req, res) => {
       email,
       password,
       phoneNumber,
+      role: role || 'client' 
     });
     await newUser.save();
 
+    const accessToken = generateAccessToken(newUser._id)
+    const refreshToken = generateRefreshToken(newUser._id)
+   
+    newUser.refreshToken = refreshToken;
+    await newUser.save();
     const transporter = nodemailer.createTransport(
       smtpTransport({
         service: "gmail",
@@ -74,7 +84,7 @@ exports.signup = async (req, res) => {
       }
     });
 
-    res.status(201).json({ message: "User created successfully" });
+    res.status(201).json({ message: "User created successfully", accessToken, refreshToken });
   } catch (error) {
     console.error("Error creating user:", error);
     res.status(500).json({ message: errorMessages.internalServerError });
@@ -96,8 +106,11 @@ exports.login = async (req, res) => {
     if (user.password !== password) {
       return res.send({ message: errorMessages.wrongPassword });
     }
-
-    return res.send({ message: "Login successful as client" });
+    const accessToken = generateAccessToken(user._id)
+    const refreshToken = generateRefreshToken(user._id)
+    user.refreshToken = refreshToken;
+    await user.save();
+    return res.send({ message: "Login successful as client" , accessToken});
   } catch (error) {
     res.send({ message: errorMessages.internalServerError });
   }
