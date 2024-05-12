@@ -62,7 +62,7 @@ function LoginPage() {
         if (message.includes("Login successful")) {
           const userType = message.includes("client") ? "client" : "admin";
           setMessage(userType);
-          localStorage.setItem('accessToken', responseData.accessToken);
+          localStorage.setItem("accessToken", responseData.accessToken);
           localStorage.setItem("userType", userType);
           localStorage.setItem("userEmail", formData.email);
           navigate(`/${userType}`);
@@ -141,28 +141,6 @@ function LoginPage() {
             className="text-1xl m-5 mx-auto mt-4 block h-6 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
           />
 
-          {formType === "signup" && (
-            <>
-              <input
-                type="text"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                placeholder="Phone Number"
-                required
-                className="text-1xl m-5 mx-auto mt-4 block h-6 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
-              />
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-                className="text-1xl m-5 mx-auto  block h-6 w-80 rounded-lg border-gray-300   text-black focus:border-orange-500"
-              />
-            </>
-          )}
           <input
             type="password"
             name="password"
@@ -172,6 +150,29 @@ function LoginPage() {
             required
             className="text-1xl m-5 mx-auto mt-4 block h-6 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
           />
+
+          {formType === "signup" && (
+            <>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                className="text-1xl m-5 mx-auto mt-4 block h-6 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
+              />
+              <input
+                type="text"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                placeholder="Phone Number"
+                required
+                className="text-1xl m-5 mx-auto mt-4 block h-6 w-80 rounded-lg border-gray-300 px-4 py-3 text-black focus:border-orange-500"
+              />
+            </>
+          )}
 
           {/* Login Button */}
           <button

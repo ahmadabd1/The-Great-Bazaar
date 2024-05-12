@@ -7,20 +7,6 @@
   align-items: center;
 }
 
-.chart-container {
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #e6e6e6
-  ); /* Consistent gradient for the card */
-  border-radius: 10px;
-  width: 100%;
-
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Consistent shadow */
-  padding: 25px;
-  transition: transform 0.3s ease; /* Consistent hover effect */
-}
-
 .chart-container:hover {
   transform: translateY(-5px); /* Consistent lift effect on hover */
 }
